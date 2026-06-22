@@ -112,8 +112,8 @@ func _process(delta):
 		enemy_stamina_bar.value = enemy.current_spin
 
 	var beat_offset = Vector3(
-		randf_range(-0.2, 0.2) * beat_punch,
-		randf_range(-0.1, 0.1) * beat_punch,
+		randf_range(-0.05, 0.05) * beat_punch,
+		randf_range(-0.02, 0.02) * beat_punch,
 		beat_punch
 	)
 
@@ -133,7 +133,7 @@ func _on_note_judged(result):
 
 			beat_punch = randf_range(
 				0.01,
-				0.02
+				0.01
 			)
 
 		"good":
@@ -141,8 +141,8 @@ func _on_note_judged(result):
 			player.current_boost += 1
 
 			beat_punch = randf_range(
-				0.5,
-				0.5
+				0.2,
+				0.2
 			)
 
 		"great":
@@ -150,8 +150,8 @@ func _on_note_judged(result):
 			player.current_boost += 2
 
 			beat_punch = randf_range(
-				0.5,
-				0.9			)
+				0.3,
+				0.3			)
 
 		"perfect":
 
@@ -159,8 +159,8 @@ func _on_note_judged(result):
 			player.current_spin += 4
 
 			beat_punch = randf_range(
-				1,
-				2
+				0.6,
+				0.6
 			)
 
 	player.current_boost = clamp(

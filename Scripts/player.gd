@@ -4,7 +4,6 @@ extends CharacterBody3D
 @export var tilt_strength := 0.03
 @export var tilt_spring := 20.0
 @export var tilt_damping := 8.0
-
 @onready var visual = $Visual/MeshInstance3D
 
 const BIG_HIT_THRESHOLD := 2.0
@@ -85,7 +84,6 @@ func _physics_process(delta):
 		)
 
 		current_boost -= boost_drain * delta
-
 	else:
 
 		current_boost_multiplier = lerp(
@@ -93,7 +91,6 @@ func _physics_process(delta):
 			1.0,
 			boost_acceleration * delta
 		)
-
 		#current_boost += boost_regen * delta
 
 	current_boost = clamp(

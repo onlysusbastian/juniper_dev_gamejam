@@ -4,6 +4,7 @@ extends AudioStreamPlayer
 @export var measures := 4
 
 # Tracking the beat and song position
+var last_judged_beat := -999
 var song_position = 0.0
 var song_position_in_beats = 1
 var sec_per_beat = 60.0 / bpm
@@ -58,11 +59,11 @@ func closest_beat(nth):
 	return Vector2(closest, time_off_beat)
 
 
-func play_from_beat(beat, offset):
+func play_from_beat(beat_number, offset):
 	play()
-	seek(beat * sec_per_beat)
+	seek(beat_number * sec_per_beat)
 	beats_before_start = offset
-	current_measure = beat % measures
+	current_measure = beat_number % measures
 
 
 func _on_StartTimer_timeout():
@@ -82,7 +83,14 @@ func _input(event):
 
 	if event.is_action_pressed("rhythm_hit"):
 
-		var beat_info = closest_beat(0.25	)
+		var beat_info = closest_beat(1)
+
+		var beat_number = int(beat_info.x)
+
+		if beat_number == last_judged_beat:
+			return
+
+		last_judged_beat = beat_number
 
 		var error = beat_info.y
 

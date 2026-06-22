@@ -54,7 +54,7 @@ func _physics_process(delta):
 		pending_hit_stop -= delta
 
 		if pending_hit_stop <= 0:
-			hit_stop = 0.05
+			hit_stop = 0.02
 
 	if hit_stop > 0:
 
@@ -126,15 +126,15 @@ func _physics_process(delta):
 
 				if impact_force > BIG_HIT_THRESHOLD:
 
-					hit_flash_timer = 0.06
-					player.hit_flash_timer = 0.06
+					hit_flash_timer = 0.02
+					player.hit_flash_timer = 0.02
 
-					pending_hit_stop = 0.03
-					player.pending_hit_stop = 0.03
+					pending_hit_stop = 0.01
+					player.pending_hit_stop = 0.01
 
 				get_parent().trigger_shake(
 					clamp(
-						impact_force * 0.03,
+						impact_force * 0.1,
 						0.02,
 						0.25
 					)
