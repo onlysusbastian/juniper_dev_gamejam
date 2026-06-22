@@ -4,14 +4,13 @@ extends AudioStreamPlayer
 @export var measures := 4
 
 # Tracking the beat and song position
-var last_judged_beat := -999
 var song_position = 0.0
 var song_position_in_beats = 1
 var sec_per_beat = 60.0 / bpm
 var last_reported_beat = 0
 var beats_before_start = 0
 var current_measure = 1
-
+var last_judged_beat := -999
 # Determining how close to the beat an event is
 var closest = 0
 var time_off_beat = 0.0
@@ -59,11 +58,11 @@ func closest_beat(nth):
 	return Vector2(closest, time_off_beat)
 
 
-func play_from_beat(beat_number, offset):
+func play_from_beat(beat, offset):
 	play()
-	seek(beat_number * sec_per_beat)
+	seek(beat * sec_per_beat)
 	beats_before_start = offset
-	current_measure = beat_number % measures
+	current_measure = beat % measures
 
 
 func _on_StartTimer_timeout():
@@ -86,26 +85,29 @@ func _input(event):
 		var beat_info = closest_beat(1)
 
 		var beat_number = int(beat_info.x)
+		var error = beat_info.y
 
+		# Already used this beat
 		if beat_number == last_judged_beat:
 			return
 
-		last_judged_beat = beat_number
-
-		var error = beat_info.y
-
 		if error <= perfect_window:
 
+			last_judged_beat = beat_number
 			note_judged.emit("perfect")
 
 		elif error <= great_window:
 
+			last_judged_beat = beat_number
 			note_judged.emit("great")
 
 		elif error <= good_window:
 
+			last_judged_beat = beat_number
 			note_judged.emit("good")
 
 		else:
 
+			# Consume the beat even on a miss
+			last_judged_beat = beat_number
 			note_judged.emit("miss")

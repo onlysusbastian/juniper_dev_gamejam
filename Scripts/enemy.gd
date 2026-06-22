@@ -54,7 +54,7 @@ func _physics_process(delta):
 		pending_hit_stop -= delta
 
 		if pending_hit_stop <= 0:
-			hit_stop = 0.02
+			hit_stop = 0.05
 
 	if hit_stop > 0:
 
@@ -86,7 +86,7 @@ func _physics_process(delta):
 
 	if player:
 
-		if global_position.distance_to(player.global_position) < 1.2 and hit_cooldown <= 0:
+		if global_position.distance_to(player.global_position) < 1.8 and hit_cooldown <= 0:
 
 			var push_dir = global_position - player.global_position
 			push_dir.y = 0
@@ -97,13 +97,13 @@ func _physics_process(delta):
 
 				var enemy_force = (
 					velocity.length()
-					* (current_spin / 100.0)
+					* (0.2 * current_spin / 100.0)
 					/ weight
 				)
 
 				var player_force = (
 					player.velocity.length()
-					* (player.current_spin / 100.0)
+					* (0.2 * player.current_spin / 100.0)
 					/ player.weight
 				)
 
@@ -126,15 +126,15 @@ func _physics_process(delta):
 
 				if impact_force > BIG_HIT_THRESHOLD:
 
-					hit_flash_timer = 0.02
-					player.hit_flash_timer = 0.02
+					hit_flash_timer = 0.06
+					player.hit_flash_timer = 0.06
 
 					pending_hit_stop = 0.01
 					player.pending_hit_stop = 0.01
 
 				get_parent().trigger_shake(
 					clamp(
-						impact_force * 0.1,
+						impact_force * 5,
 						0.02,
 						0.25
 					)
