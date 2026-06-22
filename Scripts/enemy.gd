@@ -2,16 +2,26 @@ extends CharacterBody3D
 
 @onready var ai = $Visual
 @onready var visual = $Visual/MeshInstance3D
-
+@onready var blade2 = $Visual/MeshInstance3D/blade2
 const BIG_HIT_THRESHOLD := 2.0
 
 var pending_hit_stop := 0.0
 var hit_stop := 0.0
 
+var hit_wobble_timer := 0.0
+var hit_wobble_strength := 0.0
+
+var tilt := Vector2.ZERO
+var tilt_velocity := Vector2.ZERO
+
+var tilt_strength := 0.03
+var tilt_spring := 20.0
+var tilt_damping := 8.0
+
 var flash_material : StandardMaterial3D
 var original_material : Material
 var hit_flash_timer := 0.0
-var regen_rate := 2	
+var regen_rate := 2
 
 var current_spin := 100.0
 var current_boost := 100.0
@@ -36,6 +46,7 @@ var hit_cooldown := 0.8
 var player : CharacterBody3D
 var knockback_velocity := Vector3.ZERO
 
+
 func _ready():
 
 	original_material = visual.get_active_material(0)
@@ -47,8 +58,11 @@ func _ready():
 
 	ai.enemy = self
 
+
 func _physics_process(delta):
-	
+
+	hit_wobble_timer -= delta
+
 	if pending_hit_stop > 0:
 
 		pending_hit_stop -= delta
@@ -68,7 +82,7 @@ func _physics_process(delta):
 	else:
 		visual.material_override = original_material
 
-	if current_spin <= 0:
+	if current_spin <= 40:
 		queue_free()
 		return
 
@@ -142,6 +156,12 @@ func _physics_process(delta):
 
 				player.hit_stun = 0.05
 
+				hit_wobble_timer = 0.25
+				player.hit_wobble_timer = 0.25
+
+				hit_wobble_strength = impact_force * 0.3
+				player.hit_wobble_strength = impact_force * 0.1
+
 				var impact_speed = (
 					velocity - player.velocity
 				).length()
@@ -212,4 +232,40 @@ func _physics_process(delta):
 		2.0 * delta
 	)
 
-	rotate_y(current_spin * 0.15 * delta)
+	blade2.rotate_y(
+	current_spin * 0.15 * delta
+	)
+
+	var horizontal_velocity = Vector2(
+	velocity.x,
+	velocity.z
+)
+
+	var target_tilt = Vector2(
+		-horizontal_velocity.y,
+		horizontal_velocity.x
+	) * tilt_strength
+
+	if hit_wobble_timer > 0:
+
+		target_tilt += Vector2(
+			sin(Time.get_ticks_msec() * 0.03),
+			cos(Time.get_ticks_msec() * 0.035)
+		) * hit_wobble_strength * (
+			hit_wobble_timer / 0.25
+		)
+
+	var force = (
+		target_tilt - tilt
+	) * tilt_spring
+
+	tilt_velocity += force * delta
+
+	tilt_velocity *= exp(
+		-tilt_damping * delta
+	)
+
+	tilt += tilt_velocity * delta
+
+	blade2.rotation.x = tilt.x
+	blade2.rotation.z = tilt.y

@@ -41,9 +41,9 @@ func _ready():
 		_on_note_judged
 	)
 
-	player_stamina_bar.max_value = 100
+	player_stamina_bar.max_value = 60
 	player_boost_bar.max_value = 100
-	enemy_stamina_bar.max_value = 100
+	enemy_stamina_bar.max_value = 60
 
 func _process(delta):
 
@@ -106,11 +106,11 @@ func _process(delta):
 			1.0 * delta
 		)
 
-	player_stamina_bar.value = player.current_spin
+	player_stamina_bar.value = player.current_spin - 40
 	player_boost_bar.value = player.current_boost
 
 	if is_instance_valid(enemy):
-		enemy_stamina_bar.value = enemy.current_spin
+		enemy_stamina_bar.value = enemy.current_spin - 40
 
 	var beat_offset = Vector3(
 		randf_range(-0.2, 0.2) * beat_punch,

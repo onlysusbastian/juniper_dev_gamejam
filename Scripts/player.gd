@@ -8,8 +8,13 @@ extends CharacterBody3D
 @onready var visual = $Visual/MeshInstance3D
 
 const BIG_HIT_THRESHOLD := 2.0
+
 var pending_hit_stop := 0.0
 var hit_stop := 0.0
+
+var hit_wobble_timer := 0.0
+var hit_wobble_strength := 0.0
+
 var flash_material : StandardMaterial3D
 var original_material : Material
 var hit_flash_timer := 0.0
@@ -48,15 +53,18 @@ func _ready():
 	flash_material.emission_enabled = true
 	flash_material.emission = Color.WHITE
 
+
 func _physics_process(delta):
-	
+
+	hit_wobble_timer -= delta
+
 	if pending_hit_stop > 0:
 
 		pending_hit_stop -= delta
 
 		if pending_hit_stop <= 0:
 			hit_stop = 0.001
-	
+
 	if hit_stop > 0:
 		hit_stop -= delta
 		return
@@ -68,7 +76,7 @@ func _physics_process(delta):
 	else:
 		visual.material_override = original_material
 
-	if current_spin <= 0:
+	if current_spin <= 40:
 		print("GAME OVER")
 		return
 
@@ -124,15 +132,6 @@ func _physics_process(delta):
 	var direction = target_position - global_position
 	direction.y = 0
 
-	var wobble = Vector3(
-		sin(Time.get_ticks_msec() * 0.005),
-		0,
-		cos(Time.get_ticks_msec() * 0.004)
-	) * wobble_strength
-
-	if velocity.length() < 0.5:
-		velocity += wobble * delta * 10
-
 	if hit_stun <= 0:
 
 		if direction.length() > 1.0:
@@ -166,7 +165,7 @@ func _physics_process(delta):
 
 	# SPIN DECAY
 
-	current_spin -= 1.0 * delta
+	current_spin -= 0.5 * delta
 	current_spin = max(current_spin, 0.0)
 
 	# VISUAL SPIN
@@ -186,6 +185,15 @@ func _physics_process(delta):
 		-horizontal_velocity.y,
 		horizontal_velocity.x
 	) * tilt_strength
+
+	if hit_wobble_timer > 0:
+
+		target_tilt += Vector2(
+			sin(Time.get_ticks_msec() * 0.03),
+			cos(Time.get_ticks_msec() * 0.035)
+		) * hit_wobble_strength * (
+			hit_wobble_timer / 0.25
+		)
 
 	var force = (
 		target_tilt - tilt
