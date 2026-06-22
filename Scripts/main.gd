@@ -1,0 +1,178 @@
+extends Node3D
+
+@onready var player_stamina_bar = $CanvasLayer/Control/PlayerStamina
+@onready var player_boost_bar = $CanvasLayer/Control/PlayerBoost
+@onready var enemy_stamina_bar = $CanvasLayer/Control/EnemyStamina
+
+@onready var conductor = $Conductor
+@onready var camera = $Camera3D
+@onready var marker = $MouseMarker
+@onready var player = $Player
+@onready var enemy = $Enemy
+
+var camera_base_offset := Vector3.ZERO
+var camera_offset := Vector3.ZERO
+
+var beat_punch := 0.0
+
+var shake_strength := 0.0
+var shake_fade := 10.0
+var shake_offset := Vector3.ZERO
+
+func trigger_shake(strength := 0.15):
+
+	shake_strength = max(
+		shake_strength,
+		strength
+	)
+
+func _ready():
+
+	camera_base_offset = (
+		camera.global_position
+		- player.global_position
+	)
+
+	enemy.player = player
+	enemy.ai.player = player
+
+	conductor.note_judged.connect(
+		_on_note_judged
+	)
+
+	player_stamina_bar.max_value = 100
+	player_boost_bar.max_value = 100
+	enemy_stamina_bar.max_value = 100
+
+func _process(delta):
+
+	beat_punch = lerp(
+		beat_punch,
+		0.0,
+		10.0 * delta
+	)
+
+	if shake_strength > 0:
+
+		shake_strength = lerp(
+			shake_strength,
+			0.0,
+			shake_fade * delta
+		)
+
+		shake_offset = Vector3(
+			randf_range(
+				-shake_strength,
+				shake_strength
+			),
+			0,
+			randf_range(
+				-shake_strength,
+				shake_strength
+			)
+		)
+
+	else:
+
+		shake_offset = Vector3.ZERO
+
+	var mouse_pos = get_viewport().get_mouse_position()
+
+	var ray_origin = camera.project_ray_origin(mouse_pos)
+	var ray_dir = camera.project_ray_normal(mouse_pos)
+
+	var plane = Plane(Vector3.UP, 0)
+
+	var hit = plane.intersects_ray(
+		ray_origin,
+		ray_dir
+	)
+
+	if hit != null:
+
+		marker.global_position = hit
+
+		player.target_position = hit
+
+		var offset = hit - player.global_position
+
+		camera_offset = camera_offset.lerp(
+			Vector3(
+				clamp(offset.x, -1.5, 1.5),
+				0,
+				0
+			),
+			1.0 * delta
+		)
+
+	player_stamina_bar.value = player.current_spin
+	player_boost_bar.value = player.current_boost
+
+	if is_instance_valid(enemy):
+		enemy_stamina_bar.value = enemy.current_spin
+
+	var beat_offset = Vector3(
+		randf_range(-0.2, 0.2) * beat_punch,
+		randf_range(-0.1, 0.1) * beat_punch,
+		beat_punch
+	)
+
+	camera.global_position = (
+		player.global_position
+		+ camera_base_offset
+		+ camera_offset
+		+ shake_offset
+		+ beat_offset
+	)
+
+func _on_note_judged(result):
+
+	match result:
+
+		"miss":
+
+			beat_punch = randf_range(
+				0.01,
+				0.02
+			)
+
+		"good":
+
+			player.current_boost += 1
+
+			beat_punch = randf_range(
+				0.5,
+				0.5
+			)
+
+		"great":
+
+			player.current_boost += 2
+
+			beat_punch = randf_range(
+				0.5,
+				0.9			)
+
+		"perfect":
+
+			player.current_boost += 8
+			player.current_spin += 4
+
+			beat_punch = randf_range(
+				1,
+				2
+			)
+
+	player.current_boost = clamp(
+		player.current_boost,
+		0.0,
+		100.0
+	)
+
+	player.current_spin = clamp(
+		player.current_spin,
+		0.0,
+		100.0
+	)
+
+	print(result)

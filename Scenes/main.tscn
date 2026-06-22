@@ -1,0 +1,93 @@
+[gd_scene load_steps=8 format=3 uid="uid://6ph4j2ye3m0"]
+
+[ext_resource type="Script" uid="uid://rf2tu3s8hg4d" path="res://Scripts/main.gd" id="1_8gbba"]
+[ext_resource type="PackedScene" uid="uid://bng077ae1v40b" path="res://Scenes/Arena.tscn" id="1_jjgbg"]
+[ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="3_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://ck6jrbqtyqrhf" path="res://Scenes/Player.tscn" id="4_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://dfysmu00krk0s" path="res://Scenes/Enemy.tscn" id="5_kry3j"]
+[ext_resource type="AudioStream" uid="uid://r8dfna5f2rxf" path="res://Audio/test/eda_180.mp3" id="6_6bp64"]
+[ext_resource type="Script" uid="uid://dw0b0do7m7sbt" path="res://Scripts/Conductor.gd" id="7_344ge"]
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_8gbba")
+
+[node name="Arena" parent="." instance=ExtResource("1_jjgbg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.015063286, 0, -0.029694557)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 75, 75)
+current = true
+fov = 12.8
+near = 0.029
+
+[node name="MouseMarker" parent="." instance=ExtResource("3_jjvhh")]
+
+[node name="Player" parent="." instance=ExtResource("4_jjvhh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.954, 0.5, -0.59)
+
+[node name="Enemy" parent="." instance=ExtResource("5_kry3j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.482, 0.5, 1.056)
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.87583536, 0.4826101, 0, -0.4826101, 0.87583536, 0.094677925, 8.653536, 24.629025)
+light_energy = 14.695
+light_indirect_energy = 10.722
+shadow_enabled = true
+shadow_bias = 4.154
+spot_range = 41.205
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.6273381, 0.7787471, 0, -0.7787471, -0.6273381, 0, 6.519599, -8.566631)
+visible = false
+light_energy = 4.51
+light_indirect_energy = 10.722
+shadow_enabled = true
+shadow_bias = 5.165
+shadow_normal_bias = 4.995
+shadow_transmittance_bias = -1.954
+shadow_opacity = 0.86
+shadow_blur = 10.0
+spot_range = 20.75
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PlayerStamina" type="ProgressBar" parent="CanvasLayer/Control"]
+texture_filter = 1
+layout_mode = 0
+offset_right = 120.0
+offset_bottom = 27.0
+
+[node name="PlayerBoost" type="ProgressBar" parent="CanvasLayer/Control"]
+texture_filter = 1
+layout_mode = 0
+offset_top = 60.0
+offset_right = 120.0
+offset_bottom = 87.0
+
+[node name="EnemyStamina" type="ProgressBar" parent="CanvasLayer/Control"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 1023.0
+offset_top = 7.0
+offset_right = 1143.0
+offset_bottom = 34.0
+
+[node name="EnemySpin" type="ProgressBar" parent="CanvasLayer/Control"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 1023.0
+offset_top = 37.0
+offset_right = 1143.0
+offset_bottom = 64.0
+
+[node name="Conductor" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_6bp64")
+autoplay = true
+script = ExtResource("7_344ge")
+bpm = 90

@@ -1,0 +1,215 @@
+extends CharacterBody3D
+
+@onready var ai = $Visual
+@onready var visual = $Visual/MeshInstance3D
+
+const BIG_HIT_THRESHOLD := 2.0
+
+var pending_hit_stop := 0.0
+var hit_stop := 0.0
+
+var flash_material : StandardMaterial3D
+var original_material : Material
+var hit_flash_timer := 0.0
+var regen_rate := 2	
+
+var current_spin := 100.0
+var current_boost := 100.0
+
+var boost_multiplier := 1.8
+var current_boost_multiplier := 1.0
+
+var boost_acceleration := 4.0
+var boost_drain := 25.0
+var boost_regen := 8.0
+
+var weight := 1.5
+var move_speed := 10.0
+var acceleration := 2.0
+
+var spin_damage_multiplier := 1.0
+var spin_resistance := 1.0
+
+var stun_time := 0.0
+var hit_cooldown := 0.8
+
+var player : CharacterBody3D
+var knockback_velocity := Vector3.ZERO
+
+func _ready():
+
+	original_material = visual.get_active_material(0)
+
+	flash_material = StandardMaterial3D.new()
+	flash_material.albedo_color = Color.WHITE
+	flash_material.emission_enabled = true
+	flash_material.emission = Color.WHITE
+
+	ai.enemy = self
+
+func _physics_process(delta):
+	
+	if pending_hit_stop > 0:
+
+		pending_hit_stop -= delta
+
+		if pending_hit_stop <= 0:
+			hit_stop = 0.05
+
+	if hit_stop > 0:
+
+		hit_stop -= delta
+		return
+
+	hit_flash_timer -= delta
+
+	if hit_flash_timer > 0:
+		visual.material_override = flash_material
+	else:
+		visual.material_override = original_material
+
+	if current_spin <= 0:
+		queue_free()
+		return
+
+	current_spin -= 1.0 * delta
+	current_spin += regen_rate * delta
+
+	current_spin = clamp(
+		current_spin,
+		0.0,
+		100.0
+	)
+
+	stun_time -= delta
+	hit_cooldown -= delta
+
+	if player:
+
+		if global_position.distance_to(player.global_position) < 1.2 and hit_cooldown <= 0:
+
+			var push_dir = global_position - player.global_position
+			push_dir.y = 0
+
+			if push_dir.length() > 0:
+
+				push_dir = push_dir.normalized()
+
+				var enemy_force = (
+					velocity.length()
+					* (current_spin / 100.0)
+					/ weight
+				)
+
+				var player_force = (
+					player.velocity.length()
+					* (player.current_spin / 100.0)
+					/ player.weight
+				)
+
+				knockback_velocity += (
+					push_dir
+					* player_force
+					* 0.15
+				)
+
+				player.knockback_velocity -= (
+					push_dir
+					* enemy_force
+					* 0.3
+				)
+
+				var impact_force = max(
+					enemy_force,
+					player_force
+				)
+
+				if impact_force > BIG_HIT_THRESHOLD:
+
+					hit_flash_timer = 0.06
+					player.hit_flash_timer = 0.06
+
+					pending_hit_stop = 0.03
+					player.pending_hit_stop = 0.03
+
+				get_parent().trigger_shake(
+					clamp(
+						impact_force * 0.03,
+						0.02,
+						0.25
+					)
+				)
+
+				player.hit_stun = 0.05
+
+				var impact_speed = (
+					velocity - player.velocity
+				).length()
+
+				var base_spin_damage = impact_speed * 0.7
+
+				if enemy_force > player_force:
+
+					current_spin -= (
+						base_spin_damage
+						* 0.1
+						/ weight
+						/ spin_resistance
+					)
+
+					player.current_spin -= (
+						base_spin_damage
+						* spin_damage_multiplier
+						/ player.weight
+						/ player.spin_resistance
+					)
+
+				else:
+
+					current_spin -= (
+						base_spin_damage
+						* player.spin_damage_multiplier
+						/ weight
+						/ spin_resistance
+					)
+
+					player.current_spin -= (
+						base_spin_damage
+						* 0.5
+						/ player.weight
+						/ player.spin_resistance
+					)
+
+				current_spin = max(current_spin, 0.0)
+				player.current_spin = max(player.current_spin, 0.0)
+
+				hit_cooldown = 0.2
+				stun_time = 0.1
+
+	var move_velocity = Vector3.ZERO
+
+	if stun_time <= 0:
+
+		var move_dir = ai.get_move_direction()
+
+		move_velocity = (
+			move_dir
+			* move_speed
+			* current_boost_multiplier
+		)
+
+	velocity = velocity.lerp(
+		move_velocity,
+		acceleration * delta
+	)
+
+	velocity += knockback_velocity
+
+	move_and_slide()
+
+	knockback_velocity = knockback_velocity.lerp(
+		Vector3.ZERO,
+		2.0 * delta
+	)
+
+	rotate_y(current_spin * 0.15 * delta)

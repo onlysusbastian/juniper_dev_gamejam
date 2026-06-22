@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://dfysmu00krk0s"]
+
+[ext_resource type="Script" uid="uid://c102l67w7p86r" path="res://Scripts/enemy.gd" id="1_m1htj"]
+[ext_resource type="Script" uid="uid://cr7fc0jd236s" path="res://Scripts/EnemyAI.gd" id="2_wovta"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7fd37"]
+radius = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_m1htj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wovta"]
+albedo_color = Color(0, 1, 1, 1)
+
+[node name="Enemy" type="CharacterBody3D"]
+script = ExtResource("1_m1htj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.3, 0, 0, 0, 0.5, 0, 0, 0)
+shape = SubResource("CylinderShape3D_7fd37")
+
+[node name="Visual" type="Node3D" parent="."]
+script = ExtResource("2_wovta")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Visual"]
+mesh = SubResource("BoxMesh_m1htj")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_wovta")
