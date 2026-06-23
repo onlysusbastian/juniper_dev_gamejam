@@ -1,10 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://ck6jrbqtyqrhf"]
+[gd_scene load_steps=9 format=3 uid="uid://ck6jrbqtyqrhf"]
 
 [ext_resource type="Script" uid="uid://kv4siwgogebm" path="res://Scripts/player.gd" id="1_rpqav"]
 [ext_resource type="PackedScene" uid="uid://el4o66hj7b2r" path="res://Assets/blades/blade1.glb" id="2_kyqiw"]
+[ext_resource type="PackedScene" uid="uid://j6ly81pgvkpb" path="res://Assets/eggs/pigeon.glb" id="2_nn08x"]
+[ext_resource type="Texture2D" uid="uid://bfln2yioap4v6" path="res://Assets/effects/sparkle/1.png" id="3_5ixxa"]
+[ext_resource type="Texture2D" uid="uid://c1hc2rr4r22k0" path="res://Assets/effects/sparkle/2.png" id="4_nn08x"]
+[ext_resource type="Texture2D" uid="uid://sfv7mdqaa7n5" path="res://Assets/effects/sparkle/3.png" id="5_52ee3"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_qbkls"]
 radius = 1.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bhhdu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_5ixxa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_nn08x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_52ee3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_rpqav")
@@ -14,9 +35,24 @@ transform = Transform3D(0.835, 0, 0, 0, 0.3, 0, 0, 0, 0.83, 0, 0, 0)
 shape = SubResource("CylinderShape3D_qbkls")
 
 [node name="Visual" type="Node3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.3, 0, 0, 0, 0.5, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(0.395, 0, 0, 0, 0.405, 0, 0, 0, 0.379, 0, 0, 0)
 
-[node name="blade1" parent="Visual/MeshInstance3D" instance=ExtResource("2_kyqiw")]
+[node name="blade1" parent="Visual/MeshInstance3D" instance=ExtResource("2_nn08x")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+
+[node name="blade11" parent="Visual/MeshInstance3D" instance=ExtResource("2_kyqiw")]
 transform = Transform3D(2, 0, 0, 0, 3.3333333, 0, 0, 0, 2, 0, -0.7794942, 0)
+visible = false
+
+[node name="Sparkle" type="Node3D" parent="Visual"]
+transform = Transform3D(2, 0, 0, 0, 3.3333333, 0, 0, 0, 2, 0, 0, 0)
+visible = false
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Visual/Sparkle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08232063, 0)
+pixel_size = 0.02
+sprite_frames = SubResource("SpriteFrames_bhhdu")
+autoplay = "default"
+frame_progress = 0.9681845

@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dfysmu00krk0s"]
+[gd_scene load_steps=6 format=3 uid="uid://dfysmu00krk0s"]
 
 [ext_resource type="Script" uid="uid://c102l67w7p86r" path="res://Scripts/enemy.gd" id="1_m1htj"]
 [ext_resource type="Script" uid="uid://cr7fc0jd236s" path="res://Scripts/EnemyAI.gd" id="2_wovta"]
 [ext_resource type="PackedScene" uid="uid://dqa0cbdq5tyu1" path="res://Assets/blades/blade2.glb" id="3_xeo28"]
+[ext_resource type="PackedScene" uid="uid://cpfh518bock8v" path="res://Assets/eggs/crcr.glb" id="4_kpr8r"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_7fd37"]
 radius = 1.0
@@ -21,5 +22,9 @@ script = ExtResource("2_wovta")
 transform = Transform3D(0.39521477, 0, 0, 0, 0.405, 0, 0, 0, 0.3789369, 0, 0, 0)
 skeleton = NodePath("../..")
 
-[node name="blade2" parent="Visual/MeshInstance3D" instance=ExtResource("3_xeo28")]
+[node name="blade22" parent="Visual/MeshInstance3D" instance=ExtResource("3_xeo28")]
 transform = Transform3D(2.5302699, 0, 0, 0, 2.4691358, 0, 0, 0, 2.638962, 0, -0.5555555, 0)
+visible = false
+
+[node name="blade2" parent="Visual/MeshInstance3D" instance=ExtResource("4_kpr8r")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)

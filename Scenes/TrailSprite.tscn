@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://8hony0rtu31d"]
+
+[ext_resource type="Texture2D" uid="uid://d0cw0urtaexlq" path="res://Assets/effects/trail/trail1.png" id="1_pvrrr"]
+[ext_resource type="Texture2D" uid="uid://ctby80xocl238" path="res://Assets/effects/trail/trail2.png" id="2_dihh3"]
+[ext_resource type="Script" uid="uid://ty6oevnoqypt" path="res://Scripts/TrailSprite.gd" id="3_dihh3"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l55or"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_pvrrr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_dihh3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D"]
+transform = Transform3D(4.145, 0, 0, 0, 4.145, 0, 0, 0, 4.145, 0, 0, 0)
+pixel_size = 0.1
+sprite_frames = SubResource("SpriteFrames_l55or")
+script = ExtResource("3_dihh3")

@@ -1,17 +1,20 @@
 extends CharacterBody3D
 
-@export var wobble_strength := 0.2
+@export var wobble_strength := 0.08
 @export var tilt_strength := 0.03
 @export var tilt_spring := 20.0
 @export var tilt_damping := 8.0
 
+@onready var sparkle = $Visual/Sparkle
 @onready var visual = $Visual/MeshInstance3D
-
+@onready var blade1 = $Visual/MeshInstance3D/blade1
 const BIG_HIT_THRESHOLD := 2.0
 
+var trail
 var pending_hit_stop := 0.0
 var hit_stop := 0.0
 
+var sparkle_hide_timer := 0.0
 var hit_wobble_timer := 0.0
 var hit_wobble_strength := 0.0
 
@@ -36,6 +39,18 @@ var boost_acceleration := 4.0
 var boost_drain := 25.0
 var boost_regen := 8.0
 
+# SPECIAL ATTACK
+
+var charging_special := false
+var special_charge_timer := 0.0
+
+@export var special_charge_time := 1.0
+@export var special_speed := 40
+@export var special_duration := 0.3
+
+var special_timer := 0.0
+var special_direction := Vector3.ZERO
+
 var hit_stun := 0.0
 var knockback_velocity := Vector3.ZERO
 
@@ -53,8 +68,16 @@ func _ready():
 	flash_material.emission_enabled = true
 	flash_material.emission = Color.WHITE
 
-
 func _physics_process(delta):
+	
+	if sparkle_hide_timer > 0:
+
+		sparkle_hide_timer -= delta
+		sparkle.visible = false
+
+	else:
+
+		sparkle.visible = true
 
 	hit_wobble_timer -= delta
 
@@ -68,7 +91,42 @@ func _physics_process(delta):
 	if hit_stop > 0:
 		hit_stop -= delta
 		return
+		
+		# START SPECIAL CHARGE
 
+	if Input.is_action_just_pressed("special_attack1") \
+	and !charging_special \
+	and special_timer <= 0:
+
+		charging_special = true
+		special_charge_timer = special_charge_time
+	
+	# CHARGING SPECIAL
+
+	if charging_special:
+
+		special_charge_timer -= delta
+
+		velocity = Vector3.ZERO
+
+		special_direction = (
+			target_position - global_position
+		)
+
+		special_direction.y = 0
+
+		if special_direction.length() > 0:
+			special_direction = special_direction.normalized()
+
+		current_spin += 50 * delta
+
+		if special_charge_timer <= 0:
+
+			charging_special = false
+			special_timer = special_duration
+
+		return
+	
 	hit_flash_timer -= delta
 
 	if hit_flash_timer > 0:
@@ -81,6 +139,21 @@ func _physics_process(delta):
 		return
 
 	hit_stun -= delta
+	
+	 # SPECIAL DASH
+
+	if special_timer > 0:
+
+		special_timer -= delta
+
+		velocity = (
+			special_direction
+			* special_speed
+		)
+
+		move_and_slide()
+
+		return
 
 	# BOOST
 
@@ -91,7 +164,6 @@ func _physics_process(delta):
 			boost_multiplier,
 			boost_acceleration * delta
 		)
-
 		current_boost -= boost_drain * delta
 
 	else:
@@ -101,7 +173,6 @@ func _physics_process(delta):
 			1.0,
 			boost_acceleration * delta
 		)
-
 		#current_boost += boost_regen * delta
 
 	current_boost = clamp(

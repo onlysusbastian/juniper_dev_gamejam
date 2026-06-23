@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://cyk4fwycogbne"]
+
+[ext_resource type="Texture2D" uid="uid://qaefwdu2hr46" path="res://Assets/effects/hit/hit1.png" id="1_dkmio"]
+[ext_resource type="Texture2D" uid="uid://0jn55jjobpw4" path="res://Assets/effects/hit/hit2.png" id="2_2nby3"]
+[ext_resource type="Script" uid="uid://b2yhpd5qxdjfi" path="res://Scripts/HitSpark.gd" id="3_jb23k"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_35c83"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_dkmio")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_2nby3")
+}],
+"loop": false,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D"]
+billboard = 1
+sprite_frames = SubResource("SpriteFrames_35c83")
+frame_progress = 0.56029737
+script = ExtResource("3_jb23k")

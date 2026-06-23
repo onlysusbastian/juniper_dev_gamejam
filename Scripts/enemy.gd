@@ -4,7 +4,9 @@ extends CharacterBody3D
 @onready var visual = $Visual/MeshInstance3D
 @onready var blade2 = $Visual/MeshInstance3D/blade2
 const BIG_HIT_THRESHOLD := 2.0
-
+const HIT_SPARK = preload(
+	"res://Scenes/HitSpark.tscn"
+)
 var pending_hit_stop := 0.0
 var hit_stop := 0.0
 
@@ -100,7 +102,7 @@ func _physics_process(delta):
 
 	if player:
 
-		if global_position.distance_to(player.global_position) < 1.8 and hit_cooldown <= 0:
+		if global_position.distance_to(player.global_position) < 4 and hit_cooldown <= 0:
 
 			var push_dir = global_position - player.global_position
 			push_dir.y = 0
@@ -137,14 +139,28 @@ func _physics_process(delta):
 					enemy_force,
 					player_force
 				)
+				var spark = HIT_SPARK.instantiate()
 
+				get_parent().add_child(
+					spark
+				)
+
+				var hit_pos = (
+					global_position +
+					player.global_position
+				) * 0.5
+
+				hit_pos.y += 6
+
+				hit_pos += push_dir * 0.2
+
+				spark.global_position = hit_pos
+				spark.scale = Vector3.ONE * 8
+				player.sparkle_hide_timer = 0.15
 				if impact_force > BIG_HIT_THRESHOLD:
 
 					hit_flash_timer = 0.06
 					player.hit_flash_timer = 0.06
-
-					pending_hit_stop = 0.01
-					player.pending_hit_stop = 0.01
 
 				get_parent().trigger_shake(
 					clamp(
