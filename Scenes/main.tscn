@@ -1,17 +1,36 @@
-[gd_scene load_steps=19 format=3 uid="uid://6ph4j2ye3m0"]
+[gd_scene load_steps=30 format=3 uid="uid://6ph4j2ye3m0"]
 
 [ext_resource type="Script" uid="uid://rf2tu3s8hg4d" path="res://Scripts/main.gd" id="1_8gbba"]
 [ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="3_jjvhh"]
 [ext_resource type="PackedScene" uid="uid://ck6jrbqtyqrhf" path="res://Scenes/Player.tscn" id="4_jjvhh"]
+[ext_resource type="Texture2D" uid="uid://bc5ntf4j0lxp4" path="res://Assets/ui/health_player.png" id="5_fevyy"]
 [ext_resource type="PackedScene" uid="uid://dfysmu00krk0s" path="res://Scenes/Enemy.tscn" id="5_kry3j"]
 [ext_resource type="AudioStream" uid="uid://r8dfna5f2rxf" path="res://Audio/test/eda_180.mp3" id="6_6bp64"]
+[ext_resource type="Texture2D" uid="uid://cyeubif618ytx" path="res://Assets/ui/boost.png" id="6_hibaj"]
 [ext_resource type="Script" uid="uid://dw0b0do7m7sbt" path="res://Scripts/Conductor.gd" id="7_344ge"]
+[ext_resource type="AudioStream" uid="uid://drktr2kvotvq4" path="res://Audio/beat/coin_3.wav" id="7_k12tt"]
+[ext_resource type="Texture2D" uid="uid://dwaw1dx6k64jb" path="res://Assets/ui/health_enemy.png" id="7_pdsj5"]
 [ext_resource type="PackedScene" uid="uid://bf2chskegbcp8" path="res://Assets/Environment/main/environment1.glb" id="8_344ge"]
+[ext_resource type="AudioStream" uid="uid://cyc1r1ncrj18w" path="res://Audio/beat/coin_4.wav" id="8_h1bgf"]
 [ext_resource type="Texture2D" uid="uid://cxof16hhre8y1" path="res://Assets/Environment/main/environment1_wall3.png" id="8_ynf5e"]
 [ext_resource type="Texture2D" uid="uid://ds2wt4t626rsr" path="res://Assets/birds/pigeon1.png" id="9_6iyac"]
+[ext_resource type="AudioStream" uid="uid://d01d24x2edune" path="res://Audio/beat/coin.wav" id="9_b3802"]
 [ext_resource type="Texture2D" uid="uid://bdhwc1oxvvvc0" path="res://Assets/birds/pigeon2.png" id="10_fdnlq"]
+[ext_resource type="AudioStream" uid="uid://buswhp1freiol" path="res://Audio/beat/coin_2.wav" id="10_fevyy"]
 [ext_resource type="Texture2D" uid="uid://cgcjm5x7xfoxb" path="res://Assets/birds/crow1.png" id="11_jkdf5"]
 [ext_resource type="Texture2D" uid="uid://bc7qv64pip1vq" path="res://Assets/birds/crow2.png" id="12_wsu2k"]
+
+[sub_resource type="Gradient" id="Gradient_hibaj"]
+colors = PackedColorArray(0.8145063, 0, 0.19991395, 1, 1, 0.31260142, 0.34393445, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pdsj5"]
+gradient = SubResource("Gradient_hibaj")
+
+[sub_resource type="Gradient" id="Gradient_k12tt"]
+colors = PackedColorArray(0.42093012, 0.3902245, 0.06206189, 1, 0.84489334, 0.69987994, 0.3972195, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h1bgf"]
+gradient = SubResource("Gradient_k12tt")
 
 [sub_resource type="BoxMesh" id="BoxMesh_6bp64"]
 
@@ -93,45 +112,84 @@ spot_angle = 28.24
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="PlayerStamina" type="ProgressBar" parent="CanvasLayer/Control"]
+[node name="PlayerStamina" type="TextureProgressBar" parent="CanvasLayer/Control"]
 texture_filter = 1
 layout_mode = 0
-offset_right = 120.0
-offset_bottom = 27.0
+offset_left = 42.494946
+offset_top = 27.599995
+offset_right = 840.49493
+offset_bottom = 54.600018
+min_value = -9.0
+value = 1.0
+nine_patch_stretch = true
+texture_progress = SubResource("GradientTexture2D_pdsj5")
 
-[node name="PlayerBoost" type="ProgressBar" parent="CanvasLayer/Control"]
+[node name="PlayerBoost" type="TextureProgressBar" parent="CanvasLayer/Control"]
 texture_filter = 1
 layout_mode = 0
-offset_top = 60.0
-offset_right = 120.0
-offset_bottom = 87.0
+offset_left = 51.0
+offset_top = 113.0
+offset_right = 849.0
+offset_bottom = 140.0
+min_value = -8.0
+value = 8.0
+nine_patch_stretch = true
+texture_progress = SubResource("GradientTexture2D_h1bgf")
 
-[node name="EnemyStamina" type="ProgressBar" parent="CanvasLayer/Control"]
+[node name="EnemyStamina" type="TextureProgressBar" parent="CanvasLayer/Control"]
 texture_filter = 1
 layout_mode = 0
-offset_left = 1023.0
-offset_top = 7.0
-offset_right = 1143.0
-offset_bottom = 34.0
+offset_left = 1901.6
+offset_top = 55.43
+offset_right = 2699.6
+offset_bottom = 82.42996
+scale = Vector2(-1, -1)
+min_value = -10.0
+value = 9.0
+nine_patch_stretch = true
+texture_progress = SubResource("GradientTexture2D_pdsj5")
 
-[node name="EnemySpin" type="ProgressBar" parent="CanvasLayer/Control"]
-texture_filter = 1
-layout_mode = 0
-offset_left = 1023.0
-offset_top = 37.0
-offset_right = 1143.0
-offset_bottom = 64.0
+[node name="HealthPlayer" type="Sprite2D" parent="CanvasLayer/Control"]
+position = Vector2(459.59998, 6.399993)
+scale = Vector2(1.3, 1.3)
+texture = ExtResource("5_fevyy")
+
+[node name="Boost" type="Sprite2D" parent="CanvasLayer/Control"]
+position = Vector2(462.00003, 90)
+scale = Vector2(1.3, 1.3)
+texture = ExtResource("6_hibaj")
+
+[node name="HealthEnemy" type="Sprite2D" parent="CanvasLayer/Control"]
+position = Vector2(1482.6, 5.399994)
+scale = Vector2(-1.3, 1.3)
+texture = ExtResource("7_pdsj5")
 
 [node name="Conductor" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_6bp64")
-volume_db = -24.322
+volume_db = -7.88
 autoplay = true
 script = ExtResource("7_344ge")
 bpm = 90
+
+[node name="note_audio" type="Node" parent="."]
+
+[node name="miss" type="AudioStreamPlayer" parent="note_audio"]
+stream = ExtResource("7_k12tt")
+
+[node name="good" type="AudioStreamPlayer" parent="note_audio"]
+stream = ExtResource("8_h1bgf")
+
+[node name="great" type="AudioStreamPlayer" parent="note_audio"]
+stream = ExtResource("9_b3802")
+
+[node name="perfect" type="AudioStreamPlayer" parent="note_audio"]
+stream = ExtResource("10_fevyy")
 
 [node name="Environment" type="Node3D" parent="."]
 visible = false

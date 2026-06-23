@@ -15,9 +15,9 @@ var last_judged_beat := -999
 var closest = 0
 var time_off_beat = 0.0
 
-var perfect_window := 0.04
-var great_window := 0.1
-var good_window := 0.18
+var perfect_window := 0.02
+var great_window := 0.05
+var good_window := 0.2
 
 signal beat(position)
 signal measure(position)

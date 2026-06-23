@@ -159,33 +159,35 @@ func _on_note_judged(result):
 	match result:
 
 		"miss":
-
+			$note_audio/miss.play()
 			beat_punch = randf_range(
 				0.0,
 				0.0
 			)
 
 		"good":
-
-			player.current_boost += 1
-
+			$note_audio/good.play()
+			player.current_boost += 4
+			player.current_spin += 1
 			beat_punch = randf_range(
 				0.0,
 				0.0
 			)
 
 		"great":
-
-			player.current_boost += 2
+			$note_audio/great.play()
+			player.current_boost += 7
+			player.current_spin += 4
 
 			beat_punch = randf_range(
 				0.2,
-				0.2			)
+				0.2
+			)
 
 		"perfect":
-
-			player.current_boost += 8
-			player.current_spin += 4
+			$note_audio/perfect.play()
+			player.current_boost += 10 
+			player.current_spin += 8
 
 			beat_punch = randf_range(
 				0.5,

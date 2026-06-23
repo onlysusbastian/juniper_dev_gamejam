@@ -9,6 +9,29 @@ const HIT_SPARK = preload(
 )
 var pending_hit_stop := 0.0
 var hit_stop := 0.0
+var boost_timer := 0.0
+var boosting := false
+var charging_special := false
+var special_charge_timer := 0.0
+
+var special_timer := 0.0
+var special_direction := Vector3.ZERO
+var airtime_active := false
+var airtime_phase := 0
+var airtime_timer := 0.0
+var airtime_progress := 0.0
+var airtime_target := Vector3.ZERO
+var airtime_start_y := 0.0
+var airtime_cooldown := 8.0
+
+@export var airtime_charge_time := 1.0
+@export var airtime_height := 12.0
+@export var airtime_dive_speed := 100.0
+
+
+@export var special_charge_time := 1.0
+@export var special_speed := 40.0
+@export var special_duration := 0.3
 
 var hit_wobble_timer := 0.0
 var hit_wobble_strength := 0.0
@@ -62,6 +85,46 @@ func _ready():
 
 
 func _physics_process(delta):
+	
+	
+	if player \
+	and !charging_special \
+	and special_timer <= 0 \
+	and !airtime_active:
+
+		if randf() < 0.002:
+
+			charging_special = true
+			special_charge_timer = special_charge_time
+			$Visual/effect.show()
+			
+	if player \
+	and !airtime_active \
+	and !charging_special \
+	and special_timer <= 0 \
+	and airtime_cooldown <= 0:
+
+		if randf() < 0.002:
+			$Visual/effect.show()
+			airtime_active = true
+			airtime_phase = 0
+			airtime_timer = airtime_charge_time
+			airtime_progress = 0.0
+			airtime_start_y = global_position.y
+
+			airtime_cooldown = randf_range(6.0, 12.0)
+	
+	boost_timer -= delta
+	airtime_cooldown -= delta
+
+	if boost_timer <= 0:
+
+		boosting = !boosting
+
+		if boosting:
+			boost_timer = randf_range(1.0, 2.0)
+		else:
+			boost_timer = randf_range(2.0, 4.0)
 
 	hit_wobble_timer -= delta
 
@@ -103,7 +166,7 @@ func _physics_process(delta):
 	if player:
 
 		if global_position.distance_to(player.global_position) < 4 and hit_cooldown <= 0:
-
+			$Visual/effect.hide()
 			var push_dir = global_position - player.global_position
 			push_dir.y = 0
 
@@ -134,12 +197,15 @@ func _physics_process(delta):
 					* enemy_force
 					* 0.3
 				)
+				player.knockback_velocity.y = 0.0
 
 				var impact_force = max(
 					enemy_force,
 					player_force
 				)
 				var spark = HIT_SPARK.instantiate()
+				$hit.pitch_scale = randf_range(0.8,1.03) 
+				$hit.play()
 
 				get_parent().add_child(
 					spark
@@ -224,12 +290,129 @@ func _physics_process(delta):
 
 				hit_cooldown = 0.2
 				stun_time = 0.1
+	
+	if charging_special:
 
+		special_charge_timer -= delta
+
+		velocity = Vector3.ZERO
+
+		special_direction = (
+			player.global_position
+			- global_position
+		)
+
+		special_direction.y = 0
+
+		if special_direction.length() > 0:
+			special_direction = special_direction.normalized()
+
+		if special_charge_timer <= 0:
+			$Visual/effect.hide()
+			charging_special = false
+			special_timer = special_duration
+
+		return
+		
+	if special_timer > 0:
+
+		special_timer -= delta
+
+		velocity = (
+			special_direction
+			* special_speed
+		)
+
+		move_and_slide()
+
+		return
+		
+	if airtime_active:
+
+		if airtime_phase == 0:
+
+			airtime_timer -= delta
+
+			velocity = Vector3.ZERO
+
+			airtime_progress += delta / airtime_charge_time
+
+			var t = clamp(
+				airtime_progress,
+				0.0,
+				1.0
+			)
+
+			var eased = 1.0 - pow(
+				1.0 - t,
+				10.0
+			)
+
+			global_position.y = lerp(
+				airtime_start_y,
+				airtime_height,
+				eased
+			)
+
+			if airtime_timer <= 0:
+
+				airtime_target = player.global_position
+				airtime_target.y = 0
+
+				airtime_phase = 1
+				airtime_progress = 0.0
+
+		elif airtime_phase == 1:
+
+			var dive_dir = (
+				airtime_target - global_position
+			)
+
+			if dive_dir.length() > 0:
+				dive_dir = dive_dir.normalized()
+
+			airtime_progress += delta
+
+			var speed_multiplier = min(
+				airtime_progress * 4.0,
+				1.0
+			)
+
+			velocity = dive_dir * (
+				airtime_dive_speed
+				* speed_multiplier
+			)
+
+			move_and_slide()
+
+			if global_position.distance_to(
+				airtime_target
+			) < 3.0:
+				$hard_hit.play()
+
+				airtime_active = false
+				airtime_phase = 0
+
+				velocity = Vector3.ZERO
+				if !airtime_active:
+
+					global_position.y = 0.0
+					velocity.y = 0.0
+					knockback_velocity.y = 0.0
+
+		return
+	
 	var move_velocity = Vector3.ZERO
 
 	if stun_time <= 0:
 
 		var move_dir = ai.get_move_direction()
+
+		current_boost_multiplier = (
+			boost_multiplier
+			if boosting
+			else 1.0
+		)
 
 		move_velocity = (
 			move_dir
@@ -245,8 +428,7 @@ func _physics_process(delta):
 	velocity += knockback_velocity
 
 	move_and_slide()
-
-	global_position.y = 0.0
+	
 	velocity.y = 0.0
 	knockback_velocity.y = 0.0
 

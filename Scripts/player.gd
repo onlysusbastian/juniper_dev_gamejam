@@ -34,14 +34,14 @@ var flash_material : StandardMaterial3D
 var original_material : Material
 var hit_flash_timer := 0.0
 
-var current_spin := 100.0
+var current_spin := 200.0
 var current_boost := 200.0
 
 var spin_damage_multiplier := 2.0
 var spin_resistance := 1.0
 
 var weight := 1.0
-var move_speed := 8.0
+var move_speed := 15.0
 var acceleration := 1.0
 
 # Boost
@@ -295,7 +295,7 @@ func _physics_process(delta):
 	if airtime_active:
 		
 		get_parent().camera_zoom(30.0)
-
+		
 		if airtime_phase == 0:
 
 			airtime_timer -= delta
@@ -353,13 +353,13 @@ func _physics_process(delta):
 			velocity = dive_dir * (
 				airtime_dive_speed * speed_multiplier
 			)
-
 			move_and_slide()
 			clamp_to_arena()
 
 			if global_position.distance_to(
 				airtime_target
 			) < 3.0:
+				$hard_hit.play()
 
 				#visual.visible = true
 
@@ -382,6 +382,9 @@ func _physics_process(delta):
 			boost_multiplier,
 			boost_acceleration * delta
 		)
+		$boost_tag.show()
+		$hit_effect.hide()
+		
 		current_boost -= boost_drain * delta
 
 	else:
@@ -391,6 +394,7 @@ func _physics_process(delta):
 			1.0,
 			boost_acceleration * delta
 		)
+		$boost_tag.hide()
 		#current_boost += boost_regen * delta
 
 	current_boost = clamp(
@@ -447,6 +451,10 @@ func _physics_process(delta):
 
 	move_and_slide()
 	clamp_to_arena()
+	
+	global_position.y = 0.0
+	velocity.y = 0.0
+	knockback_velocity.y = 0.0
 
 	knockback_velocity = knockback_velocity.lerp(
 		Vector3.ZERO,
