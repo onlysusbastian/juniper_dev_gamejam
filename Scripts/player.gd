@@ -12,6 +12,8 @@ extends CharacterBody3D
 @export var attack_effect_duration := 1.0
 
 const BIG_HIT_THRESHOLD := 2.0
+var play_hit_animation = 0.0
+var hit_animation_timer := 0.0
 var airtime_progress := 0.0
 var trail
 var pending_hit_stop := 0.0
@@ -92,6 +94,16 @@ func _ready():
 	flash_material.emission = Color.WHITE
 
 func _physics_process(delta):
+	if hit_animation_timer > 0:
+
+		hit_animation_timer -= delta
+
+		if hit_animation_timer <= 0:
+
+			hit_effect.visible = true
+			hit_effect.stop()
+			hit_effect.play()
+		
 	if attack_effect_timer > 0:
 
 		attack_effect_timer -= delta
@@ -128,17 +140,19 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("special_attack1") \
 	and current_boost >= 20 \
 	and !charging_special \
-	and special_timer <= 0:
+	and special_timer <= 0 \
+	and !hit_effect.visible:
 		attack_effect_timer = attack_effect_duration
 		charging_special = true
 		special_charge_timer = special_charge_time
 		current_boost = current_boost - 20
 
 	if Input.is_action_just_pressed("airtime_attack") \
-		and current_boost >= 49 \
-		and !airtime_active \
-		and !charging_special \
-		and special_timer <= 0:
+	and current_boost >= 49 \
+	and !airtime_active \
+	and !charging_special \
+	and special_timer <= 0 \
+	and !hit_effect.visible:
 			attack_effect_timer = attack_effect_duration
 			airtime_active = true
 			airtime_phase = 0
@@ -185,6 +199,13 @@ func _physics_process(delta):
 		return
 
 	hit_stun -= delta
+	if play_hit_animation and hit_stun <= 0:
+
+		play_hit_animation = false
+
+		hit_effect.visible = true
+		hit_effect.stop()
+		hit_effect.play()
 	
 	 # SPECIAL DASH
 
@@ -452,10 +473,10 @@ func clamp_to_arena():
 
 func got_hit():
 
-	hit_effect.visible = true
+	if attack_effect_timer > 0:
+		return
 
-	hit_effect.stop()
-	hit_effect.play()
+	play_hit_animation = true
 
 func _on_hit_effect_finished():
 

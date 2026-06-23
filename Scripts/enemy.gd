@@ -171,7 +171,9 @@ func _physics_process(delta):
 				)
 
 				player.hit_stun = 0.05
-				player.got_hit()
+
+				if enemy_force > player_force:
+					player.got_hit()
 
 				hit_wobble_timer = 0.25
 				player.hit_wobble_timer = 0.25

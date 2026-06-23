@@ -107,6 +107,54 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("7_glx4g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_megsn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_yoq75")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ksbbd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_glx4g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_megsn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_yoq75")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ksbbd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_glx4g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_megsn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_yoq75")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ksbbd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_glx4g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_megsn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_yoq75")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ksbbd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_glx4g")
 }],
 "loop": false,
 "name": &"default",
@@ -133,13 +181,13 @@ transform = Transform3D(0.4489496, 0, 1.9489601, 0, 3.3333337, 0, -1.9489601, 0,
 visible = false
 sprite_frames = SubResource("SpriteFrames_nn08x")
 autoplay = "default"
-frame_progress = 0.9502544
+frame_progress = 0.108772814
 
 [node name="hit_effect" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(-0.18986185, 0, -0.4736128, 0, 0.74609387, 0, 1.1599253, 0, -0.07752311, 0.049423277, 2.545956, 0)
+transform = Transform3D(0.06932092, 0, -1.780775, 0, 4.3379993, 0, 4.3594484, 0, 0.028316677, 0.049423277, 3.022299, 0)
 sprite_frames = SubResource("SpriteFrames_miouo")
 autoplay = "default"
-frame = 7
+frame = 23
 frame_progress = 1.0
 
 [node name="Visual" type="Node3D" parent="."]
