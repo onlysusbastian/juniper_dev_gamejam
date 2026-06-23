@@ -16,7 +16,7 @@ var closest = 0
 var time_off_beat = 0.0
 
 var perfect_window := 0.04
-var great_window := 0.8
+var great_window := 0.1
 var good_window := 0.18
 
 signal beat(position)

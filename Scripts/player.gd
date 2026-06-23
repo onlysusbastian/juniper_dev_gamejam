@@ -9,9 +9,14 @@ extends CharacterBody3D
 @onready var visual = $Visual/MeshInstance3D
 @onready var blade1 = $Visual/MeshInstance3D/blade1
 @onready var hit_effect = $hit_effect
+@onready var judgement_text = $Visual/JudgementText
+
 @export var attack_effect_duration := 1.0
 
 const BIG_HIT_THRESHOLD := 2.0
+
+var judgement_timer := 0.0
+var judgement_duration := 1.0
 var play_hit_animation = 0.0
 var hit_animation_timer := 0.0
 var airtime_progress := 0.0
@@ -94,6 +99,47 @@ func _ready():
 	flash_material.emission = Color.WHITE
 
 func _physics_process(delta):
+	
+	if judgement_timer > 0:
+
+		judgement_timer -= delta
+
+		var progress = 1.0 - (
+			judgement_timer / judgement_duration
+		)
+
+		# Move upward
+		judgement_text.position.y = lerp(
+			5.0,
+			8.0,
+			progress
+		)
+
+		# Fade in
+		if progress < 0.2:
+
+			judgement_text.modulate.a = (
+				progress / 0.2
+			)
+
+		# Stay visible
+		elif progress < 0.8:
+
+			judgement_text.modulate.a = 1.0
+
+		# Fade out
+		else:
+
+			judgement_text.modulate.a = (
+				1.0 - (
+					(progress - 0.8) / 0.2
+				)
+			)
+
+	else:
+
+		judgement_text.visible = false
+	
 	if hit_animation_timer > 0:
 
 		hit_animation_timer -= delta
@@ -146,6 +192,7 @@ func _physics_process(delta):
 		charging_special = true
 		special_charge_timer = special_charge_time
 		current_boost = current_boost - 20
+		get_parent().trigger_shake(0.4)
 
 	if Input.is_action_just_pressed("airtime_attack") \
 	and current_boost >= 49 \
@@ -155,15 +202,19 @@ func _physics_process(delta):
 	and !hit_effect.visible:
 			attack_effect_timer = attack_effect_duration
 			airtime_active = true
+			#get_parent().camera_zoom(30.0)
 			airtime_phase = 0
 			airtime_timer = airtime_charge_time
 			airtime_progress = 0.0
+			get_parent().trigger_shake(0.4)
 
 			airtime_start_y = global_position.y
 			current_boost = current_boost - 49
 	# CHARGING SPECIAL
 
 	if charging_special:
+		
+		get_parent().camera_zoom(28.0)
 
 		special_charge_timer -= delta
 
@@ -181,7 +232,9 @@ func _physics_process(delta):
 		current_spin += 50 * delta
 
 		if special_charge_timer <= 0:
-
+			
+			#get_parent().camera_zoom(34.0)
+			get_parent().trigger_shake(1.4)
 			charging_special = false
 			special_timer = special_duration
 
@@ -240,6 +293,8 @@ func _physics_process(delta):
 	# AIRTIME ATTACK
 
 	if airtime_active:
+		
+		get_parent().camera_zoom(30.0)
 
 		if airtime_phase == 0:
 
@@ -309,6 +364,7 @@ func _physics_process(delta):
 				#visual.visible = true
 
 				airtime_active = false
+				get_parent().trigger_shake(3)
 				airtime_phase = 0
 
 				velocity = Vector3.ZERO
@@ -319,7 +375,8 @@ func _physics_process(delta):
 	# BOOST
 
 	if Input.is_action_pressed("boost") and current_boost >= 0:
-
+		
+		get_parent().camera_zoom(26.0)
 		current_boost_multiplier = lerp(
 			current_boost_multiplier,
 			boost_multiplier,
@@ -481,3 +538,17 @@ func got_hit():
 func _on_hit_effect_finished():
 
 	hit_effect.visible = false
+
+func show_judgement(text_value):
+
+	judgement_text.text = text_value
+
+	judgement_text.visible = true
+
+	judgement_timer = judgement_duration
+
+	judgement_text.position.y = 5
+
+	judgement_text.modulate.a = 0.0
+	
+	judgement_text.scale = Vector3.ONE * 5.0

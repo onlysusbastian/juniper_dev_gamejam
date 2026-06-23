@@ -10,9 +10,9 @@ extends Node3D
 @onready var player = $Player
 @onready var enemy = $Enemy
 
+var target_fov := 37.9
 var camera_base_offset := Vector3.ZERO
 var camera_offset := Vector3.ZERO
-
 var beat_punch := 0.0
 
 var shake_strength := 0.0
@@ -27,6 +27,8 @@ func trigger_shake(strength := 0.5):
 	)
 
 func _ready():
+	
+	target_fov = camera.fov
 
 	camera_base_offset = (
 		camera.global_position
@@ -46,6 +48,17 @@ func _ready():
 	enemy_stamina_bar.max_value = 60
 
 func _process(delta):
+	camera.fov = lerp(
+	camera.fov,
+	target_fov,
+	8.0 * delta
+	)
+
+	target_fov = lerp(
+		target_fov,
+		37.9,
+		10.0 * delta
+	)
 
 	beat_punch = lerp(
 		beat_punch,
@@ -133,15 +146,16 @@ func _process(delta):
 	)
 
 	camera.global_position = (
-		player.global_position
-		+ camera_base_offset
-		+ camera_offset
-		+ shake_offset
-		+ beat_offset
-	)
+	player.global_position
+	+ camera_base_offset
+	+ camera_offset
+	+ shake_offset
+	+ beat_offset
+)
 
-func _on_note_judged(result):
-
+func _on_note_judged(result):	
+	
+	player.show_judgement(result)
 	match result:
 
 		"miss":
@@ -191,3 +205,7 @@ func _on_note_judged(result):
 	)
 
 	print(result)
+	
+func camera_zoom(fov_value):
+
+	target_fov = fov_value
