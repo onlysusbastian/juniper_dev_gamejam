@@ -4,15 +4,20 @@ extends CharacterBody3D
 @export var tilt_strength := 0.03
 @export var tilt_spring := 20.0
 @export var tilt_damping := 8.0
-
+@onready var attack_effect = $attackeffect
 @onready var sparkle = $Visual/Sparkle
 @onready var visual = $Visual/MeshInstance3D
 @onready var blade1 = $Visual/MeshInstance3D/blade1
-const BIG_HIT_THRESHOLD := 2.0
+@onready var hit_effect = $hit_effect
+@export var attack_effect_duration := 1.0
 
+const BIG_HIT_THRESHOLD := 2.0
+var airtime_progress := 0.0
 var trail
 var pending_hit_stop := 0.0
 var hit_stop := 0.0
+var airtime_start_y := 0.0
+var attack_effect_timer := 0.0
 
 var sparkle_hide_timer := 0.0
 var hit_wobble_timer := 0.0
@@ -23,7 +28,7 @@ var original_material : Material
 var hit_flash_timer := 0.0
 
 var current_spin := 100.0
-var current_boost := 100.0
+var current_boost := 200.0
 
 var spin_damage_multiplier := 2.0
 var spin_resistance := 1.0
@@ -44,9 +49,22 @@ var boost_regen := 8.0
 var charging_special := false
 var special_charge_timer := 0.0
 
-@export var special_charge_time := 1.0
+@export var special_charge_time := 1
 @export var special_speed := 40
 @export var special_duration := 0.3
+
+# AIRTIME ATTACK
+
+var airtime_active := false
+var airtime_phase := 0
+var airtime_timer := 0.0
+
+@export var airtime_charge_time := 1.0
+@export var airtime_height := 12.0
+@export var airtime_dive_speed := 100
+
+var airtime_target := Vector3.ZERO
+
 
 var special_timer := 0.0
 var special_direction := Vector3.ZERO
@@ -60,6 +78,11 @@ var tilt_velocity := Vector2.ZERO
 var target_position := Vector3.ZERO
 
 func _ready():
+	hit_effect.visible = false
+
+	hit_effect.animation_finished.connect(
+		_on_hit_effect_finished
+	)
 
 	original_material = visual.get_active_material(0)
 
@@ -69,6 +92,14 @@ func _ready():
 	flash_material.emission = Color.WHITE
 
 func _physics_process(delta):
+	if attack_effect_timer > 0:
+
+		attack_effect_timer -= delta
+		attack_effect.visible = true
+
+	else:
+
+		attack_effect.visible = false
 	
 	if sparkle_hide_timer > 0:
 
@@ -92,15 +123,30 @@ func _physics_process(delta):
 		hit_stop -= delta
 		return
 		
-		# START SPECIAL CHARGE
+	# START SPECIAL CHARGE
 
 	if Input.is_action_just_pressed("special_attack1") \
+	and current_boost >= 20 \
 	and !charging_special \
 	and special_timer <= 0:
-
+		attack_effect_timer = attack_effect_duration
 		charging_special = true
 		special_charge_timer = special_charge_time
-	
+		current_boost = current_boost - 20
+
+	if Input.is_action_just_pressed("airtime_attack") \
+		and current_boost >= 49 \
+		and !airtime_active \
+		and !charging_special \
+		and special_timer <= 0:
+			attack_effect_timer = attack_effect_duration
+			airtime_active = true
+			airtime_phase = 0
+			airtime_timer = airtime_charge_time
+			airtime_progress = 0.0
+
+			airtime_start_y = global_position.y
+			current_boost = current_boost - 49
 	# CHARGING SPECIAL
 
 	if charging_special:
@@ -152,12 +198,106 @@ func _physics_process(delta):
 		)
 
 		move_and_slide()
+		clamp_to_arena()
+		
+		var arena_radius := 14.0
+
+		var flat_pos = Vector2(
+			global_position.x,
+			global_position.z
+		)
+
+		if flat_pos.length() > arena_radius:
+
+			flat_pos = flat_pos.normalized() * arena_radius
+
+			global_position.x = flat_pos.x
+			global_position.z = flat_pos.y
+
+			return
+	
+	# AIRTIME ATTACK
+
+	if airtime_active:
+
+		if airtime_phase == 0:
+
+			airtime_timer -= delta
+
+			velocity = Vector3.ZERO
+
+			visual.visible = true
+
+			airtime_progress += delta / airtime_charge_time
+
+			var t = clamp(airtime_progress, 0.0, 1.0)
+
+			var eased = 1.0 - pow(1.0 - t, 10.0)
+
+			global_position.y = lerp(
+				airtime_start_y,
+				airtime_height,
+				eased
+			)
+
+			if airtime_timer <= 0:
+
+				airtime_target = target_position
+
+				airtime_target.x = clamp(
+					airtime_target.x,
+					-14.0,
+					14.0
+				)
+
+				airtime_target.z = clamp(
+					airtime_target.z,
+					-14.0,
+					14.0
+				)
+
+				airtime_phase = 1
+				airtime_progress = 0.0
+
+				
+
+		elif airtime_phase == 1:
+
+			var dive_dir = (
+				airtime_target - global_position
+			).normalized()
+
+			airtime_progress += delta
+
+			var speed_multiplier = min(
+				airtime_progress * 4.0,
+				1.0
+			)
+
+			velocity = dive_dir * (
+				airtime_dive_speed * speed_multiplier
+			)
+
+			move_and_slide()
+			clamp_to_arena()
+
+			if global_position.distance_to(
+				airtime_target
+			) < 3.0:
+
+				#visual.visible = true
+
+				airtime_active = false
+				airtime_phase = 0
+
+				velocity = Vector3.ZERO
+				global_position.y = 0.0
 
 		return
-
+	
 	# BOOST
 
-	if Input.is_action_pressed("boost") and current_boost > 0:
+	if Input.is_action_pressed("boost") and current_boost >= 0:
 
 		current_boost_multiplier = lerp(
 			current_boost_multiplier,
@@ -228,6 +368,7 @@ func _physics_process(delta):
 	velocity += knockback_velocity
 
 	move_and_slide()
+	clamp_to_arena()
 
 	knockback_velocity = knockback_velocity.lerp(
 		Vector3.ZERO,
@@ -280,3 +421,42 @@ func _physics_process(delta):
 
 	visual.rotation.x = tilt.x
 	visual.rotation.z = tilt.y
+
+func clamp_to_arena():
+
+	var arena_radius := 12.0
+
+	var flat_pos = Vector2(
+		global_position.x,
+		global_position.z
+	)
+
+	if flat_pos.length() > arena_radius:
+
+		var arena_normal = flat_pos.normalized()
+
+		flat_pos = arena_normal * arena_radius
+
+		global_position.x = flat_pos.x
+		global_position.z = flat_pos.y
+
+		var vel2d = Vector2(
+			velocity.x,
+			velocity.z
+		)
+
+		vel2d = vel2d.bounce(arena_normal) * 0.7
+
+		velocity.x = vel2d.x
+		velocity.z = vel2d.y
+
+func got_hit():
+
+	hit_effect.visible = true
+
+	hit_effect.stop()
+	hit_effect.play()
+
+func _on_hit_effect_finished():
+
+	hit_effect.visible = false

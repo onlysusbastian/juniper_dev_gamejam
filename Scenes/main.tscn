@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://6ph4j2ye3m0"]
+[gd_scene load_steps=19 format=3 uid="uid://6ph4j2ye3m0"]
 
 [ext_resource type="Script" uid="uid://rf2tu3s8hg4d" path="res://Scripts/main.gd" id="1_8gbba"]
 [ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="3_jjvhh"]
@@ -8,6 +8,10 @@
 [ext_resource type="Script" uid="uid://dw0b0do7m7sbt" path="res://Scripts/Conductor.gd" id="7_344ge"]
 [ext_resource type="PackedScene" uid="uid://bf2chskegbcp8" path="res://Assets/Environment/main/environment1.glb" id="8_344ge"]
 [ext_resource type="Texture2D" uid="uid://cxof16hhre8y1" path="res://Assets/Environment/main/environment1_wall3.png" id="8_ynf5e"]
+[ext_resource type="Texture2D" uid="uid://ds2wt4t626rsr" path="res://Assets/birds/pigeon1.png" id="9_6iyac"]
+[ext_resource type="Texture2D" uid="uid://bdhwc1oxvvvc0" path="res://Assets/birds/pigeon2.png" id="10_fdnlq"]
+[ext_resource type="Texture2D" uid="uid://cgcjm5x7xfoxb" path="res://Assets/birds/crow1.png" id="11_jkdf5"]
+[ext_resource type="Texture2D" uid="uid://bc7qv64pip1vq" path="res://Assets/birds/crow2.png" id="12_wsu2k"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6bp64"]
 
@@ -20,6 +24,34 @@ albedo_texture = ExtResource("8_ynf5e")
 metallic_specular = 0.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_6bp64"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k12tt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_6iyac")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_fdnlq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h1bgf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_jkdf5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_wsu2k")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_8gbba")
@@ -42,7 +74,7 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.482, 0, 7.239)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(-0.0128977215, 0.7417134, 0.6705929, -0.0014087502, -0.6706615, 0.7417622, 0.99991584, 0.008622343, 0.009694894, 24.06976, 25.603672, 1.1600132)
-light_color = Color(0.9543814, 0.9679019, 0.71935546, 1)
+light_color = Color(0.9724775, 0.87092257, 0.7237375, 1)
 light_energy = 9.655
 light_indirect_energy = 10.887
 light_volumetric_fog_energy = 0.0
@@ -53,8 +85,8 @@ shadow_normal_bias = 1.72
 shadow_transmittance_bias = -5.827
 shadow_opacity = 0.86
 shadow_blur = 10.0
-spot_range = 67.45
-spot_attenuation = 0.76
+spot_range = 67.405
+spot_attenuation = 0.38
 spot_angle = 28.24
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -125,115 +157,115 @@ mesh = SubResource("BoxMesh_6bp64")
 [node name="StaticBody3D" type="StaticBody3D" parent="Env"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D"]
-transform = Transform3D(5.96, 0, 0, 0, 3.845, 0, 0, 0, 1, 0, 0, 14.215012)
+transform = Transform3D(5.96, 0, 0, 0, 2.945, 0, 0, 0, 1, 0, 0, 14.215012)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Env/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D"]
-transform = Transform3D(5.5665956, 0, -0.3572923, 0, 3.8449998, 0, 2.129462, 0, 0.93399256, -4.0593243, 0, 13.770538)
+transform = Transform3D(5.5665956, 0, -0.35729226, 0, 2.945, 0, 2.129462, 0, 0.93399256, -4.0593243, 0, 13.770538)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D"]
-transform = Transform3D(5.0454173, 0, -0.53231496, 0, 3.8449998, 0, 3.1725972, 0, 0.8465464, -7.6491876, 0, 12.208445)
+transform = Transform3D(5.0454173, 0, -0.53231484, 0, 2.945, 0, 3.1725967, 0, 0.8465465, -7.6491876, 0, 12.208445)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D2"]
-transform = Transform3D(3.7044854, 0, -0.7833679, 0, 3.8449998, 0, 4.668874, 0, 0.6215579, -10.98602, 0, 9.508225)
+transform = Transform3D(3.7044845, 0, -0.783368, 0, 2.945, 0, 4.668874, 0, 0.6215577, -10.98602, 0, 9.508225)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D3" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D3"]
-transform = Transform3D(1.8566725, 0, -0.9502384, 0, 3.8449998, 0, 5.6634226, 0, 0.31152228, -13.615797, 0, 4.1436257)
+transform = Transform3D(1.8566725, 0, -0.95023847, 0, 2.945, 0, 5.663423, 0, 0.31152216, -13.615797, 0, 4.1436257)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D4" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D4"]
-transform = Transform3D(-0.5360266, 0, -0.99594694, 0, 3.8449998, 0, 5.935846, 0, -0.08993724, -14.381497, 0, -1.710059)
+transform = Transform3D(-0.5360268, 0, -0.99594694, 0, 2.945, 0, 5.935846, 0, -0.08993735, -14.381497, 0, -1.710059)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D5" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D5"]
-transform = Transform3D(-2.4946456, 0, -0.9081867, 0, 3.8449993, 0, 5.412794, 0, -0.41856438, -12.758853, 0, -6.423202)
+transform = Transform3D(-2.4946463, 0, -0.9081867, 0, 2.945, 0, 5.4127946, 0, -0.41856465, -12.758853, 0, -6.423202)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D6" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D6"]
-transform = Transform3D(-4.4928784, 0, -0.6570594, 0, 3.8449988, 0, 3.9160743, 0, -0.7538383, -9.557352, 0, -10.60717)
+transform = Transform3D(-4.4928775, 0, -0.65705925, 0, 2.945, 0, 3.916074, 0, -0.75383836, -9.557352, 0, -10.60717)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D7" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D7"]
-transform = Transform3D(-5.7223043, 0, -0.27959448, 0, 3.8449988, 0, 1.6663826, 0, -0.9601177, -4.3132033, 0.101851165, -13.726314)
+transform = Transform3D(-5.722305, 0, -0.27959424, 0, 2.945, 0, 1.6663824, 0, -0.96011776, -4.3132033, 0.101851165, -13.726314)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D8" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D8"]
-transform = Transform3D(-5.9363394, 0, 0.08901575, 0, 3.8449988, 0, -0.5305355, 0, -0.99602973, 0.5693612, 0.101851165, -14.648106)
+transform = Transform3D(-5.9363394, 0, 0.0890161, 0, 2.945, 0, -0.5305362, 0, -0.9960297, 0.5693612, 0.101851165, -14.648106)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D9" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D9"]
-transform = Transform3D(-5.530873, 0, 0.37258255, 0, 3.8449988, 0, -2.2205942, 0, -0.92799854, 5.3851852, 0.101851165, -13.482134)
+transform = Transform3D(-5.530873, 0, 0.37258273, 0, 2.945, 0, -2.220594, 0, -0.9279985, 5.3851852, 0.101851165, -13.482134)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D10" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D10"]
-transform = Transform3D(-4.6149197, 0, 0.6327996, 0, 3.8449988, 0, -3.771487, 0, -0.7743151, 9.559804, 0.101851165, -10.880192)
+transform = Transform3D(-4.6149197, 0, 0.6327997, 0, 2.945, 0, -3.7714875, 0, -0.77431506, 9.559804, 0.101851165, -10.880192)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D11" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D11"]
-transform = Transform3D(-3.2591238, 0, 0.8372414, 0, 3.8449988, 0, -4.9899607, 0, -0.5468327, 11.758866, 0.42328423, -8.249268)
+transform = Transform3D(-3.2591236, 0, 0.83724135, 0, 2.945, 0, -4.9899607, 0, -0.5468326, 11.758866, 0.42328423, -8.249268)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D12" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D12"]
-transform = Transform3D(-2.055342, 0, 0.93865514, 0, 3.8449988, 0, -5.594387, 0, -0.3448559, 13.318692, 0.42328423, -5.3845625)
+transform = Transform3D(-2.055342, 0, 0.93865514, 0, 2.945, 0, -5.5943875, 0, -0.34485584, 13.318692, 0.42328423, -5.3845625)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D13" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D13"]
-transform = Transform3D(-0.8594371, 0, 0.9895479, 0, 3.8449988, 0, -5.8977075, 0, -0.14420086, 14.162299, 0.42328423, -1.9248219)
+transform = Transform3D(-0.859437, 0, 0.9895479, 0, 2.945, 0, -5.897708, 0, -0.14420079, 14.162299, 0.42328423, -1.9248219)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D14" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D14"]
-transform = Transform3D(1.5129998, 0, 0.9672407, 0, 3.8449988, 0, -5.764756, 0, 0.25385892, 13.673194, 0.42328423, 3.7580175)
+transform = Transform3D(1.5129995, 0, 0.9672407, 0, 2.945, 0, -5.764756, 0, 0.2538589, 13.673194, 0.42328423, 3.7580175)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D15" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D15"]
-transform = Transform3D(3.5429673, 0, 0.8041262, 0, 3.8449988, 0, -4.7925935, 0, 0.59445745, 10.952376, 0.42328423, 8.771577)
+transform = Transform3D(3.542967, 0, 0.8041262, 0, 2.945, 0, -4.7925935, 0, 0.59445745, 10.952376, 0.42328423, 8.771577)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D16" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D16"]
-transform = Transform3D(4.72382, 0, 0.60975754, 0, 3.8449988, 0, -3.6341562, 0, 0.79258716, 9.02246, 0.42328423, 11.08424)
+transform = Transform3D(4.72382, 0, 0.6097576, 0, 2.945, 0, -3.634156, 0, 0.7925871, 9.02246, 0.42328423, 11.08424)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="StaticBody3D17" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D17"]
-transform = Transform3D(5.692317, 0, 0.29632476, 0, 3.8449988, 0, -1.7660965, 0, 0.9550866, 4.9593115, 0.42328423, 13.403677)
+transform = Transform3D(5.6923165, 0, 0.29632488, 0, 2.945, 0, -1.7660967, 0, 0.95508647, 4.9593115, 0.42328423, 13.403677)
 shape = SubResource("BoxShape3D_6bp64")
 
 [node name="environment1" parent="." instance=ExtResource("8_344ge")]
@@ -246,3 +278,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5229492, -6)
 transform = Transform3D(28.605, 0, 0, 0, -0.69, 0, 0, 0, 28.515, -0.08, -0.12, -6.116)
 material_override = SubResource("StandardMaterial3D_hptm8")
 mesh = SubResource("CylinderMesh_6bp64")
+
+[node name="birds" type="Node3D" parent="."]
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="birds"]
+transform = Transform3D(0.47832665, 0, -1.9676963, 0, 2.373, 0, 1.9676963, 0, 0.47832665, 1.9576902, 10.604655, 23.948715)
+sprite_frames = SubResource("SpriteFrames_k12tt")
+autoplay = "default"
+frame_progress = 0.87863004
+
+[node name="AnimatedSprite3D2" type="AnimatedSprite3D" parent="birds"]
+transform = Transform3D(0.079326436, 0, 2.0934978, 0, 2.095, 0, -2.0934978, 0, 0.079326436, 2.068307, 15.296129, -27.26342)
+sprite_frames = SubResource("SpriteFrames_h1bgf")
+autoplay = "default"
+frame_progress = 0.49170947

@@ -171,6 +171,7 @@ func _physics_process(delta):
 				)
 
 				player.hit_stun = 0.05
+				player.got_hit()
 
 				hit_wobble_timer = 0.25
 				player.hit_wobble_timer = 0.25
@@ -242,6 +243,10 @@ func _physics_process(delta):
 	velocity += knockback_velocity
 
 	move_and_slide()
+
+	global_position.y = 0.0
+	velocity.y = 0.0
+	knockback_velocity.y = 0.0
 
 	knockback_velocity = knockback_velocity.lerp(
 		Vector3.ZERO,

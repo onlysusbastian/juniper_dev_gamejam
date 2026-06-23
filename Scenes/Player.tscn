@@ -1,27 +1,121 @@
-[gd_scene load_steps=9 format=3 uid="uid://ck6jrbqtyqrhf"]
+[gd_scene load_steps=14 format=3 uid="uid://ck6jrbqtyqrhf"]
 
 [ext_resource type="Script" uid="uid://kv4siwgogebm" path="res://Scripts/player.gd" id="1_rpqav"]
 [ext_resource type="PackedScene" uid="uid://el4o66hj7b2r" path="res://Assets/blades/blade1.glb" id="2_kyqiw"]
 [ext_resource type="PackedScene" uid="uid://j6ly81pgvkpb" path="res://Assets/eggs/pigeon.glb" id="2_nn08x"]
-[ext_resource type="Texture2D" uid="uid://bfln2yioap4v6" path="res://Assets/effects/sparkle/1.png" id="3_5ixxa"]
-[ext_resource type="Texture2D" uid="uid://c1hc2rr4r22k0" path="res://Assets/effects/sparkle/2.png" id="4_nn08x"]
-[ext_resource type="Texture2D" uid="uid://sfv7mdqaa7n5" path="res://Assets/effects/sparkle/3.png" id="5_52ee3"]
+[ext_resource type="Texture2D" uid="uid://cskbm84cfrmvm" path="res://Assets/effects/empty.png" id="3_5ixxa"]
+[ext_resource type="Texture2D" uid="uid://byckcg7x2vke7" path="res://Assets/effects/special_attack.png" id="4_dewec"]
+[ext_resource type="Texture2D" uid="uid://d2snlujvryb3y" path="res://Assets/effects/player_hit/1.png" id="4_megsn"]
+[ext_resource type="Texture2D" uid="uid://bkp4jk75r2q0t" path="res://Assets/effects/player_hit/2.png" id="5_yoq75"]
+[ext_resource type="Texture2D" uid="uid://b26p82k14gdh" path="res://Assets/effects/player_hit/3.png" id="6_ksbbd"]
+[ext_resource type="Texture2D" uid="uid://5r6wmdojyl33" path="res://Assets/effects/player_hit/4.png" id="7_glx4g"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_qbkls"]
 radius = 1.0
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_bhhdu"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_nn08x"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_dewec")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dewec")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dewec")
+}, {
 "duration": 1.0,
 "texture": ExtResource("3_5ixxa")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_nn08x")
+"texture": ExtResource("3_5ixxa")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_52ee3")
+"texture": ExtResource("3_5ixxa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dewec")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dewec")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dewec")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dewec")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5ixxa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dewec")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5ixxa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dewec")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5ixxa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dewec")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5ixxa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dewec")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5ixxa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dewec")
 }],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_miouo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_megsn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_yoq75")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ksbbd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_glx4g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_megsn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_yoq75")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ksbbd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_glx4g")
+}],
+"loop": false,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bhhdu"]
+animations = [{
+"frames": [],
 "loop": true,
 "name": &"default",
 "speed": 12.0
@@ -33,6 +127,20 @@ script = ExtResource("1_rpqav")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.835, 0, 0, 0, 0.3, 0, 0, 0, 0.83, 0, 0, 0)
 shape = SubResource("CylinderShape3D_qbkls")
+
+[node name="attackeffect" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(0.4489496, 0, 1.9489601, 0, 3.3333337, 0, -1.9489601, 0, 0.4489496, 0, 3.8932729, 0)
+visible = false
+sprite_frames = SubResource("SpriteFrames_nn08x")
+autoplay = "default"
+frame_progress = 0.9502544
+
+[node name="hit_effect" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(-0.18986185, 0, -0.4736128, 0, 0.74609387, 0, 1.1599253, 0, -0.07752311, 0.049423277, 2.545956, 0)
+sprite_frames = SubResource("SpriteFrames_miouo")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
 
 [node name="Visual" type="Node3D" parent="."]
 
@@ -48,7 +156,6 @@ visible = false
 
 [node name="Sparkle" type="Node3D" parent="Visual"]
 transform = Transform3D(2, 0, 0, 0, 3.3333333, 0, 0, 0, 2, 0, 0, 0)
-visible = false
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Visual/Sparkle"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08232063, 0)

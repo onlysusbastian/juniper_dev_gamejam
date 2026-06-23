@@ -91,6 +91,20 @@ func _process(delta):
 
 	if hit != null:
 
+		var arena_radius := 12.0
+
+		var hit_2d = Vector2(
+			hit.x,
+			hit.z
+		)
+
+		if hit_2d.length() > arena_radius:
+
+			hit_2d = hit_2d.normalized() * arena_radius
+
+			hit.x = hit_2d.x
+			hit.z = hit_2d.y
+
 		marker.global_position = hit
 
 		player.target_position = hit
