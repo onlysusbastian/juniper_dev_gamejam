@@ -1,7 +1,7 @@
 extends Node3D
 
-func _on_next_pressed():
-		match GameManager.current_mission:
+func _on_next_button_pressed():
+	match GameManager.current_mission:
 
 			1:
 				get_tree().change_scene_to_file(

@@ -41,21 +41,6 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_hibaj"]
-resource_name = "fade_out"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("FadeScreen:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_ki2rj"]
 resource_name = "fade_in"
 tracks/0/type = "value"
@@ -69,6 +54,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_hibaj"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeScreen:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ee4r6"]
@@ -133,10 +133,30 @@ near = 0.029
 [node name="MouseMarker" parent="." instance=ExtResource("3_jjvhh")]
 
 [node name="Player" parent="." instance=ExtResource("4_jjvhh")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.954, 0, -5.146)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.954, 0, 7.5998583)
+current_spin = 300.0
+spin_damage_multiplier = 4.0
 
 [node name="Enemy" parent="." instance=ExtResource("5_kry3j")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.482, 0, 7.239)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.482, 0, -6.921579)
+move_speed = 6.0
+acceleration = 1.0
+spin_damage_multiplier = 0.3
+hit_cooldown = 1.3
+
+[node name="Enemy2" parent="." instance=ExtResource("5_kry3j")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -8.831232, 0, 0.73537874)
+move_speed = 6.0
+acceleration = 1.0
+spin_damage_multiplier = 0.3
+hit_cooldown = 1.2
+
+[node name="Enemy3" parent="." instance=ExtResource("5_kry3j")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 9.871252, 0, -0.31134462)
+move_speed = 6.0
+acceleration = 1.0
+spin_damage_multiplier = 0.3
+hit_cooldown = 1.2
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(-0.0128977215, 0.7417134, 0.6705929, -0.0014087502, -0.6706615, 0.7417622, 0.99991584, 0.008622343, 0.009694894, 24.06976, 25.603672, 1.1600132)

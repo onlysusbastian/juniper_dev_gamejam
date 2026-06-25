@@ -181,6 +181,17 @@ value = 100.0
 nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture2D_1v8r1")
 
+[node name="Legend2" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 973.0
+offset_top = 22.0
+offset_right = 1108.0
+offset_bottom = 77.0
+theme_override_colors/font_color = Color(0.756933, 0.77276933, 0.73984784, 1)
+theme_override_fonts/font = ExtResource("5_w2e3v")
+theme_override_font_sizes/font_size = 39
+text = "tutorial"
+
 [node name="Legend" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 0
 offset_left = 42.0
@@ -234,9 +245,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -437.0
-offset_top = -124.0
+offset_top = -93.0
 offset_right = 4417.9995
-offset_bottom = 186.0
+offset_bottom = 217.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.2, 0.2)
@@ -408,6 +419,7 @@ theme_override_colors/font_hover_color = Color(0.9843137, 0.9490196, 0.21176471,
 theme_override_fonts/font = ExtResource("6_qx1ny")
 theme_override_font_sizes/font_size = 100
 text = "NEXT"
+flat = true
 
 [node name="Conductor" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_k8lbx")

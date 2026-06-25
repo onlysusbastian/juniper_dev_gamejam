@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2baq85phb1ko"]
+
+[ext_resource type="Texture2D" uid="uid://bh0pt20u5rb6p" path="res://Assets/ui/main_menu.png" id="1_web8u"]
+[ext_resource type="FontFile" uid="uid://yrnkkpx8c1id" path="res://Assets/fonts/23 seconds to midnight.ttf" id="2_rtnl3"]
+
+[node name="Mainmenu" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_web8u")
+expand_mode = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = 200.0
+offset_top = 89.0
+offset_right = 1159.9999
+offset_bottom = 453.99994
+scale = Vector2(0.2, 0.2)
+theme_override_fonts/normal_font = ExtResource("2_rtnl3")
+theme_override_font_sizes/normal_font_size = 300
+text = "the evil"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = 202.0
+offset_top = 141.0
+offset_right = 2411.9998
+offset_bottom = 1495.9999
+scale = Vector2(0.2, 0.2)
+theme_override_fonts/normal_font = ExtResource("2_rtnl3")
+theme_override_font_sizes/normal_font_size = 900
+text = "cro"

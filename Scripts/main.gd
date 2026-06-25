@@ -14,6 +14,8 @@ extends Node3D
 @onready var marker = $MouseMarker
 @onready var player = $Player
 @onready var enemy = $Enemy
+@onready var enemy2 = get_node_or_null("Enemy2")
+@onready var enemy3 = get_node_or_null("Enemy3")
 
 var game_over := false
 var game_started := false
@@ -57,6 +59,14 @@ func _ready():
 	enemy.player = player
 	
 	enemy.ai.player = player
+	
+	if enemy2:
+		enemy2.player = player
+		enemy2.ai.player = player
+
+	if enemy3:
+		enemy3.player = player
+		enemy3.ai.player = player
 
 	conductor.note_judged.connect(
 		_on_note_judged
@@ -77,7 +87,18 @@ func _process(delta):
 			game_over = true
 			player_lost()
 
-		elif !is_instance_valid(enemy):
+		var enemies_alive := false
+
+		if is_instance_valid(enemy):
+			enemies_alive = true
+
+		if is_instance_valid(enemy2):
+			enemies_alive = true
+
+		if is_instance_valid(enemy3):
+			enemies_alive = true
+
+		if !enemies_alive:
 
 			game_over = true
 			player_won()
@@ -273,9 +294,18 @@ func start_countdown():
 	game_started = false
 
 	$CanvasLayer/Control/Countdown.visible = true
-	
 	player.set_physics_process(false)
+
 	enemy.set_physics_process(false)
+
+	if enemy2:
+		enemy2.set_physics_process(false)
+
+	if enemy3:
+		enemy3.set_physics_process(false)
+		
+		player.set_physics_process(false)
+		enemy.set_physics_process(false)
 
 	$CanvasLayer/Control/Countdown.text = "[center]3[/center]"
 	await get_tree().create_timer(1.0).timeout
@@ -288,7 +318,16 @@ func start_countdown():
 
 	$CanvasLayer/Control/Countdown.text = "[center]GO![/center]"
 	await get_tree().create_timer(0.6).timeout
+	
+	player.set_physics_process(true)
+	enemy.set_physics_process(true)
 
+	if enemy2:
+		enemy2.set_physics_process(true)
+
+	if enemy3:
+		enemy3.set_physics_process(true)
+	
 	$CanvasLayer/Control/Countdown.visible = false
 	player.set_physics_process(true)
 	enemy.set_physics_process(true)

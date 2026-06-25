@@ -63,14 +63,14 @@ var boost_drain := 25.0
 var boost_regen := 8.0
 
 var weight := 1.5
-var move_speed := 10.0
-var acceleration := 2.0
+@export var move_speed := 10.0
+@export var acceleration := 2.0
 
-var spin_damage_multiplier := 1.0
+@export var spin_damage_multiplier := 1.0
 var spin_resistance := 1.0
 
 var stun_time := 0.0
-var hit_cooldown := 0.8
+@export var hit_cooldown := 0.8
 
 var player : CharacterBody3D
 var knockback_velocity := Vector3.ZERO

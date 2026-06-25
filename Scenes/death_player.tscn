@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://2xgm1c8qaxod"]
+[gd_scene load_steps=9 format=3 uid="uid://2xgm1c8qaxod"]
 
 [ext_resource type="PackedScene" uid="uid://j6ly81pgvkpb" path="res://Assets/eggs/pigeon.glb" id="1_igdx6"]
 [ext_resource type="Script" uid="uid://4gpqb80uyf4m" path="res://Scripts/death_player.gd" id="1_w83o4"]
 [ext_resource type="Texture2D" uid="uid://wbha0s1vplhk" path="res://Assets/eggs/angel-removebg-preview.png" id="2_5eu2c"]
+[ext_resource type="FontFile" uid="uid://clo6er66bms8a" path="res://Assets/fonts/Square Thief.ttf" id="4_s1mc8"]
 
 [sub_resource type="Environment" id="Environment_5eu2c"]
 background_mode = 1
@@ -71,10 +72,49 @@ transform = Transform3D(1, 0, 0, 0, 0.13936315, 0.99024135, 0, -0.99024135, 0.13
 spot_range = 3.975
 spot_attenuation = -3.32
 
-[node name="next" type="Button" parent="."]
-offset_left = 708.0
-offset_top = 451.0
-offset_right = 1147.0
-offset_bottom = 767.0
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
-[connection signal="pressed" from="next" to="." method="_on_next_pressed"]
+[node name="NextButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -116.0
+offset_top = 80.0
+offset_right = 1218.9998
+offset_bottom = 505.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.2, 0.2)
+theme_override_colors/font_hover_color = Color(0.9843137, 0.9490196, 0.21176471, 1)
+theme_override_fonts/font = ExtResource("4_s1mc8")
+theme_override_font_sizes/font_size = 200
+text = "continue"
+flat = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -25.0
+offset_right = 1287.0
+offset_bottom = 205.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.2, 0.2)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("4_s1mc8")
+theme_override_font_sizes/normal_font_size = 150
+text = "You defeated him!!"
+
+[connection signal="pressed" from="NextButton" to="." method="_on_next_button_pressed"]

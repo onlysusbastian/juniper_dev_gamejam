@@ -38,10 +38,10 @@ var flash_material : StandardMaterial3D
 var original_material : Material
 var hit_flash_timer := 0.0
 
-var current_spin := 100.0
+@export var current_spin := 100.0
 var current_boost := 200.0
 
-var spin_damage_multiplier := 2.0
+@export var spin_damage_multiplier := 2.0
 var spin_resistance := 1.0
 
 var weight := 1.0
