@@ -1,14 +1,485 @@
-[gd_scene load_steps=2 format=3 uid="uid://dt4gfm40glvb3"]
+[gd_scene load_steps=17 format=3 uid="uid://dt4gfm40glvb3"]
 
 [ext_resource type="Script" uid="uid://culoo88ugbufr" path="res://Scripts/cutscene_1.gd" id="1_dif7x"]
+[ext_resource type="AudioStream" uid="uid://jcwqjbtkplnt" path="res://Audio/cutscene_audio/pop_3.wav" id="2_5arrb"]
+[ext_resource type="Texture2D" uid="uid://b10qbm3byli0f" path="res://Cutscenes/cutscene1/1.png" id="2_hdjsx"]
+[ext_resource type="Texture2D" uid="uid://bs1ksaqeu85cg" path="res://Cutscenes/cutscene1/2.png" id="3_8xxqb"]
+[ext_resource type="Texture2D" uid="uid://nvyiihd02gry" path="res://Cutscenes/talk.png" id="3_ajl8d"]
+[ext_resource type="FontFile" uid="uid://clo6er66bms8a" path="res://Assets/fonts/Square Thief.ttf" id="4_6xn6i"]
+[ext_resource type="Texture2D" uid="uid://byh0r0s053kgk" path="res://Cutscenes/cutscene1/3.png" id="4_nno6u"]
+[ext_resource type="Texture2D" uid="uid://dythronqnbmd" path="res://Cutscenes/cutscene1/4.png" id="5_0sxtc"]
+[ext_resource type="Texture2D" uid="uid://cjlvk874w0bf0" path="res://Cutscenes/cutscene1/5.png" id="6_emtxm"]
+[ext_resource type="Texture2D" uid="uid://c5fim05im5lmk" path="res://Cutscenes/cutscene1/6.png" id="7_5arrb"]
+[ext_resource type="Texture2D" uid="uid://d01laj8vohkmp" path="res://Cutscenes/think.png" id="7_gv5hw"]
+[ext_resource type="Texture2D" uid="uid://cjlo6f6vv6xw4" path="res://Cutscenes/cutscene1/7.png" id="8_847yk"]
+[ext_resource type="Texture2D" uid="uid://bsomgdo7ywsl7" path="res://Cutscenes/cutscene1/8.png" id="9_683vm"]
+[ext_resource type="Texture2D" uid="uid://bka300ibbinub" path="res://Cutscenes/cutscene1/9.png" id="10_256bf"]
+[ext_resource type="Texture2D" uid="uid://ddg5pm86dpe5y" path="res://Cutscenes/cutscene1/10.png" id="11_cfhxk"]
+[ext_resource type="Texture2D" uid="uid://dkqf4utt1c1xm" path="res://Cutscenes/cutscene 2/6.png" id="13_nno6u"]
 
-[node name="Cutscene1" type="Node2D"]
+[node name="Cutscene1" type="CanvasLayer"]
 script = ExtResource("1_dif7x")
+next_scene = "res://Scenes/main_1.tscn"
 
-[node name="continue" type="Button" parent="."]
-offset_left = 735.0
-offset_top = 435.0
-offset_right = 1204.0
-offset_bottom = 679.0
+[node name="TypingSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_5arrb")
+volume_db = 0.024
 
-[connection signal="pressed" from="continue" to="." method="_on_continue_pressed"]
+[node name="Dialogue1" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_hdjsx")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue1"]
+position = Vector2(138.00002, 116)
+rotation = -0.26005405
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_ajl8d")
+
+[node name="1" type="RichTextLabel" parent="Dialogue1"]
+layout_mode = 0
+offset_left = 59.0
+offset_top = 40.0
+offset_right = 798.9999
+offset_bottom = 635.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 80
+text = "...uff, finally the thing is out. i cannot wait to see my child. i want him to be stronger than his late father :("
+fit_content = true
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Dialogue2" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_8xxqb")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue2"]
+position = Vector2(392.64148, 378.64148)
+rotation = -2.4718652
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_ajl8d")
+
+[node name="2" type="RichTextLabel" parent="Dialogue2"]
+layout_mode = 0
+offset_left = 320.00003
+offset_top = 334.00003
+offset_right = 1069.9999
+offset_bottom = 929.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 120
+text = "yoooo!!!
+
+is that an egg!!
+"
+fit_content = true
+
+[node name="Dialogue3" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_nno6u")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue3"]
+position = Vector2(999.25684, 158.25687)
+rotation = 1.3029201
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("7_gv5hw")
+
+[node name="2" type="RichTextLabel" parent="Dialogue3"]
+layout_mode = 0
+offset_left = 950.99994
+offset_top = 94.0
+offset_right = 1700.9998
+offset_bottom = 689.0
+rotation = -0.017885968
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 120
+text = "HOLY
+
+****"
+fit_content = true
+
+[node name="Dialogue4" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_nno6u")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue4"]
+position = Vector2(999.25684, 158.25687)
+rotation = 1.3029201
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("7_gv5hw")
+
+[node name="2" type="RichTextLabel" parent="Dialogue4"]
+layout_mode = 0
+offset_left = 940.0
+offset_top = 93.0
+offset_right = 1689.9998
+offset_bottom = 688.0
+rotation = -0.017885968
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 120
+text = "This can Be my dinner oh yeah!!!"
+fit_content = true
+
+[node name="Dialogue5" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_0sxtc")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue5"]
+position = Vector2(392.64148, 378.64148)
+rotation = -0.7060778
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_ajl8d")
+
+[node name="2" type="RichTextLabel" parent="Dialogue5"]
+layout_mode = 0
+offset_left = 320.00003
+offset_top = 334.00003
+offset_right = 1069.9999
+offset_bottom = 929.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 120
+text = "hahahaha"
+fit_content = true
+
+[node name="Dialogue6" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_emtxm")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue6"]
+position = Vector2(367.44278, 233.44278)
+rotation = -0.7060778
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_ajl8d")
+
+[node name="2" type="RichTextLabel" parent="Dialogue6"]
+layout_mode = 0
+offset_left = 287.0
+offset_top = 167.0
+offset_right = 1037.0
+offset_bottom = 762.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 120
+text = "WHAT???
+NOOOO :(
+this was my last resort"
+fit_content = true
+
+[node name="Dialogue7" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_5arrb")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue7"]
+position = Vector2(785, 223)
+rotation = 2.4210594
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("7_gv5hw")
+
+[node name="2" type="RichTextLabel" parent="Dialogue7"]
+layout_mode = 0
+offset_left = 730.0
+offset_top = 176.0
+offset_right = 1480.0
+offset_bottom = 771.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 120
+text = "hehehe
+quite a good day  right?"
+fit_content = true
+
+[node name="Dialogue8" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_683vm")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue8"]
+position = Vector2(624, 211.99997)
+rotation = 2.2005422
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("7_gv5hw")
+
+[node name="2" type="RichTextLabel" parent="Dialogue8"]
+layout_mode = 0
+offset_left = 570.0
+offset_top = 168.0
+offset_right = 1320.0
+offset_bottom = 763.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 120
+text = "I will have to find him some way"
+fit_content = true
+
+[node name="Dialogue10" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_nno6u")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue10"]
+position = Vector2(753, 278)
+rotation = 2.2005422
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("7_gv5hw")
+
+[node name="2" type="RichTextLabel" parent="Dialogue10"]
+layout_mode = 0
+offset_left = 704.0
+offset_top = 220.0
+offset_right = 1383.9998
+offset_bottom = 725.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 120
+text = "alright, time to find this guy."
+fit_content = true
+
+[node name="Dialogue9" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_847yk")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue9"]
+position = Vector2(624, 211.99997)
+rotation = 2.2005422
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("7_gv5hw")
+
+[node name="2" type="RichTextLabel" parent="Dialogue9"]
+layout_mode = 0
+offset_left = 570.0
+offset_top = 168.0
+offset_right = 1320.0
+offset_bottom = 763.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 120
+text = "that fella wont find me ever lol"
+fit_content = true
+
+[node name="Dialogue11" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_256bf")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue11"]
+position = Vector2(541.02997, 203.02998)
+rotation = 2.2005422
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_ajl8d")
+
+[node name="2" type="RichTextLabel" parent="Dialogue11"]
+layout_mode = 0
+offset_left = 487.02997
+offset_top = 159.03001
+offset_right = 1237.03
+offset_bottom = 754.03
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 120
+text = "hi mr cro. gimme my egg. "
+fit_content = true
+
+[node name="Dialogue16" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_cfhxk")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue16"]
+position = Vector2(541.02997, 203.02998)
+rotation = -0.60096097
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("7_gv5hw")
+
+[node name="2" type="RichTextLabel" parent="Dialogue16"]
+layout_mode = 0
+offset_left = 466.0
+offset_top = 133.00002
+offset_right = 1126.0
+offset_bottom = 727.9999
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 120
+text = "how did this retard find me???"
+fit_content = true
+
+[node name="Dialogue12" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_cfhxk")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue12"]
+position = Vector2(541.02997, 203.02998)
+rotation = -0.60096097
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_ajl8d")
+
+[node name="2" type="RichTextLabel" parent="Dialogue12"]
+layout_mode = 0
+offset_left = 466.0
+offset_top = 133.00002
+offset_right = 1126.0
+offset_bottom = 727.9999
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 120
+text = "uhh...why though?? i need food to live!!!"
+fit_content = true
+
+[node name="Dialogue13" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_256bf")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue13"]
+position = Vector2(541.02997, 203.02998)
+rotation = 2.2005422
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_ajl8d")
+
+[node name="2" type="RichTextLabel" parent="Dialogue13"]
+layout_mode = 0
+offset_left = 487.02997
+offset_top = 159.03001
+offset_right = 1237.03
+offset_bottom = 754.03
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 120
+text = "you cannot just steal and justify that"
+fit_content = true
+
+[node name="Dialogue14" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_cfhxk")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue14"]
+position = Vector2(541.02997, 203.02998)
+rotation = -0.60096097
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_ajl8d")
+
+[node name="2" type="RichTextLabel" parent="Dialogue14"]
+layout_mode = 0
+offset_left = 466.0
+offset_top = 133.00002
+offset_right = 1126.0
+offset_bottom = 727.9999
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 120
+text = "alright mr p. fight my egg!!"
+fit_content = true
+
+[node name="Dialogue15" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_cfhxk")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue15"]
+position = Vector2(541.02997, 203.02998)
+rotation = -0.60096097
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_ajl8d")
+
+[node name="2" type="RichTextLabel" parent="Dialogue15"]
+layout_mode = 0
+offset_left = 466.0
+offset_top = 133.00002
+offset_right = 1126.0
+offset_bottom = 727.9999
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_6xn6i")
+theme_override_font_sizes/normal_font_size = 120
+text = "if you win, you get the egg. else, you know!!!"
+fit_content = true
