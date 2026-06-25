@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkchv6fvd0dxb"]
+
+[ext_resource type="Script" uid="uid://1oswuvnx1sju" path="res://Scripts/win_player.gd" id="1_4eggk"]
+
+[node name="WinPlayer" type="Node3D"]
+script = ExtResource("1_4eggk")
+
+[node name="next" type="Button" parent="."]
+offset_left = 752.0
+offset_top = 375.0
+offset_right = 1178.0
+offset_bottom = 634.0
+
+[connection signal="pressed" from="next" to="." method="_on_next_pressed"]

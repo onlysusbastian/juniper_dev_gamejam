@@ -1,0 +1,392 @@
+[gd_scene load_steps=33 format=3 uid="uid://bbamh6l162agg"]
+
+[ext_resource type="Script" uid="uid://rf2tu3s8hg4d" path="res://Scripts/main.gd" id="1_7mvmt"]
+[ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="2_p1oyv"]
+[ext_resource type="PackedScene" uid="uid://ck6jrbqtyqrhf" path="res://Scenes/Player.tscn" id="3_rcyw2"]
+[ext_resource type="PackedScene" uid="uid://dfysmu00krk0s" path="res://Scenes/Enemy.tscn" id="4_n5n48"]
+[ext_resource type="Texture2D" uid="uid://bc5ntf4j0lxp4" path="res://Assets/ui/health_player.png" id="5_3p5r5"]
+[ext_resource type="Texture2D" uid="uid://cyeubif618ytx" path="res://Assets/ui/boost.png" id="6_uhddi"]
+[ext_resource type="Texture2D" uid="uid://dwaw1dx6k64jb" path="res://Assets/ui/health_enemy.png" id="7_d1eiu"]
+[ext_resource type="FontFile" uid="uid://yrnkkpx8c1id" path="res://Assets/fonts/23 seconds to midnight.ttf" id="8_axuel"]
+[ext_resource type="AudioStream" uid="uid://r8dfna5f2rxf" path="res://Audio/test/eda_180.mp3" id="9_ncmf3"]
+[ext_resource type="Script" uid="uid://dw0b0do7m7sbt" path="res://Scripts/Conductor.gd" id="10_u5i0y"]
+[ext_resource type="AudioStream" uid="uid://drktr2kvotvq4" path="res://Audio/beat/coin_3.wav" id="11_habdg"]
+[ext_resource type="AudioStream" uid="uid://cyc1r1ncrj18w" path="res://Audio/beat/coin_4.wav" id="12_qas6s"]
+[ext_resource type="AudioStream" uid="uid://d01d24x2edune" path="res://Audio/beat/coin.wav" id="13_37jld"]
+[ext_resource type="AudioStream" uid="uid://buswhp1freiol" path="res://Audio/beat/coin_2.wav" id="14_0o7lx"]
+[ext_resource type="Texture2D" uid="uid://cpus0vlxswf7q" path="res://Assets/Environment/2/environment2_pahr.png" id="15_6y6hv"]
+[ext_resource type="Texture2D" uid="uid://ds2wt4t626rsr" path="res://Assets/birds/pigeon1.png" id="17_76u2v"]
+[ext_resource type="Texture2D" uid="uid://bdhwc1oxvvvc0" path="res://Assets/birds/pigeon2.png" id="18_wy0uv"]
+[ext_resource type="Texture2D" uid="uid://cgcjm5x7xfoxb" path="res://Assets/birds/crow1.png" id="19_630qq"]
+[ext_resource type="PackedScene" uid="uid://0mlfsleiqkwr" path="res://Assets/Environment/3/environment3.glb" id="20_7mvmt"]
+[ext_resource type="Texture2D" uid="uid://bc7qv64pip1vq" path="res://Assets/birds/crow2.png" id="20_gaafq"]
+
+[sub_resource type="Gradient" id="Gradient_hibaj"]
+colors = PackedColorArray(0.8145063, 0, 0.19991395, 1, 1, 0.31260142, 0.34393445, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pdsj5"]
+gradient = SubResource("Gradient_hibaj")
+
+[sub_resource type="Gradient" id="Gradient_k12tt"]
+colors = PackedColorArray(0.42093012, 0.3902245, 0.06206189, 1, 0.84489334, 0.69987994, 0.3972195, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h1bgf"]
+gradient = SubResource("Gradient_k12tt")
+
+[sub_resource type="Animation" id="Animation_pdsj5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeScreen:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_hibaj"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeScreen:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ee4r6"]
+_data = {
+&"RESET": SubResource("Animation_pdsj5"),
+&"fade_out": SubResource("Animation_hibaj")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6bp64"]
+size = Vector3(1, 0.9470215, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b7urp"]
+albedo_texture = ExtResource("15_6y6hv")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6bp64"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k12tt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_76u2v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_wy0uv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h1bgf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_630qq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_gaafq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_7mvmt")
+mission_number = 2
+enable_special = false
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.0038396784, -0.5075347, 0.8616228, 0, 0.8616292, 0.50753844, -0.99999267, -0.0019487842, 0.0033083786, 71.03051, 49.19, 1.2893372)
+current = true
+fov = 37.9
+near = 0.029
+
+[node name="MouseMarker" parent="." instance=ExtResource("2_p1oyv")]
+
+[node name="Player" parent="." instance=ExtResource("3_rcyw2")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.954, 0, -5.146)
+
+[node name="Enemy" parent="." instance=ExtResource("4_n5n48")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.482, 0, 7.239)
+
+[node name="SpotLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.0128977215, 0.7417134, 0.6705929, -0.0014087502, -0.6706615, 0.7417622, 0.99991584, 0.008622343, 0.009694894, 24.06976, 25.603672, 1.1600132)
+light_color = Color(0.46561378, 0.45947146, 0.43005252, 1)
+light_energy = 1.381
+light_indirect_energy = 10.887
+light_volumetric_fog_energy = 0.0
+light_specular = 6.309
+shadow_enabled = true
+shadow_bias = 6.955
+shadow_normal_bias = 1.72
+shadow_transmittance_bias = -5.827
+shadow_opacity = 0.86
+shadow_blur = 10.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerStamina" type="TextureProgressBar" parent="CanvasLayer/Control"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 42.494946
+offset_top = 27.599995
+offset_right = 840.49493
+offset_bottom = 54.600018
+min_value = -9.0
+value = 1.0
+nine_patch_stretch = true
+texture_progress = SubResource("GradientTexture2D_pdsj5")
+
+[node name="PlayerBoost" type="TextureProgressBar" parent="CanvasLayer/Control"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 51.0
+offset_top = 113.0
+offset_right = 849.0
+offset_bottom = 140.0
+min_value = -8.0
+value = 8.0
+nine_patch_stretch = true
+texture_progress = SubResource("GradientTexture2D_h1bgf")
+
+[node name="EnemyStamina" type="TextureProgressBar" parent="CanvasLayer/Control"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 1901.6
+offset_top = 55.43
+offset_right = 2699.6
+offset_bottom = 82.42996
+scale = Vector2(-1, -1)
+min_value = -10.0
+value = 9.0
+nine_patch_stretch = true
+texture_progress = SubResource("GradientTexture2D_pdsj5")
+
+[node name="HealthPlayer" type="Sprite2D" parent="CanvasLayer/Control"]
+position = Vector2(459.59998, 6.399993)
+scale = Vector2(1.3, 1.3)
+texture = ExtResource("5_3p5r5")
+
+[node name="Boost" type="Sprite2D" parent="CanvasLayer/Control"]
+position = Vector2(462.00003, 90)
+scale = Vector2(1.3, 1.3)
+texture = ExtResource("6_uhddi")
+
+[node name="HealthEnemy" type="Sprite2D" parent="CanvasLayer/Control"]
+position = Vector2(1482.6, 5.399994)
+scale = Vector2(-1.3, 1.3)
+texture = ExtResource("7_d1eiu")
+
+[node name="Legend" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 846.0
+offset_right = 572.0
+offset_bottom = 1014.0
+theme_override_colors/font_color = Color(0.90898293, 0.7507657, 0.184782, 1)
+theme_override_fonts/font = ExtResource("8_axuel")
+theme_override_font_sizes/font_size = 39
+text = "BOOST : LMB
+HEAVY ATTACK : A/D
+RHYTHM : SPACE
+"
+
+[node name="FadeScreen" type="ColorRect" parent="CanvasLayer/Control"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control"]
+libraries = {
+&"": SubResource("AnimationLibrary_ee4r6")
+}
+
+[node name="Conductor" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_ncmf3")
+volume_db = -10.957
+autoplay = true
+script = ExtResource("10_u5i0y")
+bpm = 90
+
+[node name="note_audio" type="Node" parent="."]
+
+[node name="miss" type="AudioStreamPlayer" parent="note_audio"]
+stream = ExtResource("11_habdg")
+
+[node name="good" type="AudioStreamPlayer" parent="note_audio"]
+stream = ExtResource("12_qas6s")
+
+[node name="great" type="AudioStreamPlayer" parent="note_audio"]
+stream = ExtResource("13_37jld")
+
+[node name="perfect" type="AudioStreamPlayer" parent="note_audio"]
+stream = ExtResource("14_0o7lx")
+
+[node name="Env" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Env"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D"]
+transform = Transform3D(5.96, 0, 0, 0, 2.945, 0, 0, 0, 1, 0, 0, 14.215012)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Env/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D"]
+transform = Transform3D(5.5665956, 0, -0.35729226, 0, 2.945, 0, 2.129462, 0, 0.93399256, -4.0593243, 0, 13.770538)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D"]
+transform = Transform3D(5.0454173, 0, -0.53231484, 0, 2.945, 0, 3.1725967, 0, 0.8465465, -7.6491876, 0, 12.208445)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D2"]
+transform = Transform3D(3.7044845, 0, -0.783368, 0, 2.945, 0, 4.668874, 0, 0.6215577, -10.98602, 0, 9.508225)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D3"]
+transform = Transform3D(1.8566725, 0, -0.95023847, 0, 2.945, 0, 5.663423, 0, 0.31152216, -13.615797, 0, 4.1436257)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D4"]
+transform = Transform3D(-0.5360268, 0, -0.99594694, 0, 2.945, 0, 5.935846, 0, -0.08993735, -14.381497, 0, -1.710059)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D5" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D5"]
+transform = Transform3D(-2.4946463, 0, -0.9081867, 0, 2.945, 0, 5.4127946, 0, -0.41856465, -12.758853, 0, -6.423202)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D6" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D6"]
+transform = Transform3D(-4.4928775, 0, -0.65705925, 0, 2.945, 0, 3.916074, 0, -0.75383836, -9.557352, 0, -10.60717)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D7" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D7"]
+transform = Transform3D(-5.722305, 0, -0.27959424, 0, 2.945, 0, 1.6663824, 0, -0.96011776, -4.3132033, 0.101851165, -13.726314)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D8" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D8"]
+transform = Transform3D(-5.9363394, 0, 0.0890161, 0, 2.945, 0, -0.5305362, 0, -0.9960297, 0.5693612, 0.101851165, -14.648106)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D9" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D9"]
+transform = Transform3D(-5.530873, 0, 0.37258273, 0, 2.945, 0, -2.220594, 0, -0.9279985, 5.3851852, 0.101851165, -13.482134)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D10" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D10"]
+transform = Transform3D(-4.6149197, 0, 0.6327997, 0, 2.945, 0, -3.7714875, 0, -0.77431506, 9.559804, 0.101851165, -10.880192)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D11" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D11"]
+transform = Transform3D(-3.2591236, 0, 0.83724135, 0, 2.945, 0, -4.9899607, 0, -0.5468326, 11.758866, 0.42328423, -8.249268)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D12" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D12"]
+transform = Transform3D(-2.055342, 0, 0.93865514, 0, 2.945, 0, -5.5943875, 0, -0.34485584, 13.318692, 0.42328423, -5.3845625)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D13" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D13"]
+transform = Transform3D(-0.859437, 0, 0.9895479, 0, 2.945, 0, -5.897708, 0, -0.14420079, 14.162299, 0.42328423, -1.9248219)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D14" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D14"]
+transform = Transform3D(1.5129995, 0, 0.9672407, 0, 2.945, 0, -5.764756, 0, 0.2538589, 13.673194, 0.42328423, 3.7580175)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D15" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D15"]
+transform = Transform3D(3.542967, 0, 0.8041262, 0, 2.945, 0, -4.7925935, 0, 0.59445745, 10.952376, 0.42328423, 8.771577)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D16" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D16"]
+transform = Transform3D(4.72382, 0, 0.6097576, 0, 2.945, 0, -3.634156, 0, 0.7925871, 9.02246, 0.42328423, 11.08424)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="StaticBody3D17" type="StaticBody3D" parent="Env/StaticBody3D/StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/StaticBody3D/StaticBody3D/StaticBody3D17"]
+transform = Transform3D(5.6923165, 0, 0.29632488, 0, 2.945, 0, -1.7660967, 0, 0.95508647, 4.9593115, 0.42328423, 13.403677)
+shape = SubResource("BoxShape3D_6bp64")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(28.605, 0, 0, 0, -0.69, 0, 0, 0, 28.515, -0.08, -0.6429492, -0.116000175)
+material_override = SubResource("StandardMaterial3D_b7urp")
+mesh = SubResource("CylinderMesh_6bp64")
+skeleton = NodePath("")
+
+[node name="birds" type="Node3D" parent="."]
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="birds"]
+transform = Transform3D(0.47832665, 0, -1.9676963, 0, 2.373, 0, 1.9676963, 0, 0.47832665, 1.9576902, 11.107261, 26.709465)
+sprite_frames = SubResource("SpriteFrames_k12tt")
+autoplay = "default"
+frame_progress = 0.87863004
+
+[node name="AnimatedSprite3D2" type="AnimatedSprite3D" parent="birds"]
+transform = Transform3D(0.079326436, 0, 2.0934978, 0, 2.095, 0, -2.0934978, 0, 0.079326436, 2.068307, 15.296129, -27.26342)
+sprite_frames = SubResource("SpriteFrames_h1bgf")
+autoplay = "default"
+frame_progress = 0.49170947
+
+[node name="environment3" parent="." instance=ExtResource("20_7mvmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5073285, 6.058978)

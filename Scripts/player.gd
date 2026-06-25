@@ -1,5 +1,9 @@
 extends CharacterBody3D
 
+var enable_boost := true
+var enable_special := true
+var enable_airtime := true
+
 @export var wobble_strength := 0.08
 @export var tilt_strength := 0.03
 @export var tilt_spring := 20.0
@@ -34,7 +38,7 @@ var flash_material : StandardMaterial3D
 var original_material : Material
 var hit_flash_timer := 0.0
 
-var current_spin := 200.0
+var current_spin := 100.0
 var current_boost := 200.0
 
 var spin_damage_multiplier := 2.0
@@ -183,7 +187,9 @@ func _physics_process(delta):
 		
 	# START SPECIAL CHARGE
 
-	if Input.is_action_just_pressed("special_attack1") \
+	if enable_special \
+	and Input.is_action_just_pressed("special_attack1") \
+	and current_boost >= 20 \
 	and current_boost >= 20 \
 	and !charging_special \
 	and special_timer <= 0 \
@@ -194,7 +200,9 @@ func _physics_process(delta):
 		current_boost = current_boost - 20
 		get_parent().trigger_shake(0.4)
 
-	if Input.is_action_just_pressed("airtime_attack") \
+	if enable_airtime \
+	and Input.is_action_just_pressed("airtime_attack") \
+	and current_boost >= 49 \
 	and current_boost >= 49 \
 	and !airtime_active \
 	and !charging_special \
@@ -374,7 +382,9 @@ func _physics_process(delta):
 	
 	# BOOST
 
-	if Input.is_action_pressed("boost") and current_boost >= 0:
+	if enable_boost \
+	and Input.is_action_pressed("boost") \
+	and current_boost >= 0:
 		
 		get_parent().camera_zoom(26.0)
 		current_boost_multiplier = lerp(

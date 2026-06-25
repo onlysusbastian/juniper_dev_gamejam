@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmppaanrus10o"]
+
+[ext_resource type="PackedScene" uid="uid://j6ly81pgvkpb" path="res://Assets/eggs/pigeon.glb" id="1_e331w"]
+
+[node name="pigeon" instance=ExtResource("1_e331w")]
+
+[node name="Icosphere_001" parent="." index="0"]
+gi_mode = 2

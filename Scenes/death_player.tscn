@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3 uid="uid://2xgm1c8qaxod"]
+
+[ext_resource type="PackedScene" uid="uid://j6ly81pgvkpb" path="res://Assets/eggs/pigeon.glb" id="1_igdx6"]
+[ext_resource type="Script" uid="uid://4gpqb80uyf4m" path="res://Scripts/death_player.gd" id="1_w83o4"]
+[ext_resource type="Texture2D" uid="uid://wbha0s1vplhk" path="res://Assets/eggs/angel-removebg-preview.png" id="2_5eu2c"]
+
+[sub_resource type="Environment" id="Environment_5eu2c"]
+background_mode = 1
+
+[sub_resource type="Animation" id="Animation_5eu2c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pigeon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_igdx6"]
+resource_name = "egg_move_1"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pigeon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.4333334, 3.4666667, 4.163334, 4.366667, 4.4666667, 4.533334),
+"transitions": PackedFloat32Array(1, 1.1486968, 0.7845838, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 4, 0), Vector3(0, 5.3, 0), Vector3(0, 5.4, 0), Vector3(0, 5.5, 0), Vector3(0, 5.6, 0), Vector3(0, 5.7, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w83o4"]
+_data = {
+&"RESET": SubResource("Animation_5eu2c"),
+&"egg_move_1": SubResource("Animation_igdx6")
+}
+
+[node name="DeathPlayer" type="Node3D"]
+script = ExtResource("1_w83o4")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5eu2c")
+
+[node name="pigeon" parent="." instance=ExtResource("1_igdx6")]
+
+[node name="Sprite3D" type="Sprite3D" parent="pigeon"]
+transform = Transform3D(4.305, 0, 0, 0, 4.305, 0, 0, 0, 4.305, 0, 3.3764021, -1.8931926)
+texture = ExtResource("2_5eu2c")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.632002, 19.630333)
+fov = 28.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_w83o4")
+}
+autoplay = "egg_move_1"
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.13936315, 0.99024135, 0, -0.99024135, 0.13936315, 0, 7, -0.44618726)
+spot_range = 3.975
+spot_attenuation = -3.32
+
+[node name="next" type="Button" parent="."]
+offset_left = 708.0
+offset_top = 451.0
+offset_right = 1147.0
+offset_bottom = 767.0
+
+[connection signal="pressed" from="next" to="." method="_on_next_pressed"]

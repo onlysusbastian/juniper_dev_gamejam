@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://6ph4j2ye3m0"]
+[gd_scene load_steps=34 format=3 uid="uid://6ph4j2ye3m0"]
 
 [ext_resource type="Script" uid="uid://rf2tu3s8hg4d" path="res://Scripts/main.gd" id="1_8gbba"]
 [ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="3_jjvhh"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dwaw1dx6k64jb" path="res://Assets/ui/health_enemy.png" id="7_pdsj5"]
 [ext_resource type="PackedScene" uid="uid://bf2chskegbcp8" path="res://Assets/Environment/main/environment1.glb" id="8_344ge"]
 [ext_resource type="AudioStream" uid="uid://cyc1r1ncrj18w" path="res://Audio/beat/coin_4.wav" id="8_h1bgf"]
+[ext_resource type="FontFile" uid="uid://yrnkkpx8c1id" path="res://Assets/fonts/23 seconds to midnight.ttf" id="8_hibaj"]
 [ext_resource type="Texture2D" uid="uid://cxof16hhre8y1" path="res://Assets/Environment/main/environment1_wall3.png" id="8_ynf5e"]
 [ext_resource type="Texture2D" uid="uid://ds2wt4t626rsr" path="res://Assets/birds/pigeon1.png" id="9_6iyac"]
 [ext_resource type="AudioStream" uid="uid://d01d24x2edune" path="res://Audio/beat/coin.wav" id="9_b3802"]
@@ -31,6 +32,42 @@ colors = PackedColorArray(0.42093012, 0.3902245, 0.06206189, 1, 0.84489334, 0.69
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_h1bgf"]
 gradient = SubResource("Gradient_k12tt")
+
+[sub_resource type="Animation" id="Animation_pdsj5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeScreen:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_hibaj"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeScreen:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ee4r6"]
+_data = {
+&"RESET": SubResource("Animation_pdsj5"),
+&"fade_out": SubResource("Animation_hibaj")
+}
 
 [sub_resource type="BoxMesh" id="BoxMesh_6bp64"]
 
@@ -74,6 +111,7 @@ animations = [{
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_8gbba")
+mission_number = 3
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
@@ -93,7 +131,7 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.482, 0, 7.239)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(-0.0128977215, 0.7417134, 0.6705929, -0.0014087502, -0.6706615, 0.7417622, 0.99991584, 0.008622343, 0.009694894, 24.06976, 25.603672, 1.1600132)
-light_color = Color(0.9724775, 0.87092257, 0.7237375, 1)
+light_color = Color(0.82171065, 0.85906684, 0.53789157, 1)
 light_energy = 9.655
 light_indirect_energy = 10.887
 light_volumetric_fog_energy = 0.0
@@ -170,9 +208,38 @@ position = Vector2(1482.6, 5.399994)
 scale = Vector2(-1.3, 1.3)
 texture = ExtResource("7_pdsj5")
 
+[node name="Legend" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 846.0
+offset_right = 572.0
+offset_bottom = 1014.0
+theme_override_colors/font_color = Color(0.90898293, 0.7507657, 0.184782, 1)
+theme_override_fonts/font = ExtResource("8_hibaj")
+theme_override_font_sizes/font_size = 39
+text = "BOOST : LMB
+HEAVY ATTACK : A/D
+RHYTHM : SPACE
+"
+
+[node name="FadeScreen" type="ColorRect" parent="CanvasLayer/Control"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control"]
+libraries = {
+&"": SubResource("AnimationLibrary_ee4r6")
+}
+
 [node name="Conductor" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_6bp64")
-volume_db = -7.88
+volume_db = -10.957
 autoplay = true
 script = ExtResource("7_344ge")
 bpm = 90

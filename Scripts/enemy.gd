@@ -1,5 +1,9 @@
 extends CharacterBody3D
 
+var enable_boost := true
+var enable_special := true
+var enable_airtime := true
+
 @onready var ai = $Visual
 @onready var visual = $Visual/MeshInstance3D
 @onready var blade2 = $Visual/MeshInstance3D/blade2
@@ -46,7 +50,7 @@ var tilt_damping := 8.0
 var flash_material : StandardMaterial3D
 var original_material : Material
 var hit_flash_timer := 0.0
-var regen_rate := 2
+var regen_rate := 4
 
 var current_spin := 100.0
 var current_boost := 100.0
@@ -87,7 +91,8 @@ func _ready():
 func _physics_process(delta):
 	
 	
-	if player \
+	if enable_special \
+	and player \
 	and !charging_special \
 	and special_timer <= 0 \
 	and !airtime_active:
@@ -98,7 +103,8 @@ func _physics_process(delta):
 			special_charge_timer = special_charge_time
 			$Visual/effect.show()
 			
-	if player \
+	if enable_airtime \
+	and player \
 	and !airtime_active \
 	and !charging_special \
 	and special_timer <= 0 \
@@ -252,6 +258,7 @@ func _physics_process(delta):
 				).length()
 
 				var base_spin_damage = impact_speed * 0.7
+				base_spin_damage = min(base_spin_damage, 35.0)
 
 				if enemy_force > player_force:
 
@@ -408,11 +415,17 @@ func _physics_process(delta):
 
 		var move_dir = ai.get_move_direction()
 
-		current_boost_multiplier = (
-			boost_multiplier
-			if boosting
-			else 1.0
-		)
+		if enable_boost:
+
+			current_boost_multiplier = (
+				boost_multiplier
+				if boosting
+				else 1.0
+			)
+
+		else:
+
+			current_boost_multiplier = 1.0
 
 		move_velocity = (
 			move_dir
@@ -431,6 +444,8 @@ func _physics_process(delta):
 	
 	velocity.y = 0.0
 	knockback_velocity.y = 0.0
+	
+	global_position.y = 0.0
 
 	knockback_velocity = knockback_velocity.lerp(
 		Vector3.ZERO,

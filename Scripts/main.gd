@@ -1,5 +1,10 @@
 extends Node3D
 
+@export var mission_number := 1
+@export var enable_special := true
+@export var enable_airtime := true
+@export var enable_boost := true
+
 @onready var player_stamina_bar = $CanvasLayer/Control/PlayerStamina
 @onready var player_boost_bar = $CanvasLayer/Control/PlayerBoost
 @onready var enemy_stamina_bar = $CanvasLayer/Control/EnemyStamina
@@ -10,6 +15,7 @@ extends Node3D
 @onready var player = $Player
 @onready var enemy = $Enemy
 
+var game_over := false
 var target_fov := 37.9
 var camera_base_offset := Vector3.ZERO
 var camera_offset := Vector3.ZERO
@@ -27,6 +33,17 @@ func trigger_shake(strength := 0.5):
 	)
 
 func _ready():
+	
+	#mechanic switching
+	player.enable_boost = enable_boost
+	player.enable_special = enable_special
+	player.enable_airtime = enable_airtime
+
+	enemy.enable_boost = enable_boost
+	enemy.enable_special = enable_special
+	enemy.enable_airtime = enable_airtime
+		
+	GameManager.current_mission = mission_number
 	
 	target_fov = camera.fov
 
@@ -48,6 +65,17 @@ func _ready():
 	enemy_stamina_bar.max_value = 60
 
 func _process(delta):
+	if !game_over:
+
+		if player.current_spin <= 40:
+
+			game_over = true
+			player_lost()
+
+		elif !is_instance_valid(enemy):
+
+			game_over = true
+			player_won()
 	camera.fov = lerp(
 	camera.fov,
 	target_fov,
@@ -211,3 +239,26 @@ func _on_note_judged(result):
 func camera_zoom(fov_value):
 
 	target_fov = fov_value
+
+func player_won():
+
+	$CanvasLayer/Control/AnimationPlayer.play("fade_out")
+
+	await $CanvasLayer/Control/AnimationPlayer.animation_finished
+	
+	get_tree().change_scene_to_file("res://Scenes/win_player.tscn")
+	
+	
+
+	#$CanvasLayer/VictoryScreen.visible = true
+	#$CanvasLayer/VictoryAnimation.play("victory")
+	
+func player_lost():
+
+	$CanvasLayer/Control/AnimationPlayer.play("fade_out")
+
+	await $CanvasLayer/Control/AnimationPlayer.animation_finished
+	get_tree().change_scene_to_file("res://Scenes/death_player.tscn")
+
+	#$CanvasLayer/DefeatScreen.visible = true
+	#$CanvasLayer/DefeatAnimation.play("defeat")

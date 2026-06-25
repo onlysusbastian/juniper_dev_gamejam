@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dt4gfm40glvb3"]
+
+[ext_resource type="Script" uid="uid://culoo88ugbufr" path="res://Scripts/cutscene_1.gd" id="1_dif7x"]
+
+[node name="Cutscene1" type="Node2D"]
+script = ExtResource("1_dif7x")
+
+[node name="continue" type="Button" parent="."]
+offset_left = 735.0
+offset_top = 435.0
+offset_right = 1204.0
+offset_bottom = 679.0
+
+[connection signal="pressed" from="continue" to="." method="_on_continue_pressed"]
