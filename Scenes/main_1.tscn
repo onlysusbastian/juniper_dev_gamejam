@@ -1,12 +1,9 @@
-[gd_scene load_steps=33 format=3 uid="uid://cniqkjtm1i4r6"]
+[gd_scene load_steps=31 format=3 uid="uid://cniqkjtm1i4r6"]
 
 [ext_resource type="Script" uid="uid://rf2tu3s8hg4d" path="res://Scripts/main.gd" id="1_xwitc"]
 [ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="2_7xgdn"]
 [ext_resource type="PackedScene" uid="uid://ck6jrbqtyqrhf" path="res://Scenes/Player.tscn" id="3_b7urp"]
 [ext_resource type="PackedScene" uid="uid://dfysmu00krk0s" path="res://Scenes/Enemy.tscn" id="4_cd2bx"]
-[ext_resource type="Texture2D" uid="uid://bc5ntf4j0lxp4" path="res://Assets/ui/health_player.png" id="5_b6uwa"]
-[ext_resource type="Texture2D" uid="uid://cyeubif618ytx" path="res://Assets/ui/boost.png" id="6_cjmeg"]
-[ext_resource type="Texture2D" uid="uid://dwaw1dx6k64jb" path="res://Assets/ui/health_enemy.png" id="7_4yft7"]
 [ext_resource type="FontFile" uid="uid://yrnkkpx8c1id" path="res://Assets/fonts/23 seconds to midnight.ttf" id="8_t2l80"]
 [ext_resource type="AudioStream" uid="uid://r8dfna5f2rxf" path="res://Audio/test/eda_180.mp3" id="9_24smn"]
 [ext_resource type="Script" uid="uid://dw0b0do7m7sbt" path="res://Scripts/Conductor.gd" id="10_b6nua"]
@@ -21,17 +18,17 @@
 [ext_resource type="Texture2D" uid="uid://cgcjm5x7xfoxb" path="res://Assets/birds/crow1.png" id="19_ahs5s"]
 [ext_resource type="Texture2D" uid="uid://bc7qv64pip1vq" path="res://Assets/birds/crow2.png" id="20_0jfuw"]
 
-[sub_resource type="Gradient" id="Gradient_hibaj"]
+[sub_resource type="Gradient" id="Gradient_ki2rj"]
 colors = PackedColorArray(0.8145063, 0, 0.19991395, 1, 1, 0.31260142, 0.34393445, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_pdsj5"]
-gradient = SubResource("Gradient_hibaj")
+gradient = SubResource("Gradient_ki2rj")
 
-[sub_resource type="Gradient" id="Gradient_k12tt"]
+[sub_resource type="Gradient" id="Gradient_86rpo"]
 colors = PackedColorArray(0.42093012, 0.3902245, 0.06206189, 1, 0.84489334, 0.69987994, 0.3972195, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_h1bgf"]
-gradient = SubResource("Gradient_k12tt")
+gradient = SubResource("Gradient_86rpo")
 
 [sub_resource type="Animation" id="Animation_pdsj5"]
 length = 0.001
@@ -45,7 +42,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0)]
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_hibaj"]
@@ -63,9 +60,25 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_ki2rj"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeScreen:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ee4r6"]
 _data = {
 &"RESET": SubResource("Animation_pdsj5"),
+&"fade_in": SubResource("Animation_ki2rj"),
 &"fade_out": SubResource("Animation_hibaj")
 }
 
@@ -121,10 +134,10 @@ near = 0.029
 [node name="MouseMarker" parent="." instance=ExtResource("2_7xgdn")]
 
 [node name="Player" parent="." instance=ExtResource("3_b7urp")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.954, 0, -5.146)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.954, 0, 8.055233)
 
 [node name="Enemy" parent="." instance=ExtResource("4_cd2bx")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.482, 0, 7.239)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.482, 0, -8.963287)
 
 [node name="SpotLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.0128977215, 0.7417134, 0.6705929, -0.0014087502, -0.6706615, 0.7417622, 0.99991584, 0.008622343, 0.009694894, 24.06976, 25.603672, 1.1600132)
@@ -157,67 +170,52 @@ offset_left = 42.494946
 offset_top = 27.599995
 offset_right = 840.49493
 offset_bottom = 54.600018
+scale = Vector2(0.39, 1)
 min_value = -9.0
-value = 1.0
+value = 100.0
 nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture2D_pdsj5")
 
 [node name="PlayerBoost" type="TextureProgressBar" parent="CanvasLayer/Control"]
 texture_filter = 1
 layout_mode = 0
-offset_left = 51.0
-offset_top = 113.0
-offset_right = 849.0
-offset_bottom = 140.0
+offset_left = 42.000004
+offset_top = 92.0
+offset_right = 840.0
+offset_bottom = 119.0
+scale = Vector2(0.39, 1)
 min_value = -8.0
-value = 8.0
+value = 100.0
 nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture2D_h1bgf")
 
 [node name="EnemyStamina" type="TextureProgressBar" parent="CanvasLayer/Control"]
 texture_filter = 1
 layout_mode = 0
-offset_left = 1901.6
-offset_top = 55.43
-offset_right = 2699.6
-offset_bottom = 82.42996
-scale = Vector2(-1, -1)
+offset_left = 1124.0
+offset_top = 55.0
+offset_right = 1922.0006
+offset_bottom = 81.99996
+scale = Vector2(-0.39, -1)
 min_value = -10.0
-value = 9.0
+value = 100.0
 nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture2D_pdsj5")
 
-[node name="HealthPlayer" type="Sprite2D" parent="CanvasLayer/Control"]
-position = Vector2(459.59998, 6.399993)
-scale = Vector2(1.3, 1.3)
-texture = ExtResource("5_b6uwa")
-
-[node name="Boost" type="Sprite2D" parent="CanvasLayer/Control"]
-position = Vector2(462.00003, 90)
-scale = Vector2(1.3, 1.3)
-texture = ExtResource("6_cjmeg")
-
-[node name="HealthEnemy" type="Sprite2D" parent="CanvasLayer/Control"]
-position = Vector2(1482.6, 5.399994)
-scale = Vector2(-1.3, 1.3)
-texture = ExtResource("7_4yft7")
-
 [node name="Legend" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 0
-offset_left = 83.0
-offset_top = 846.0
-offset_right = 572.0
-offset_bottom = 1014.0
+offset_left = 42.0
+offset_top = 444.0
+offset_right = 531.0
+offset_bottom = 641.0
 theme_override_colors/font_color = Color(0.90898293, 0.7507657, 0.184782, 1)
 theme_override_fonts/font = ExtResource("8_t2l80")
 theme_override_font_sizes/font_size = 39
 text = "BOOST : LMB
-HEAVY ATTACK : A/D
 RHYTHM : SPACE
 "
 
 [node name="FadeScreen" type="ColorRect" parent="CanvasLayer/Control"]
-self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -230,6 +228,24 @@ color = Color(0, 0, 0, 1)
 libraries = {
 &"": SubResource("AnimationLibrary_ee4r6")
 }
+
+[node name="Countdown" type="RichTextLabel" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -61.0
+offset_right = 64.0
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_selected_color = Color(0.571706, 0.3540438, 0.16011563, 0)
+theme_override_fonts/normal_font = ExtResource("8_t2l80")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
 
 [node name="Conductor" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_24smn")

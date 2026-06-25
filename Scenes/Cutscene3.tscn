@@ -1,14 +1,314 @@
-[gd_scene load_steps=2 format=3 uid="uid://yooolskx7ego"]
+[gd_scene load_steps=12 format=3 uid="uid://yooolskx7ego"]
 
 [ext_resource type="Script" uid="uid://co8ybki6wln3y" path="res://Scripts/cutscene_3.gd" id="1_5cdrm"]
+[ext_resource type="AudioStream" uid="uid://jcwqjbtkplnt" path="res://Audio/cutscene_audio/pop_3.wav" id="2_st801"]
+[ext_resource type="Texture2D" uid="uid://j8ym3clk37j2" path="res://Cutscenes/cutscene 3/1.png" id="3_st801"]
+[ext_resource type="Texture2D" uid="uid://nvyiihd02gry" path="res://Cutscenes/talk.png" id="4_p80p3"]
+[ext_resource type="FontFile" uid="uid://clo6er66bms8a" path="res://Assets/fonts/Square Thief.ttf" id="5_4ki4j"]
+[ext_resource type="Texture2D" uid="uid://p8xv662v8pup" path="res://Cutscenes/cutscene 3/2.png" id="6_xs754"]
+[ext_resource type="Texture2D" uid="uid://dml4c17mdorgj" path="res://Cutscenes/cutscene 3/3.png" id="7_sikhs"]
+[ext_resource type="Texture2D" uid="uid://cikf1a6u44pui" path="res://Cutscenes/cutscene 3/4.png" id="8_4lwrj"]
+[ext_resource type="Texture2D" uid="uid://d01laj8vohkmp" path="res://Cutscenes/think.png" id="8_5m8qs"]
+[ext_resource type="Texture2D" uid="uid://uvxms3rjtaem" path="res://Cutscenes/cutscene 3/5.png" id="10_st801"]
+[ext_resource type="Texture2D" uid="uid://d851pfybgdur" path="res://Cutscenes/cutscene 3/6.png" id="11_f84fm"]
 
-[node name="Cutscene3" type="Node2D"]
+[node name="Cutscene3" type="CanvasLayer"]
 script = ExtResource("1_5cdrm")
+next_scene = "res://Scenes/main.tscn"
 
-[node name="continue" type="Button" parent="."]
-offset_left = 349.0
-offset_top = 236.0
-offset_right = 815.0
-offset_bottom = 481.0
+[node name="TypingSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_st801")
+volume_db = 0.024
 
-[connection signal="pressed" from="continue" to="." method="_on_continue_pressed"]
+[node name="Dialogue1" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_st801")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue1"]
+position = Vector2(742.623, 124.62299)
+rotation = 0.3878634
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("4_p80p3")
+
+[node name="1" type="RichTextLabel" parent="Dialogue1"]
+layout_mode = 0
+offset_left = 682.623
+offset_top = 64.62299
+offset_right = 1422.623
+offset_bottom = 659.623
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_4ki4j")
+theme_override_font_sizes/normal_font_size = 80
+text = "...ughhhh. i need to teach you a lesson, my friend *hisses aggresively*"
+fit_content = true
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Dialogue2" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_xs754")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue2"]
+position = Vector2(789.69006, 444.69006)
+rotation = -3.4552648
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("4_p80p3")
+
+[node name="2" type="RichTextLabel" parent="Dialogue2"]
+layout_mode = 0
+offset_left = 731.69006
+offset_top = 409.69006
+offset_right = 1481.6901
+offset_bottom = 1004.69006
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_4ki4j")
+theme_override_font_sizes/normal_font_size = 120
+text = "what is wrong with this guy"
+fit_content = true
+
+[node name="Dialogue11" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_xs754")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue11"]
+position = Vector2(789.69006, 444.69006)
+rotation = -3.4552648
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("4_p80p3")
+
+[node name="2" type="RichTextLabel" parent="Dialogue11"]
+layout_mode = 0
+offset_left = 731.69006
+offset_top = 409.69006
+offset_right = 1481.6901
+offset_bottom = 1004.69006
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_4ki4j")
+theme_override_font_sizes/normal_font_size = 120
+text = "always on something man!!!"
+fit_content = true
+
+[node name="Dialogue3" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_sikhs")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue3"]
+position = Vector2(423.69006, 264.69006)
+rotation = -3.4552648
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("4_p80p3")
+
+[node name="2" type="RichTextLabel" parent="Dialogue3"]
+layout_mode = 0
+offset_left = 369.0
+offset_top = 226.0
+offset_right = 1119.0
+offset_bottom = 821.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_4ki4j")
+theme_override_font_sizes/normal_font_size = 120
+text = "he should not get here soon man"
+fit_content = true
+
+[node name="Dialogue12" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_sikhs")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue12"]
+position = Vector2(423.69006, 264.69006)
+rotation = -3.4552648
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("4_p80p3")
+
+[node name="2" type="RichTextLabel" parent="Dialogue12"]
+layout_mode = 0
+offset_left = 369.0
+offset_top = 226.0
+offset_right = 1119.0
+offset_bottom = 821.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_4ki4j")
+theme_override_font_sizes/normal_font_size = 120
+text = "i need time to prepare my potion..."
+fit_content = true
+
+[node name="Dialogue4" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_4lwrj")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue4"]
+position = Vector2(707.25684, 329.25687)
+rotation = 1.3029201
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("8_5m8qs")
+
+[node name="2" type="RichTextLabel" parent="Dialogue4"]
+layout_mode = 0
+offset_left = 646.0
+offset_top = 289.00003
+offset_right = 1395.9998
+offset_bottom = 884.0
+rotation = -0.017885968
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_4ki4j")
+theme_override_font_sizes/normal_font_size = 120
+text = "i hope this brews fast"
+fit_content = true
+
+[node name="Dialogue13" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_4lwrj")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue13"]
+position = Vector2(707.25684, 329.25687)
+rotation = 1.3029201
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("8_5m8qs")
+
+[node name="2" type="RichTextLabel" parent="Dialogue13"]
+layout_mode = 0
+offset_left = 646.0
+offset_top = 289.00003
+offset_right = 1395.9998
+offset_bottom = 884.0
+rotation = -0.017885968
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_4ki4j")
+theme_override_font_sizes/normal_font_size = 120
+text = "**hissing noises"
+fit_content = true
+
+[node name="Dialogue10" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_st801")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue10"]
+position = Vector2(331.02997, 180.02998)
+rotation = 2.2005422
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("4_p80p3")
+
+[node name="2" type="RichTextLabel" parent="Dialogue10"]
+layout_mode = 0
+offset_left = 289.00003
+offset_top = 130.0
+offset_right = 968.99976
+offset_bottom = 760.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_4ki4j")
+theme_override_font_sizes/normal_font_size = 120
+text = "hello mr cro!!! did you think you could get away!"
+fit_content = true
+
+[node name="Dialogue14" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_st801")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue14"]
+position = Vector2(717.02997, 360.02997)
+rotation = 1.6151215
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("8_5m8qs")
+
+[node name="2" type="RichTextLabel" parent="Dialogue14"]
+layout_mode = 0
+offset_left = 669.0
+offset_top = 286.0
+offset_right = 1348.9998
+offset_bottom = 916.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_4ki4j")
+theme_override_font_sizes/normal_font_size = 120
+text = "whatttt
+how did this guy find me?"
+fit_content = true
+
+[node name="Dialogue5" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_f84fm")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue5"]
+position = Vector2(515.5106, 156.5106)
+rotation = -0.04424715
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("4_p80p3")
+
+[node name="2" type="RichTextLabel" parent="Dialogue5"]
+layout_mode = 0
+offset_left = 441.0
+offset_top = 113.0
+offset_right = 1256.0
+offset_bottom = 708.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_4ki4j")
+theme_override_font_sizes/normal_font_size = 250
+text = "BOOM!!"
+fit_content = true
+
+[node name="Fade" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

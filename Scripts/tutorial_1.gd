@@ -13,8 +13,9 @@ extends Node3D
 @onready var camera = $Camera3D
 @onready var marker = $MouseMarker
 @onready var player = $Player
-@onready var enemy = $Enemy
 
+var tutorial_page := 1
+var practice_mode := false
 var game_over := false
 var game_started := false
 var target_fov := 37.9
@@ -40,10 +41,6 @@ func _ready():
 	player.enable_boost = enable_boost
 	player.enable_special = enable_special
 	player.enable_airtime = enable_airtime
-
-	enemy.enable_boost = enable_boost
-	enemy.enable_special = enable_special
-	enemy.enable_airtime = enable_airtime
 		
 	GameManager.current_mission = mission_number
 	
@@ -54,10 +51,6 @@ func _ready():
 		- player.global_position
 	)
 
-	enemy.player = player
-	
-	enemy.ai.player = player
-
 	conductor.note_judged.connect(
 		_on_note_judged
 	)
@@ -65,22 +58,13 @@ func _ready():
 	player_stamina_bar.max_value = 60
 	player_boost_bar.max_value = 100
 	enemy_stamina_bar.max_value = 60
-	start_countdown()
+	show_tutorial(1)
+	player.set_physics_process(false)
+	game_started = false
 
 func _process(delta):
 	if !game_started:
 		return
-	if !game_over:
-
-		if player.current_spin <= 40:
-
-			game_over = true
-			player_lost()
-
-		elif !is_instance_valid(enemy):
-
-			game_over = true
-			player_won()
 	camera.fov = lerp(
 	camera.fov,
 	target_fov,
@@ -169,9 +153,6 @@ func _process(delta):
 	player_stamina_bar.value = player.current_spin - 40
 	player_boost_bar.value = player.current_boost
 
-	if is_instance_valid(enemy):
-		enemy_stamina_bar.value = enemy.current_spin - 40
-
 	var beat_offset = Vector3(
 		randf_range(-0.2, 0.2) * beat_punch,
 		randf_range(-0.1, 0.1) * beat_punch,
@@ -245,29 +226,6 @@ func camera_zoom(fov_value):
 
 	target_fov = fov_value
 
-func player_won():
-
-	$CanvasLayer/Control/AnimationPlayer.play("fade_out")
-
-	await $CanvasLayer/Control/AnimationPlayer.animation_finished
-	
-	get_tree().change_scene_to_file("res://Scenes/win_player.tscn")
-	
-	
-
-	#$CanvasLayer/VictoryScreen.visible = true
-	#$CanvasLayer/VictoryAnimation.play("victory")
-	
-func player_lost():
-
-	$CanvasLayer/Control/AnimationPlayer.play("fade_out")
-
-	await $CanvasLayer/Control/AnimationPlayer.animation_finished
-	get_tree().change_scene_to_file("res://Scenes/death_player.tscn")
-
-	#$CanvasLayer/DefeatScreen.visible = true
-	#$CanvasLayer/DefeatAnimation.play("defeat")
-
 func start_countdown():
 
 	game_started = false
@@ -275,7 +233,6 @@ func start_countdown():
 	$CanvasLayer/Control/Countdown.visible = true
 	
 	player.set_physics_process(false)
-	enemy.set_physics_process(false)
 
 	$CanvasLayer/Control/Countdown.text = "[center]3[/center]"
 	await get_tree().create_timer(1.0).timeout
@@ -291,5 +248,68 @@ func start_countdown():
 
 	$CanvasLayer/Control/Countdown.visible = false
 	player.set_physics_process(true)
-	enemy.set_physics_process(true)
 	game_started = true
+
+func show_tutorial(page):
+
+	$CanvasLayer/Tutorial.visible = true
+
+	$CanvasLayer/Tutorial/Screen1.hide()
+	$CanvasLayer/Tutorial/Screen2.hide()
+	$CanvasLayer/Tutorial/Screen3.hide()
+
+	match page:
+
+		1:
+			$CanvasLayer/Tutorial/Screen1.show()
+
+		2:
+			$CanvasLayer/Tutorial/Screen2.show()
+
+		3:
+			$CanvasLayer/Tutorial/Screen3.show()
+
+func _on_next_button_pressed():
+
+	tutorial_page += 1
+
+	if tutorial_page <= 3:
+
+		show_tutorial(tutorial_page)
+
+	else:
+		$CanvasLayer/Tutorial/NextButton.disabled = true
+
+		$CanvasLayer/Tutorial.hide()
+
+		await start_countdown()
+
+		practice_mode = true
+
+		$CanvasLayer/TutorialT.visible = true
+
+func _input(event):
+
+	if !practice_mode:
+		return
+
+	if event.is_action_pressed("finish_tutorial"):
+
+		print("F PRESSED")
+
+		practice_mode = false
+
+		var anim = $CanvasLayer/Control/AnimationPlayer
+
+		print(anim)
+		print(anim.has_animation("fade_out"))
+
+		anim.play("fade_out")
+
+		print(anim.current_animation)
+
+		await anim.animation_finished
+
+		print("Animation finished")
+
+		get_tree().change_scene_to_file("res://Scenes/main_1.tscn")

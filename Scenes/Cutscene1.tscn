@@ -19,7 +19,7 @@
 
 [node name="Cutscene1" type="CanvasLayer"]
 script = ExtResource("1_dif7x")
-next_scene = "res://Scenes/main_1.tscn"
+next_scene = "res://Scenes/tutorial_1.tscn"
 
 [node name="TypingSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_5arrb")
@@ -346,6 +346,7 @@ text = "hi mr cro. gimme my egg. "
 fit_content = true
 
 [node name="Dialogue16" type="TextureRect" parent="."]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -453,7 +454,7 @@ scale = Vector2(0.2, 0.2)
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("4_6xn6i")
 theme_override_font_sizes/normal_font_size = 120
-text = "alright mr p. fight my egg!!"
+text = "alright mrs p. fight my egg!!"
 fit_content = true
 
 [node name="Dialogue15" type="TextureRect" parent="."]
@@ -483,3 +484,11 @@ theme_override_fonts/normal_font = ExtResource("4_6xn6i")
 theme_override_font_sizes/normal_font_size = 120
 text = "if you win, you get the egg. else, you know!!!"
 fit_content = true
+
+[node name="Fade" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

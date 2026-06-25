@@ -80,6 +80,9 @@ func _on_StartTimer_timeout():
 
 func _input(event):
 
+	if !get_parent().game_started:
+		return
+
 	if event.is_action_pressed("rhythm_hit"):
 
 		var beat_info = closest_beat(1)
