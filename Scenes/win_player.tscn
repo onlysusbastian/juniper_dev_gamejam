@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dkchv6fvd0dxb"]
+[gd_scene load_steps=4 format=3 uid="uid://dkchv6fvd0dxb"]
 
 [ext_resource type="Script" uid="uid://1oswuvnx1sju" path="res://Scripts/win_player.gd" id="1_4eggk"]
 [ext_resource type="FontFile" uid="uid://clo6er66bms8a" path="res://Assets/fonts/Square Thief.ttf" id="2_jfi0q"]
+[ext_resource type="PackedScene" uid="uid://c5q2x3avfe3ap" path="res://Postprocessing/PostProcess.tscn" id="3_rudya"]
 
 [node name="WinPlayer" type="Node3D"]
 script = ExtResource("1_4eggk")
@@ -50,5 +51,7 @@ theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_fonts/normal_font = ExtResource("2_jfi0q")
 theme_override_font_sizes/normal_font_size = 150
 text = "You defeated him!!"
+
+[node name="PostProcess" parent="." instance=ExtResource("3_rudya")]
 
 [connection signal="pressed" from="NextButton" to="." method="_on_next_button_pressed"]

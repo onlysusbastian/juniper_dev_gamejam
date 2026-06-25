@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://6ph4j2ye3m0"]
+[gd_scene load_steps=29 format=3 uid="uid://6ph4j2ye3m0"]
 
 [ext_resource type="Script" uid="uid://rf2tu3s8hg4d" path="res://Scripts/main.gd" id="1_8gbba"]
 [ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="3_jjvhh"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://bdhwc1oxvvvc0" path="res://Assets/birds/pigeon2.png" id="10_fdnlq"]
 [ext_resource type="Texture2D" uid="uid://cgcjm5x7xfoxb" path="res://Assets/birds/crow1.png" id="11_jkdf5"]
 [ext_resource type="Texture2D" uid="uid://bc7qv64pip1vq" path="res://Assets/birds/crow2.png" id="12_wsu2k"]
+[ext_resource type="PackedScene" uid="uid://c5q2x3avfe3ap" path="res://Postprocessing/PostProcess.tscn" id="14_jkdf5"]
 
 [sub_resource type="Gradient" id="Gradient_ki2rj"]
 colors = PackedColorArray(0.8145063, 0, 0.19991395, 1, 1, 0.31260142, 0.34393445, 1)
@@ -446,3 +447,5 @@ transform = Transform3D(0.079326436, 0, 2.0934978, 0, 2.095, 0, -2.0934978, 0, 0
 sprite_frames = SubResource("SpriteFrames_h1bgf")
 autoplay = "default"
 frame_progress = 0.49170947
+
+[node name="PostProcess" parent="." instance=ExtResource("14_jkdf5")]

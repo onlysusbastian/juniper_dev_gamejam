@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://f1gpt84fcs8u"]
+[gd_scene load_steps=31 format=3 uid="uid://f1gpt84fcs8u"]
 
 [ext_resource type="Script" uid="uid://bhkeqj2wi1i0" path="res://Scripts/tutorial_1.gd" id="1_qd5km"]
 [ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="2_6o7rb"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://cpus0vlxswf7q" path="res://Assets/Environment/2/environment2_pahr.png" id="12_l6vw1"]
 [ext_resource type="PackedScene" uid="uid://s1jmysodr4kn" path="res://Assets/Arena/arena1.glb" id="13_qd5km"]
 [ext_resource type="Texture2D" uid="uid://yxiajbkb1mbn" path="res://Assets/Environment/graph.jpg" id="15_7bhxr"]
+[ext_resource type="PackedScene" uid="uid://c5q2x3avfe3ap" path="res://Postprocessing/PostProcess.tscn" id="16_s3gi3"]
 
 [sub_resource type="Environment" id="Environment_s3gi3"]
 background_mode = 1
@@ -583,5 +584,7 @@ shadow_normal_bias = 0.065
 spot_range = 160.8
 spot_attenuation = 0.71
 spot_angle = 32.05
+
+[node name="PostProcess" parent="." instance=ExtResource("16_s3gi3")]
 
 [connection signal="pressed" from="CanvasLayer/Tutorial/NextButton" to="." method="_on_next_button_pressed"]

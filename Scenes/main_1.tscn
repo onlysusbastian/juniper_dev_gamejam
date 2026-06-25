@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cniqkjtm1i4r6"]
+[gd_scene load_steps=34 format=3 uid="uid://cniqkjtm1i4r6"]
 
 [ext_resource type="Script" uid="uid://rf2tu3s8hg4d" path="res://Scripts/main.gd" id="1_xwitc"]
 [ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="2_7xgdn"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://ds2wt4t626rsr" path="res://Assets/birds/pigeon1.png" id="17_sgj5k"]
 [ext_resource type="Texture2D" uid="uid://bdhwc1oxvvvc0" path="res://Assets/birds/pigeon2.png" id="18_klt25"]
 [ext_resource type="Texture2D" uid="uid://cgcjm5x7xfoxb" path="res://Assets/birds/crow1.png" id="19_ahs5s"]
+[ext_resource type="PackedScene" uid="uid://c5q2x3avfe3ap" path="res://Postprocessing/PostProcess.tscn" id="19_fu4f7"]
 [ext_resource type="Texture2D" uid="uid://bc7qv64pip1vq" path="res://Assets/birds/crow2.png" id="20_0jfuw"]
 
 [sub_resource type="Gradient" id="Gradient_ki2rj"]
@@ -85,6 +86,13 @@ _data = {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fu4f7"]
 shader = ExtResource("6_86rpo")
+shader_parameter/curve_strength = 0.2
+shader_parameter/rgb_offset = 0.001
+shader_parameter/wobble_strength = 0.003
+shader_parameter/scanline_strength = 0.17
+shader_parameter/vignette_strength = 0.4
+shader_parameter/shadowmask_strength = 0.7
+shader_parameter/flicker_strength = 0.01
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6bp64"]
 size = Vector3(1, 0.9470215, 1)
@@ -421,3 +429,5 @@ transform = Transform3D(0.079326436, 0, 2.0934978, 0, 2.095, 0, -2.0934978, 0, 0
 sprite_frames = SubResource("SpriteFrames_h1bgf")
 autoplay = "default"
 frame_progress = 0.49170947
+
+[node name="PostProcess" parent="." instance=ExtResource("19_fu4f7")]

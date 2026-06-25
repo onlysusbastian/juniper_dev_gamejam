@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://b2baq85phb1ko"]
+[gd_scene load_steps=6 format=3 uid="uid://b2baq85phb1ko"]
 
+[ext_resource type="Script" uid="uid://bmo0vlr3mb3j1" path="res://Scripts/mainmenu.gd" id="1_lah54"]
 [ext_resource type="Texture2D" uid="uid://bh0pt20u5rb6p" path="res://Assets/ui/main_menu.png" id="1_web8u"]
 [ext_resource type="FontFile" uid="uid://yrnkkpx8c1id" path="res://Assets/fonts/23 seconds to midnight.ttf" id="2_rtnl3"]
+[ext_resource type="PackedScene" uid="uid://c5q2x3avfe3ap" path="res://Postprocessing/PostProcess.tscn" id="3_rtnl3"]
+[ext_resource type="FontFile" uid="uid://clo6er66bms8a" path="res://Assets/fonts/Square Thief.ttf" id="4_5326e"]
 
 [node name="Mainmenu" type="Node2D"]
+script = ExtResource("1_lah54")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -35,3 +39,26 @@ scale = Vector2(0.2, 0.2)
 theme_override_fonts/normal_font = ExtResource("2_rtnl3")
 theme_override_font_sizes/normal_font_size = 900
 text = "cro"
+
+[node name="NextButton" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -389.99997
+offset_top = 85.0
+offset_right = 944.99976
+offset_bottom = 510.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.2, 0.2)
+theme_override_colors/font_hover_color = Color(0.9843137, 0.9490196, 0.21176471, 1)
+theme_override_fonts/font = ExtResource("4_5326e")
+theme_override_font_sizes/font_size = 200
+text = "continue"
+flat = true
+
+[node name="PostProcess" parent="." instance=ExtResource("3_rtnl3")]
+
+[connection signal="pressed" from="CanvasLayer/NextButton" to="." method="_on_next_button_pressed"]

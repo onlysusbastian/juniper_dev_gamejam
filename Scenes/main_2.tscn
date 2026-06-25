@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bbamh6l162agg"]
+[gd_scene load_steps=32 format=3 uid="uid://bbamh6l162agg"]
 
 [ext_resource type="Script" uid="uid://rf2tu3s8hg4d" path="res://Scripts/main.gd" id="1_7mvmt"]
 [ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="2_p1oyv"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://buswhp1freiol" path="res://Audio/beat/coin_2.wav" id="14_0o7lx"]
 [ext_resource type="Texture2D" uid="uid://cpus0vlxswf7q" path="res://Assets/Environment/2/environment2_pahr.png" id="15_6y6hv"]
 [ext_resource type="Texture2D" uid="uid://ds2wt4t626rsr" path="res://Assets/birds/pigeon1.png" id="17_76u2v"]
+[ext_resource type="PackedScene" uid="uid://c5q2x3avfe3ap" path="res://Postprocessing/PostProcess.tscn" id="18_1v8r1"]
 [ext_resource type="Texture2D" uid="uid://bdhwc1oxvvvc0" path="res://Assets/birds/pigeon2.png" id="18_wy0uv"]
 [ext_resource type="Texture2D" uid="uid://cgcjm5x7xfoxb" path="res://Assets/birds/crow1.png" id="19_630qq"]
 [ext_resource type="PackedScene" uid="uid://0mlfsleiqkwr" path="res://Assets/Environment/3/environment3.glb" id="20_7mvmt"]
@@ -45,21 +46,6 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_hibaj"]
-resource_name = "fade_out"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("FadeScreen:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_ki2rj"]
 resource_name = "fade_in"
 tracks/0/type = "value"
@@ -73,6 +59,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_hibaj"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeScreen:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ee4r6"]
@@ -121,7 +122,6 @@ animations = [{
 [node name="main" type="Node3D"]
 script = ExtResource("1_7mvmt")
 mission_number = 2
-enable_special = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
@@ -407,3 +407,5 @@ frame_progress = 0.49170947
 
 [node name="environment3" parent="." instance=ExtResource("20_7mvmt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5073285, 6.058978)
+
+[node name="PostProcess" parent="." instance=ExtResource("18_1v8r1")]

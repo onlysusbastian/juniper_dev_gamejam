@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://crafgii4pwrs5"]
+[gd_scene load_steps=18 format=3 uid="uid://crafgii4pwrs5"]
 
 [ext_resource type="Script" uid="uid://ct17c1aoum8e8" path="res://Scripts/cutscene_2.gd" id="1_2mqi4"]
 [ext_resource type="AudioStream" uid="uid://jcwqjbtkplnt" path="res://Audio/cutscene_audio/pop_3.wav" id="2_vvdcv"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://d32vskhlkh4o2" path="res://Cutscenes/cutscene 2/8.png" id="12_vvdcv"]
 [ext_resource type="Texture2D" uid="uid://dj10buurotsru" path="res://Cutscenes/cutscene 2/9.png" id="13_xlha4"]
 [ext_resource type="Texture2D" uid="uid://4lejmxelf5eg" path="res://Cutscenes/cutscene 2/10.png" id="14_d7rob"]
+[ext_resource type="PackedScene" uid="uid://c5q2x3avfe3ap" path="res://Postprocessing/PostProcess.tscn" id="15_7rgrc"]
 
 [sub_resource type="Gradient" id="Gradient_veub1"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -560,3 +561,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="PostProcess" parent="." instance=ExtResource("15_7rgrc")]
