@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cniqkjtm1i4r6"]
+[gd_scene load_steps=30 format=3 uid="uid://cniqkjtm1i4r6"]
 
 [ext_resource type="Script" uid="uid://rf2tu3s8hg4d" path="res://Scripts/main.gd" id="1_xwitc"]
 [ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="2_7xgdn"]
@@ -8,10 +8,6 @@
 [ext_resource type="FontFile" uid="uid://yrnkkpx8c1id" path="res://Assets/fonts/23 seconds to midnight.ttf" id="8_t2l80"]
 [ext_resource type="AudioStream" uid="uid://r8dfna5f2rxf" path="res://Audio/test/eda_180.mp3" id="9_24smn"]
 [ext_resource type="Script" uid="uid://dw0b0do7m7sbt" path="res://Scripts/Conductor.gd" id="10_b6nua"]
-[ext_resource type="AudioStream" uid="uid://drktr2kvotvq4" path="res://Audio/beat/coin_3.wav" id="11_du6ii"]
-[ext_resource type="AudioStream" uid="uid://cyc1r1ncrj18w" path="res://Audio/beat/coin_4.wav" id="12_h6cda"]
-[ext_resource type="AudioStream" uid="uid://d01d24x2edune" path="res://Audio/beat/coin.wav" id="13_ft7l7"]
-[ext_resource type="AudioStream" uid="uid://buswhp1freiol" path="res://Audio/beat/coin_2.wav" id="14_vds6o"]
 [ext_resource type="Texture2D" uid="uid://cpus0vlxswf7q" path="res://Assets/Environment/2/environment2_pahr.png" id="15_xwitc"]
 [ext_resource type="PackedScene" uid="uid://nfpyaa104e5n" path="res://Assets/Environment/2/environment2.glb" id="16_7xgdn"]
 [ext_resource type="Texture2D" uid="uid://ds2wt4t626rsr" path="res://Assets/birds/pigeon1.png" id="17_sgj5k"]
@@ -183,7 +179,6 @@ offset_top = 27.599995
 offset_right = 840.49493
 offset_bottom = 54.600018
 scale = Vector2(0.39, 1)
-min_value = -9.0
 value = 100.0
 nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture2D_pdsj5")
@@ -196,7 +191,6 @@ offset_top = 92.0
 offset_right = 840.0
 offset_bottom = 119.0
 scale = Vector2(0.39, 1)
-min_value = -8.0
 value = 100.0
 nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture2D_h1bgf")
@@ -209,7 +203,6 @@ offset_top = 55.0
 offset_right = 1922.0006
 offset_bottom = 81.99996
 scale = Vector2(-0.39, -1)
-min_value = -10.0
 value = 100.0
 nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture2D_pdsj5")
@@ -280,16 +273,12 @@ bpm = 90
 [node name="note_audio" type="Node" parent="."]
 
 [node name="miss" type="AudioStreamPlayer" parent="note_audio"]
-stream = ExtResource("11_du6ii")
 
 [node name="good" type="AudioStreamPlayer" parent="note_audio"]
-stream = ExtResource("12_h6cda")
 
 [node name="great" type="AudioStreamPlayer" parent="note_audio"]
-stream = ExtResource("13_ft7l7")
 
 [node name="perfect" type="AudioStreamPlayer" parent="note_audio"]
-stream = ExtResource("14_vds6o")
 
 [node name="Env" type="Node3D" parent="."]
 

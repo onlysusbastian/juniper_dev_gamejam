@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://yooolskx7ego"]
+[gd_scene load_steps=14 format=3 uid="uid://yooolskx7ego"]
 
 [ext_resource type="Script" uid="uid://co8ybki6wln3y" path="res://Scripts/cutscene_3.gd" id="1_5cdrm"]
 [ext_resource type="AudioStream" uid="uid://jcwqjbtkplnt" path="res://Audio/cutscene_audio/pop_3.wav" id="2_st801"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://uvxms3rjtaem" path="res://Cutscenes/cutscene 3/5.png" id="10_st801"]
 [ext_resource type="Texture2D" uid="uid://d851pfybgdur" path="res://Cutscenes/cutscene 3/6.png" id="11_f84fm"]
 [ext_resource type="PackedScene" uid="uid://c5q2x3avfe3ap" path="res://Postprocessing/PostProcess.tscn" id="12_sikhs"]
+[ext_resource type="AudioStream" uid="uid://cx6o748xgpq03" path="res://Audio/ost/cutscene3.mp3" id="13_4lwrj"]
 
 [node name="Cutscene3" type="CanvasLayer"]
 script = ExtResource("1_5cdrm")
@@ -19,7 +20,7 @@ next_scene = "res://Scenes/main.tscn"
 
 [node name="TypingSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_st801")
-volume_db = 0.024
+volume_db = -9.618
 
 [node name="Dialogue1" type="TextureRect" parent="."]
 visible = false
@@ -315,3 +316,9 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="PostProcess" parent="." instance=ExtResource("12_sikhs")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_4lwrj")
+volume_db = -4.0
+autoplay = true
+parameters/looping = true

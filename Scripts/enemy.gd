@@ -71,6 +71,8 @@ var spin_resistance := 1.0
 
 var stun_time := 0.0
 @export var hit_cooldown := 0.8
+var invincible_timer := 0.0
+@export var invincible_time := 0.5
 
 var player : CharacterBody3D
 var knockback_velocity := Vector3.ZERO
@@ -122,6 +124,7 @@ func _physics_process(delta):
 	
 	boost_timer -= delta
 	airtime_cooldown -= delta
+	invincible_timer -= delta
 
 	if boost_timer <= 0:
 
@@ -171,7 +174,9 @@ func _physics_process(delta):
 
 	if player:
 
-		if global_position.distance_to(player.global_position) < 4 and hit_cooldown <= 0:
+		if global_position.distance_to(player.global_position) < 4 \
+		and hit_cooldown <= 0 \
+		and invincible_timer <= 0:
 			$Visual/effect.hide()
 			var push_dir = global_position - player.global_position
 			push_dir.y = 0
@@ -297,6 +302,7 @@ func _physics_process(delta):
 
 				hit_cooldown = 0.2
 				stun_time = 0.1
+				invincible_timer = invincible_time
 	
 	if charging_special:
 

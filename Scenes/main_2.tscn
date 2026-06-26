@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bbamh6l162agg"]
+[gd_scene load_steps=28 format=3 uid="uid://bbamh6l162agg"]
 
 [ext_resource type="Script" uid="uid://rf2tu3s8hg4d" path="res://Scripts/main.gd" id="1_7mvmt"]
 [ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="2_p1oyv"]
@@ -7,10 +7,6 @@
 [ext_resource type="FontFile" uid="uid://yrnkkpx8c1id" path="res://Assets/fonts/23 seconds to midnight.ttf" id="8_axuel"]
 [ext_resource type="AudioStream" uid="uid://r8dfna5f2rxf" path="res://Audio/test/eda_180.mp3" id="9_ncmf3"]
 [ext_resource type="Script" uid="uid://dw0b0do7m7sbt" path="res://Scripts/Conductor.gd" id="10_u5i0y"]
-[ext_resource type="AudioStream" uid="uid://drktr2kvotvq4" path="res://Audio/beat/coin_3.wav" id="11_habdg"]
-[ext_resource type="AudioStream" uid="uid://cyc1r1ncrj18w" path="res://Audio/beat/coin_4.wav" id="12_qas6s"]
-[ext_resource type="AudioStream" uid="uid://d01d24x2edune" path="res://Audio/beat/coin.wav" id="13_37jld"]
-[ext_resource type="AudioStream" uid="uid://buswhp1freiol" path="res://Audio/beat/coin_2.wav" id="14_0o7lx"]
 [ext_resource type="Texture2D" uid="uid://cpus0vlxswf7q" path="res://Assets/Environment/2/environment2_pahr.png" id="15_6y6hv"]
 [ext_resource type="Texture2D" uid="uid://ds2wt4t626rsr" path="res://Assets/birds/pigeon1.png" id="17_76u2v"]
 [ext_resource type="PackedScene" uid="uid://c5q2x3avfe3ap" path="res://Postprocessing/PostProcess.tscn" id="18_1v8r1"]
@@ -135,6 +131,8 @@ near = 0.029
 
 [node name="Player" parent="." instance=ExtResource("3_rcyw2")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.954, 0, -5.146)
+special_speed = 20
+airtime_dive_speed = 50
 
 [node name="Enemy" parent="." instance=ExtResource("4_n5n48")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.482, 0, 7.239)
@@ -171,7 +169,6 @@ offset_top = 27.599995
 offset_right = 840.49493
 offset_bottom = 54.600018
 scale = Vector2(0.39, 1)
-min_value = -9.0
 value = 100.0
 nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture2D_1v8r1")
@@ -184,7 +181,6 @@ offset_top = 92.0
 offset_right = 840.0
 offset_bottom = 119.0
 scale = Vector2(0.39, 1)
-min_value = -8.0
 value = 100.0
 nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture2D_7mvmt")
@@ -197,7 +193,6 @@ offset_top = 55.0
 offset_right = 1922.0006
 offset_bottom = 81.99996
 scale = Vector2(-0.39, -1)
-min_value = -10.0
 value = 100.0
 nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture2D_1v8r1")
@@ -258,16 +253,12 @@ bpm = 90
 [node name="note_audio" type="Node" parent="."]
 
 [node name="miss" type="AudioStreamPlayer" parent="note_audio"]
-stream = ExtResource("11_habdg")
 
 [node name="good" type="AudioStreamPlayer" parent="note_audio"]
-stream = ExtResource("12_qas6s")
 
 [node name="great" type="AudioStreamPlayer" parent="note_audio"]
-stream = ExtResource("13_37jld")
 
 [node name="perfect" type="AudioStreamPlayer" parent="note_audio"]
-stream = ExtResource("14_0o7lx")
 
 [node name="Env" type="Node3D" parent="."]
 

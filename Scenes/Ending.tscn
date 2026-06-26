@@ -1,3 +1,257 @@
-[gd_scene format=3 uid="uid://2il50o4wy121"]
+[gd_scene load_steps=11 format=3 uid="uid://2il50o4wy121"]
 
-[node name="Ending" type="Node2D"]
+[ext_resource type="Script" uid="uid://ctj7epvy503o3" path="res://Scripts/ending.gd" id="1_3puwj"]
+[ext_resource type="AudioStream" uid="uid://jcwqjbtkplnt" path="res://Audio/cutscene_audio/pop_3.wav" id="2_cbapr"]
+[ext_resource type="Texture2D" uid="uid://ddg5pm86dpe5y" path="res://Cutscenes/cutscene1/10.png" id="2_keknu"]
+[ext_resource type="Texture2D" uid="uid://nvyiihd02gry" path="res://Cutscenes/talk.png" id="3_cbapr"]
+[ext_resource type="FontFile" uid="uid://clo6er66bms8a" path="res://Assets/fonts/Square Thief.ttf" id="4_4p1x5"]
+[ext_resource type="Texture2D" uid="uid://bka300ibbinub" path="res://Cutscenes/cutscene1/9.png" id="5_6i72b"]
+[ext_resource type="Texture2D" uid="uid://e6y2uioetjto" path="res://Cutscenes/final_mog.png" id="6_p2pql"]
+[ext_resource type="FontFile" uid="uid://yrnkkpx8c1id" path="res://Assets/fonts/23 seconds to midnight.ttf" id="7_rhdxo"]
+[ext_resource type="AudioStream" uid="uid://d4c6sogvjbs77" path="res://Audio/ost/outro game.mp3" id="9_cbapr"]
+[ext_resource type="PackedScene" uid="uid://c5q2x3avfe3ap" path="res://Postprocessing/PostProcess.tscn" id="10_4p1x5"]
+
+[node name="Ending" type="CanvasLayer"]
+script = ExtResource("1_3puwj")
+
+[node name="TypingSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_cbapr")
+volume_db = 0.024
+
+[node name="Dialogue14" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_keknu")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue14"]
+position = Vector2(541.02997, 203.02998)
+rotation = -0.60096097
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_cbapr")
+
+[node name="2" type="RichTextLabel" parent="Dialogue14"]
+layout_mode = 0
+offset_left = 478.0
+offset_top = 118.0
+offset_right = 1138.0
+offset_bottom = 874.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_4p1x5")
+theme_override_font_sizes/normal_font_size = 120
+text = "nah you won this time. i am not fighting anymore"
+fit_content = true
+
+[node name="Dialogue13" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_6i72b")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue13"]
+position = Vector2(541.02997, 203.02998)
+rotation = 2.2005422
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_cbapr")
+
+[node name="2" type="RichTextLabel" parent="Dialogue13"]
+layout_mode = 0
+offset_left = 487.02997
+offset_top = 159.03001
+offset_right = 1237.03
+offset_bottom = 754.03
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_4p1x5")
+theme_override_font_sizes/normal_font_size = 120
+text = "you can underestim -ate me..."
+fit_content = true
+
+[node name="Dialogue15" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_6i72b")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue15"]
+position = Vector2(541.02997, 203.02998)
+rotation = 2.2005422
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_cbapr")
+
+[node name="2" type="RichTextLabel" parent="Dialogue15"]
+layout_mode = 0
+offset_left = 487.02997
+offset_top = 159.03001
+offset_right = 1281.8801
+offset_bottom = 754.03
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_4p1x5")
+theme_override_font_sizes/normal_font_size = 120
+text = "but not mr p.
+and you know, he aint dead"
+fit_content = true
+
+[node name="Dialogue16" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_keknu")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue16"]
+position = Vector2(541.02997, 203.02998)
+rotation = -0.60096097
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_cbapr")
+
+[node name="2" type="RichTextLabel" parent="Dialogue16"]
+layout_mode = 0
+offset_left = 478.0
+offset_top = 118.0
+offset_right = 1138.0
+offset_bottom = 874.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_4p1x5")
+theme_override_font_sizes/normal_font_size = 120
+text = "what?
+didnt he die like last week?"
+fit_content = true
+
+[node name="Dialogue17" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_6i72b")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue17"]
+position = Vector2(541.02997, 203.02998)
+rotation = 2.2005422
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_cbapr")
+
+[node name="2" type="RichTextLabel" parent="Dialogue17"]
+layout_mode = 0
+offset_left = 492.0
+offset_top = 147.00002
+offset_right = 1286.8501
+offset_bottom = 777.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_4p1x5")
+theme_override_font_sizes/normal_font_size = 120
+text = "might have... but there is someone who has his soul..."
+fit_content = true
+
+[node name="Dialogue18" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_6i72b")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue18"]
+position = Vector2(541.02997, 203.02998)
+rotation = 2.2005422
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_cbapr")
+
+[node name="2" type="RichTextLabel" parent="Dialogue18"]
+layout_mode = 0
+offset_left = 494.0
+offset_top = 197.0
+offset_right = 1288.8501
+offset_bottom = 827.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_4p1x5")
+theme_override_font_sizes/normal_font_size = 120
+text = "and it is.."
+fit_content = true
+
+[node name="Dialogue19" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_p2pql")
+
+[node name="Bubble" type="Sprite2D" parent="Dialogue19"]
+visible = false
+position = Vector2(541.02997, 203.02998)
+rotation = 2.2005422
+scale = Vector2(-1.745, 1.745)
+texture = ExtResource("3_cbapr")
+
+[node name="2" type="RichTextLabel" parent="Dialogue19"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 202.99994
+offset_top = -293.0
+offset_right = 952.99976
+offset_bottom = 307.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("7_rhdxo")
+theme_override_font_sizes/normal_font_size = 500
+text = "YOU"
+fit_content = true
+
+[node name="Fade" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="2" type="RichTextLabel" parent="Fade"]
+layout_mode = 0
+offset_left = 382.0
+offset_top = 280.0
+offset_right = 2571.9995
+offset_bottom = 950.0
+scale = Vector2(0.2, 0.2)
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("7_rhdxo")
+theme_override_font_sizes/normal_font_size = 300
+text = "thanks for playing :)"
+fit_content = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_cbapr")
+autoplay = true
+
+[node name="PostProcess" parent="." instance=ExtResource("10_4p1x5")]

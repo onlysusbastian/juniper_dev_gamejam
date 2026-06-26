@@ -136,7 +136,9 @@ near = 0.029
 [node name="Player" parent="." instance=ExtResource("4_jjvhh")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.954, 0, 7.5998583)
 current_spin = 300.0
-spin_damage_multiplier = 4.0
+spin_damage_multiplier = 2.7
+special_speed = 20
+airtime_dive_speed = 40
 
 [node name="Enemy" parent="." instance=ExtResource("5_kry3j")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.482, 0, -6.921579)
@@ -194,7 +196,6 @@ offset_top = 27.599995
 offset_right = 840.49493
 offset_bottom = 54.600018
 scale = Vector2(0.39, 1)
-min_value = -9.0
 value = 100.0
 nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture2D_fdnlq")
@@ -207,7 +208,6 @@ offset_top = 92.0
 offset_right = 840.0
 offset_bottom = 119.0
 scale = Vector2(0.39, 1)
-min_value = -8.0
 value = 100.0
 nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture2D_jkdf5")
@@ -220,7 +220,6 @@ offset_top = 55.0
 offset_right = 1922.0006
 offset_bottom = 81.99996
 scale = Vector2(-0.39, -1)
-min_value = -10.0
 value = 100.0
 nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture2D_fdnlq")
