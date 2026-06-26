@@ -4,6 +4,10 @@ extends Node3D
 @export var enable_special := true
 @export var enable_airtime := true
 @export var enable_boost := true
+@export var beat_frames : Array[Texture2D]
+@export var pressed_frame := 3
+@export var frame_time := 0.03
+@onready var beat_indicator = $"CanvasLayer/Control/Beat Indicator"
 
 @onready var player_stamina_bar = $CanvasLayer/Control/PlayerStamina
 @onready var player_boost_bar = $CanvasLayer/Control/PlayerBoost
@@ -17,6 +21,7 @@ extends Node3D
 @onready var enemy2 = get_node_or_null("Enemy2")
 @onready var enemy3 = get_node_or_null("Enemy3")
 
+var playing_indicator := false
 var game_over := false
 var game_started := false
 var target_fov := 37.9
@@ -36,7 +41,9 @@ func trigger_shake(strength := 0.5):
 	)
 
 func _ready():
-	
+	conductor.note_judged.connect(_on_note_judged)
+	conductor.good_window_started.connect(play_beat_animation)
+		
 	$CanvasLayer/Control/AnimationPlayer.play("fade_in")
 	#mechanic switching
 	player.enable_boost = enable_boost
@@ -319,7 +326,7 @@ func start_countdown():
 	$CanvasLayer/Control/Countdown.text = "[center]GO![/center]"
 	await get_tree().create_timer(0.6).timeout
 	
-	player.set_physics_process(true)
+	player.set_physics_process(true) 
 	enemy.set_physics_process(true)
 
 	if enemy2:
@@ -332,3 +339,20 @@ func start_countdown():
 	player.set_physics_process(true)
 	enemy.set_physics_process(true)
 	game_started = true
+	
+func play_beat_animation():
+
+	if playing_indicator:
+		return
+
+	playing_indicator = true
+
+	for texture in beat_frames:
+
+		beat_indicator.texture = texture
+
+		await get_tree().create_timer(0.03).timeout
+
+	beat_indicator.texture = beat_frames[0]
+
+	playing_indicator = false

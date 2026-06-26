@@ -2,7 +2,8 @@ extends AudioStreamPlayer
 
 @export var bpm := 100
 @export var measures := 4
-
+@export var indicator_frame_time := 0.03
+@export var indicator_pressed_frame := 4
 # Tracking the beat and song position
 var song_position = 0.0
 var song_position_in_beats = 1
@@ -22,6 +23,8 @@ var good_window := 0.2
 signal beat(position)
 signal measure(position)
 signal note_judged(result)
+signal good_window_started
+signal good_window_ended
 
 
 func _ready():
@@ -37,12 +40,20 @@ func _physics_process(_delta):
 
 
 func _report_beat():
+
 	if last_reported_beat < song_position_in_beats:
+
 		if current_measure > measures:
 			current_measure = 1
-		emit_signal("beat", song_position_in_beats)
-		emit_signal("measure", current_measure)
+
 		last_reported_beat = song_position_in_beats
+
+		emit_signal("beat", song_position_in_beats)
+
+		show_good_window()
+
+		emit_signal("measure", current_measure)
+
 		current_measure += 1
 
 
@@ -114,3 +125,17 @@ func _input(event):
 			# Consume the beat even on a miss
 			last_judged_beat = beat_number
 			note_judged.emit("miss")
+
+func show_good_window():
+
+	var start_offset = indicator_pressed_frame * indicator_frame_time
+
+	await get_tree().create_timer(
+		max(sec_per_beat - start_offset, 0.0)
+	).timeout
+
+	good_window_started.emit()
+
+	await get_tree().create_timer(good_window * 2.0).timeout
+
+	good_window_ended.emit()
