@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://ck5xjtdasprpk"]
+[gd_scene load_steps=5 format=3 uid="uid://ck5xjtdasprpk"]
+
+[ext_resource type="Texture2D" uid="uid://btsvf3tirde1p" path="res://Assets/tiles/circle.png" id="1_o3psc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kftq2"]
 albedo_color = Color(1, 0, 0, 1)
@@ -22,3 +24,8 @@ mesh = SubResource("SphereMesh_o3psc")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 transform = Transform3D(2.105, 0, 0, 0, 2.105, 0, 0, 0, 2.105, 0, 0, 0)
 shape = SubResource("SphereShape3D_kftq2")
+
+[node name="Sprite3D" type="Sprite3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, -0.005358118, 0.99998564, 0, -0.99998564, -0.005358118, 0, -0.5905776, 0)
+pixel_size = 0.095
+texture = ExtResource("1_o3psc")

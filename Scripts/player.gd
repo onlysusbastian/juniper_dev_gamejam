@@ -4,6 +4,7 @@ var enable_boost := true
 var enable_special := true
 var enable_airtime := true
 
+var egg_default_scale : Vector3
 @export var wobble_strength := 0.08
 @export var tilt_strength := 0.03
 @export var tilt_spring := 20.0
@@ -14,7 +15,7 @@ var enable_airtime := true
 @onready var blade1 = $Visual/MeshInstance3D/blade1
 @onready var hit_effect = $hit_effect
 @onready var judgement_text = $Visual/JudgementText
-
+@onready var egg = $Visual/MeshInstance3D/blade1
 @export var attack_effect_duration := 1.0
 
 const BIG_HIT_THRESHOLD := 2.0
@@ -89,6 +90,7 @@ var tilt_velocity := Vector2.ZERO
 var target_position := Vector3.ZERO
 
 func _ready():
+	egg_default_scale = egg.scale
 	hit_effect.visible = false
 
 	hit_effect.animation_finished.connect(
@@ -196,6 +198,7 @@ func _physics_process(delta):
 	and !hit_effect.visible:
 		attack_effect_timer = attack_effect_duration
 		charging_special = true
+		get_parent().marker.visible = true
 		special_charge_timer = special_charge_time
 		current_boost = current_boost - 20
 		get_parent().trigger_shake(0.4)
@@ -210,6 +213,7 @@ func _physics_process(delta):
 	and !hit_effect.visible:
 			attack_effect_timer = attack_effect_duration
 			airtime_active = true
+			get_parent().marker.visible = true
 			#get_parent().camera_zoom(30.0)
 			airtime_phase = 0
 			airtime_timer = airtime_charge_time
@@ -244,6 +248,7 @@ func _physics_process(delta):
 			#get_parent().camera_zoom(34.0)
 			get_parent().trigger_shake(1.4)
 			charging_special = false
+			get_parent().marker.visible = false
 			special_timer = special_duration
 
 		return
@@ -256,7 +261,7 @@ func _physics_process(delta):
 		visual.material_override = original_material
 
 	if current_spin <= 40:
-		print("GAME OVER")
+		#print("GAME OVER")
 		return
 
 	hit_stun -= delta
@@ -295,7 +300,7 @@ func _physics_process(delta):
 
 			global_position.x = flat_pos.x
 			global_position.z = flat_pos.y
-
+			get_parent().marker.visible = false
 			return
 	
 	# AIRTIME ATTACK
@@ -341,7 +346,9 @@ func _physics_process(delta):
 				)
 
 				airtime_phase = 1
+				
 				airtime_progress = 0.0
+				get_parent().marker.visible = false
 
 				
 
@@ -372,6 +379,7 @@ func _physics_process(delta):
 				#visual.visible = true
 
 				airtime_active = false
+				get_parent().marker.visible = false
 				get_parent().trigger_shake(3)
 				airtime_phase = 0
 
@@ -570,3 +578,21 @@ func show_judgement(text_value):
 	judgement_text.modulate.a = 0.0
 	
 	judgement_text.scale = Vector3.ONE * 5.0
+
+func beat_pulse():
+
+	var tween = create_tween()
+
+	tween.tween_property(
+		egg,
+		"scale",
+		egg_default_scale * Vector3(1.22, 0.70, 1.22), 
+		0.03
+	)
+
+	tween.tween_property(
+		egg,
+		"scale",
+		egg_default_scale,
+		0.12
+	)

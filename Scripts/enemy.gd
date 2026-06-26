@@ -3,10 +3,11 @@ extends CharacterBody3D
 var enable_boost := true
 var enable_special := true
 var enable_airtime := true
-
+var egg_default_scale : Vector3
 @onready var ai = $Visual
 @onready var visual = $Visual/MeshInstance3D
 @onready var blade2 = $Visual/MeshInstance3D/blade2
+
 const BIG_HIT_THRESHOLD := 2.0
 const HIT_SPARK = preload(
 	"res://Scenes/HitSpark.tscn"
@@ -79,6 +80,7 @@ var knockback_velocity := Vector3.ZERO
 
 
 func _ready():
+	egg_default_scale = blade2.scale
 
 	original_material = visual.get_active_material(0)
 
@@ -495,3 +497,21 @@ func _physics_process(delta):
 
 	blade2.rotation.x = tilt.x
 	blade2.rotation.z = tilt.y
+
+func beat_pulse():
+
+	var tween = create_tween()
+
+	tween.tween_property(
+		blade2,
+		"scale",
+		egg_default_scale * Vector3(1.22, 0.70, 1.22),
+		0.03
+	)
+
+	tween.tween_property(
+		blade2,
+		"scale",
+		egg_default_scale,
+		0.12
+	)

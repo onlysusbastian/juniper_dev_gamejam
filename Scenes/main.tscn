@@ -1,10 +1,14 @@
-[gd_scene load_steps=29 format=3 uid="uid://6ph4j2ye3m0"]
+[gd_scene load_steps=33 format=3 uid="uid://6ph4j2ye3m0"]
 
 [ext_resource type="Script" uid="uid://rf2tu3s8hg4d" path="res://Scripts/main.gd" id="1_8gbba"]
+[ext_resource type="Texture2D" uid="uid://b7pyuqnj5sybf" path="res://Assets/tiles/space3.png" id="3_b3802"]
 [ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="3_jjvhh"]
+[ext_resource type="Texture2D" uid="uid://24cgf3kqun6y" path="res://Assets/tiles/space6.png" id="4_fevyy"]
 [ext_resource type="PackedScene" uid="uid://ck6jrbqtyqrhf" path="res://Scenes/Player.tscn" id="4_jjvhh"]
+[ext_resource type="Texture2D" uid="uid://wamxokeftx5x" path="res://Assets/tiles/space2.png" id="5_hibaj"]
 [ext_resource type="PackedScene" uid="uid://dfysmu00krk0s" path="res://Scenes/Enemy.tscn" id="5_kry3j"]
 [ext_resource type="AudioStream" uid="uid://r8dfna5f2rxf" path="res://Audio/test/eda_180.mp3" id="6_6bp64"]
+[ext_resource type="Texture2D" uid="uid://lhqrhdbaw6sj" path="res://Assets/tiles/space1.png" id="6_wsu2k"]
 [ext_resource type="Script" uid="uid://dw0b0do7m7sbt" path="res://Scripts/Conductor.gd" id="7_344ge"]
 [ext_resource type="PackedScene" uid="uid://bf2chskegbcp8" path="res://Assets/Environment/main/environment1.glb" id="8_344ge"]
 [ext_resource type="FontFile" uid="uid://yrnkkpx8c1id" path="res://Assets/fonts/23 seconds to midnight.ttf" id="8_hibaj"]
@@ -122,6 +126,7 @@ animations = [{
 [node name="main" type="Node3D"]
 script = ExtResource("1_8gbba")
 mission_number = 3
+beat_frames = Array[Texture2D]([ExtResource("6_wsu2k"), ExtResource("3_b3802"), ExtResource("4_fevyy"), ExtResource("4_fevyy"), ExtResource("3_b3802"), ExtResource("5_hibaj")])
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
@@ -132,6 +137,7 @@ fov = 37.9
 near = 0.029
 
 [node name="MouseMarker" parent="." instance=ExtResource("3_jjvhh")]
+visible = false
 
 [node name="Player" parent="." instance=ExtResource("4_jjvhh")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.954, 0, 7.5998583)
@@ -189,6 +195,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PlayerStamina" type="TextureProgressBar" parent="CanvasLayer/Control"]
+visible = false
 texture_filter = 1
 layout_mode = 0
 offset_left = 42.494946
@@ -201,6 +208,7 @@ nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture2D_fdnlq")
 
 [node name="PlayerBoost" type="TextureProgressBar" parent="CanvasLayer/Control"]
+visible = false
 texture_filter = 1
 layout_mode = 0
 offset_left = 42.000004
@@ -213,6 +221,7 @@ nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture2D_jkdf5")
 
 [node name="EnemyStamina" type="TextureProgressBar" parent="CanvasLayer/Control"]
+visible = false
 texture_filter = 1
 layout_mode = 0
 offset_left = 1124.0
@@ -237,6 +246,12 @@ text = "BOOST : LMB
 HEAVY ATTACK : A/D
 RHYTHM : SPACE
 "
+
+[node name="Beat Indicator" type="Sprite2D" parent="CanvasLayer/Control"]
+self_modulate = Color(1, 1, 1, 0.64705884)
+position = Vector2(595, 568)
+scale = Vector2(0.725586, 0.74609333)
+texture = ExtResource("6_wsu2k")
 
 [node name="FadeScreen" type="ColorRect" parent="CanvasLayer/Control"]
 layout_mode = 1

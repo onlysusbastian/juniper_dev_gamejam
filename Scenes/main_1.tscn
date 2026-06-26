@@ -134,6 +134,8 @@ fov = 37.9
 near = 0.029
 
 [node name="MouseMarker" parent="." instance=ExtResource("2_7xgdn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45238915, 0)
+visible = false
 
 [node name="Player" parent="." instance=ExtResource("3_b7urp")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.954, 0, 8.055233)
@@ -142,10 +144,10 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.954, 0, 8.055233)
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.482, 0, -8.963287)
 
 [node name="SpotLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.0128977215, 0.7417134, 0.6705929, -0.0014087502, -0.6706615, 0.7417622, 0.99991584, 0.008622343, 0.009694894, 24.06976, 25.603672, 1.1600132)
-light_color = Color(0.46561378, 0.45947146, 0.43005252, 1)
+transform = Transform3D(-0.010909503, 0.9632063, 0.26854205, -0.0070227203, -0.26862526, 0.9632192, 0.99991584, 0.008622346, 0.009694894, 3.4514036, 25.603672, 1.1600132)
+light_color = Color(0.6504383, 0.6424357, 0.614326, 1)
 light_energy = 1.381
-light_indirect_energy = 10.887
+light_indirect_energy = 10.557
 light_volumetric_fog_energy = 0.0
 light_specular = 6.309
 shadow_enabled = true
@@ -216,12 +218,11 @@ RHYTHM : SPACE
 
 [node name="Beat Indicator" type="Sprite2D" parent="CanvasLayer/Control"]
 self_modulate = Color(1, 1, 1, 0.64705884)
-position = Vector2(587, 568)
+position = Vector2(595, 568)
 scale = Vector2(0.725586, 0.74609333)
 texture = ExtResource("6_fu4f7")
 
 [node name="FadeScreen" type="ColorRect" parent="CanvasLayer/Control"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

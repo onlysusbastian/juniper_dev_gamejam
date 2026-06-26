@@ -4,6 +4,11 @@ extends Node3D
 @export var enable_special := true
 @export var enable_airtime := true
 @export var enable_boost := true
+@export var beat_frames : Array[Texture2D]
+
+@onready var beat_indicator = $"CanvasLayer/Control/Beat Indicator"
+
+var playing_indicator := false
 
 @onready var player_stamina_bar = $CanvasLayer/Control/PlayerStamina
 @onready var player_boost_bar = $CanvasLayer/Control/PlayerBoost
@@ -53,6 +58,10 @@ func _ready():
 
 	conductor.note_judged.connect(
 		_on_note_judged
+	)
+	
+	conductor.good_window_started.connect(
+	play_beat_animation
 	)
 
 	player_stamina_bar.max_value = 60
@@ -174,39 +183,40 @@ func _on_note_judged(result):
 
 		"miss":
 			$note_audio/miss.play()
-			beat_punch = randf_range(
-				0.0,
-				0.0
-			)
+			#beat_punch = randf_range(
+				#0.0,
+				#0.0
+			#)
 
 		"good":
 			$note_audio/good.play()
 			player.current_boost += 4
 			player.current_spin += 1
-			beat_punch = randf_range(
-				0.0,
-				0.0
-			)
+			camera_zoom(32)
+			#beat_punch = randf_range(
+				#0.0,
+				#0.0
+			#)
 
 		"great":
 			$note_audio/great.play()
 			player.current_boost += 7
 			player.current_spin += 4
-
-			beat_punch = randf_range(
-				0.2,
-				0.2
-			)
+			camera_zoom(30)
+			#beat_punch = randf_range(
+				#0.8,
+				#0.8
+			#)
 
 		"perfect":
 			$note_audio/perfect.play()
 			player.current_boost += 10 
 			player.current_spin += 8
-
-			beat_punch = randf_range(
-				0.5,
-				0.5
-			)
+			camera_zoom(25)
+			#beat_punch = randf_range(
+				#0.8,
+				#0.8
+			#)
 
 	player.current_boost = clamp(
 		player.current_boost,
@@ -220,7 +230,7 @@ func _on_note_judged(result):
 		100.0
 	)
 
-	print(result)
+	#print(result)
 	
 func camera_zoom(fov_value):
 
@@ -295,21 +305,38 @@ func _input(event):
 
 	if event.is_action_pressed("finish_tutorial"):
 
-		print("F PRESSED")
+		#print("F PRESSED")
 
 		practice_mode = false
 
 		var anim = $CanvasLayer/Control/AnimationPlayer
 
-		print(anim)
-		print(anim.has_animation("fade_out"))
+		#print(anim)
+		#print(anim.has_animation("fade_out"))
 
 		anim.play("fade_out")
 
-		print(anim.current_animation)
+		#print(anim.current_animation)
 
 		await anim.animation_finished
 
-		print("Animation finished")
+		#print("Animation finished")
 
 		get_tree().change_scene_to_file("res://Scenes/main_1.tscn")
+
+func play_beat_animation():
+
+	if playing_indicator:
+		return
+
+	playing_indicator = true
+
+	for texture in beat_frames:
+
+		beat_indicator.texture = texture
+
+		await get_tree().create_timer(0.03).timeout
+
+	beat_indicator.texture = beat_frames[0]
+
+	playing_indicator = false

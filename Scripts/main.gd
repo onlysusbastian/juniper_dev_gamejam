@@ -4,6 +4,7 @@ extends Node3D
 @export var enable_special := true
 @export var enable_airtime := true
 @export var enable_boost := true
+
 @export var beat_frames : Array[Texture2D]
 @export var pressed_frame := 3
 @export var frame_time := 0.03
@@ -21,6 +22,8 @@ extends Node3D
 @onready var enemy2 = get_node_or_null("Enemy2")
 @onready var enemy3 = get_node_or_null("Enemy3")
 
+var beat_scale := 0.0
+var beat_rotation := 0.0
 var playing_indicator := false
 var game_over := false
 var game_started := false
@@ -41,6 +44,7 @@ func trigger_shake(strength := 0.5):
 	)
 
 func _ready():
+	conductor.beat.connect(_on_beat)
 	conductor.note_judged.connect(_on_note_judged)
 	conductor.good_window_started.connect(play_beat_animation)
 		
@@ -74,7 +78,6 @@ func _ready():
 	if enemy3:
 		enemy3.player = player
 		enemy3.ai.player = player
-
 	conductor.note_judged.connect(
 		_on_note_judged
 	)
@@ -126,6 +129,9 @@ func _process(delta):
 		0.0,
 		10.0 * delta
 	)
+	
+	beat_scale = lerp(beat_scale, 0.0, 10.0 * delta)
+	beat_rotation = lerp(beat_rotation, 0.0, 12.0 * delta)
 
 	if shake_strength > 0:
 
@@ -212,7 +218,20 @@ func _process(delta):
 	+ camera_offset
 	+ shake_offset
 	+ beat_offset
-)
+	)
+	
+func _on_beat(_position):
+
+	player.beat_pulse()
+
+	if enemy:
+		enemy.beat_pulse()
+
+	if enemy2:
+		enemy2.beat_pulse()
+
+	if enemy3:
+		enemy3.beat_pulse()
 
 func _on_note_judged(result):	
 	
@@ -221,39 +240,41 @@ func _on_note_judged(result):
 
 		"miss":
 			$note_audio/miss.play()
-			beat_punch = randf_range(
-				0.0,
-				0.0
-			)
+			player.current_spin -= 2
+			#beat_punch = randf_range(
+				#0.0,
+				#0.0
+			#)
 
 		"good":
 			$note_audio/good.play()
-			player.current_boost += 4
+			player.current_boost += 2
 			player.current_spin += 1
-			beat_punch = randf_range(
-				0.0,
-				0.0
-			)
+			camera_zoom(32)
+			#beat_punch = randf_range(
+				#0.0,
+				#0.0
+			#)
 
 		"great":
 			$note_audio/great.play()
-			player.current_boost += 7
-			player.current_spin += 4
-
-			beat_punch = randf_range(
-				0.2,
-				0.2
-			)
+			player.current_boost += 3
+			player.current_spin += 1.5
+			camera_zoom(30)
+			#beat_punch = randf_range(
+				#0.8,
+				#0.8
+			#)
 
 		"perfect":
 			$note_audio/perfect.play()
-			player.current_boost += 10 
-			player.current_spin += 8
-
-			beat_punch = randf_range(
-				0.5,
-				0.5
-			)
+			player.current_boost += 4.5
+			player.current_spin += 4
+			camera_zoom(25)
+			#beat_punch = randf_range(
+				#0.8,
+				#0.8
+			#)
 
 	player.current_boost = clamp(
 		player.current_boost,
@@ -267,7 +288,7 @@ func _on_note_judged(result):
 		100.0
 	)
 
-	print(result)
+	#print(result)
 	
 func camera_zoom(fov_value):
 

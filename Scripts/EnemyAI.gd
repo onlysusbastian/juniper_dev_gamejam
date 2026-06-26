@@ -94,7 +94,7 @@ func change_state(new_state, duration):
 	state = new_state
 	state_timer = duration
 
-	print("AI:", state)
+	#print("AI:", state)
 
 func should_boost() -> bool:
 

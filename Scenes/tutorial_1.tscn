@@ -1,8 +1,12 @@
-[gd_scene load_steps=31 format=3 uid="uid://f1gpt84fcs8u"]
+[gd_scene load_steps=35 format=3 uid="uid://f1gpt84fcs8u"]
 
 [ext_resource type="Script" uid="uid://bhkeqj2wi1i0" path="res://Scripts/tutorial_1.gd" id="1_qd5km"]
 [ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="2_6o7rb"]
 [ext_resource type="PackedScene" uid="uid://ck6jrbqtyqrhf" path="res://Scenes/Player.tscn" id="3_qd5km"]
+[ext_resource type="Texture2D" uid="uid://b7pyuqnj5sybf" path="res://Assets/tiles/space3.png" id="3_qx1ny"]
+[ext_resource type="Texture2D" uid="uid://di1nyefxb440v" path="res://Assets/tiles/space4.png" id="4_w2e3v"]
+[ext_resource type="Texture2D" uid="uid://lhqrhdbaw6sj" path="res://Assets/tiles/space1.png" id="5_gheb2"]
+[ext_resource type="Texture2D" uid="uid://24cgf3kqun6y" path="res://Assets/tiles/space6.png" id="5_k8lbx"]
 [ext_resource type="Texture2D" uid="uid://3u0chbgvfdx5" path="res://Assets/ui/splash.png" id="5_qd5km"]
 [ext_resource type="FontFile" uid="uid://yrnkkpx8c1id" path="res://Assets/fonts/23 seconds to midnight.ttf" id="5_w2e3v"]
 [ext_resource type="AudioStream" uid="uid://r8dfna5f2rxf" path="res://Audio/test/eda_180.mp3" id="6_k8lbx"]
@@ -103,6 +107,7 @@ uv1_scale = Vector3(3.72, 3.72, 3.72)
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_qd5km")
+beat_frames = Array[Texture2D]([ExtResource("5_gheb2"), ExtResource("3_qx1ny"), ExtResource("4_w2e3v"), ExtResource("5_k8lbx"), ExtResource("3_qx1ny"), ExtResource("5_gheb2")])
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_s3gi3")
@@ -206,6 +211,12 @@ text = "BOOST : LMB
 RHYTHM : SPACE
 "
 
+[node name="Beat Indicator" type="Sprite2D" parent="CanvasLayer/Control"]
+self_modulate = Color(1, 1, 1, 0.64705884)
+position = Vector2(595, 568)
+scale = Vector2(0.725586, 0.74609333)
+texture = ExtResource("5_gheb2")
+
 [node name="FadeScreen" type="ColorRect" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 15
@@ -246,9 +257,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -437.0
-offset_top = -93.0
+offset_top = -70.0
 offset_right = 4417.9995
-offset_bottom = 217.0
+offset_bottom = 240.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.2, 0.2)
@@ -347,14 +358,14 @@ anchor_bottom = 0.5
 offset_left = -202.0
 offset_top = -67.0
 offset_right = 1787.9996
-offset_bottom = 652.9999
+offset_bottom = 747.9999
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.2, 0.2)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_fonts/normal_font = ExtResource("6_qx1ny")
 theme_override_font_sizes/normal_font_size = 150
-text = "use spacebar to match the rhythm of the music. that gives you health and boost"
+text = "use spacebar to match the rhythm of the music. that gives you health and boost. check the spacebar below for help"
 
 [node name="Screen3" type="Control" parent="CanvasLayer/Tutorial"]
 layout_mode = 1

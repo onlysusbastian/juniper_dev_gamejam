@@ -1,9 +1,13 @@
-[gd_scene load_steps=28 format=3 uid="uid://bbamh6l162agg"]
+[gd_scene load_steps=32 format=3 uid="uid://bbamh6l162agg"]
 
 [ext_resource type="Script" uid="uid://rf2tu3s8hg4d" path="res://Scripts/main.gd" id="1_7mvmt"]
 [ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="2_p1oyv"]
+[ext_resource type="Texture2D" uid="uid://b7pyuqnj5sybf" path="res://Assets/tiles/space3.png" id="3_1v8r1"]
 [ext_resource type="PackedScene" uid="uid://ck6jrbqtyqrhf" path="res://Scenes/Player.tscn" id="3_rcyw2"]
+[ext_resource type="Texture2D" uid="uid://di1nyefxb440v" path="res://Assets/tiles/space4.png" id="4_go1jf"]
 [ext_resource type="PackedScene" uid="uid://dfysmu00krk0s" path="res://Scenes/Enemy.tscn" id="4_n5n48"]
+[ext_resource type="Texture2D" uid="uid://24cgf3kqun6y" path="res://Assets/tiles/space6.png" id="5_7mvmt"]
+[ext_resource type="Texture2D" uid="uid://lhqrhdbaw6sj" path="res://Assets/tiles/space1.png" id="6_uot50"]
 [ext_resource type="FontFile" uid="uid://yrnkkpx8c1id" path="res://Assets/fonts/23 seconds to midnight.ttf" id="8_axuel"]
 [ext_resource type="AudioStream" uid="uid://r8dfna5f2rxf" path="res://Audio/test/eda_180.mp3" id="9_ncmf3"]
 [ext_resource type="Script" uid="uid://dw0b0do7m7sbt" path="res://Scripts/Conductor.gd" id="10_u5i0y"]
@@ -118,6 +122,7 @@ animations = [{
 [node name="main" type="Node3D"]
 script = ExtResource("1_7mvmt")
 mission_number = 2
+beat_frames = Array[Texture2D]([ExtResource("6_uot50"), ExtResource("3_1v8r1"), ExtResource("4_go1jf"), ExtResource("5_7mvmt"), ExtResource("3_1v8r1"), ExtResource("6_uot50")])
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
@@ -128,6 +133,7 @@ fov = 37.9
 near = 0.029
 
 [node name="MouseMarker" parent="." instance=ExtResource("2_p1oyv")]
+visible = false
 
 [node name="Player" parent="." instance=ExtResource("3_rcyw2")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.954, 0, -5.146)
@@ -210,6 +216,12 @@ text = "BOOST : LMB
 HEAVY ATTACK : A/D
 RHYTHM : SPACE
 "
+
+[node name="Beat Indicator" type="Sprite2D" parent="CanvasLayer/Control"]
+self_modulate = Color(1, 1, 1, 0.64705884)
+position = Vector2(595, 568)
+scale = Vector2(0.725586, 0.74609333)
+texture = ExtResource("6_uot50")
 
 [node name="FadeScreen" type="ColorRect" parent="CanvasLayer/Control"]
 layout_mode = 1
