@@ -42,9 +42,10 @@ func trigger_shake(strength := 0.5):
 		shake_strength,
 		strength
 	)
-
+ 
 func _ready():
-	conductor.beat.connect(_on_beat)
+	conductor.good_window_started.connect(_on_visual_beat)
+	#conductor.beat.connect(_on_beat)
 	conductor.note_judged.connect(_on_note_judged)
 	conductor.good_window_started.connect(play_beat_animation)
 		
@@ -187,9 +188,21 @@ func _process(delta):
 
 		marker.global_position = hit
 
+		var min_radius := 1.5
+
+		var dir = hit - player.global_position
+		dir.y = 0
+
+		if dir.length() > 0.001 and dir.length() < min_radius:
+
+			hit = player.global_position + dir.normalized() * min_radius
+
 		player.target_position = hit
 
 		var offset = hit - player.global_position
+
+		if offset.length() < 0.3:
+			offset = Vector3.ZERO
 
 		camera_offset = camera_offset.lerp(
 			Vector3(
@@ -297,6 +310,7 @@ func camera_zoom(fov_value):
 func player_won():
 
 	$CanvasLayer/Control/AnimationPlayer.play("fade_out")
+	await conductor.fade_out(0.8)
 
 	await $CanvasLayer/Control/AnimationPlayer.animation_finished
 	
@@ -310,6 +324,7 @@ func player_won():
 func player_lost():
 
 	$CanvasLayer/Control/AnimationPlayer.play("fade_out")
+	await conductor.fade_out(0.8)
 
 	await $CanvasLayer/Control/AnimationPlayer.animation_finished
 	get_tree().change_scene_to_file("res://Scenes/death_player.tscn")
@@ -377,3 +392,16 @@ func play_beat_animation():
 	beat_indicator.texture = beat_frames[0]
 
 	playing_indicator = false
+
+func _on_visual_beat():
+
+	player.beat_pulse()
+
+	if enemy:
+		enemy.beat_pulse()
+
+	if enemy2:
+		enemy2.beat_pulse()
+
+	if enemy3:
+		enemy3.beat_pulse()

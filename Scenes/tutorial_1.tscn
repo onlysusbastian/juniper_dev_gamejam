@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://f1gpt84fcs8u"]
+[gd_scene load_steps=29 format=3 uid="uid://f1gpt84fcs8u"]
 
 [ext_resource type="Script" uid="uid://bhkeqj2wi1i0" path="res://Scripts/tutorial_1.gd" id="1_qd5km"]
 [ext_resource type="PackedScene" uid="uid://ck5xjtdasprpk" path="res://Scenes/MouseMarker.tscn" id="2_6o7rb"]
@@ -9,16 +9,12 @@
 [ext_resource type="Texture2D" uid="uid://24cgf3kqun6y" path="res://Assets/tiles/space6.png" id="5_k8lbx"]
 [ext_resource type="Texture2D" uid="uid://3u0chbgvfdx5" path="res://Assets/ui/splash.png" id="5_qd5km"]
 [ext_resource type="FontFile" uid="uid://yrnkkpx8c1id" path="res://Assets/fonts/23 seconds to midnight.ttf" id="5_w2e3v"]
-[ext_resource type="AudioStream" uid="uid://r8dfna5f2rxf" path="res://Audio/test/eda_180.mp3" id="6_k8lbx"]
 [ext_resource type="FontFile" uid="uid://clo6er66bms8a" path="res://Assets/fonts/Square Thief.ttf" id="6_qx1ny"]
 [ext_resource type="Script" uid="uid://dw0b0do7m7sbt" path="res://Scripts/Conductor.gd" id="7_hugjn"]
-[ext_resource type="AudioStream" uid="uid://drktr2kvotvq4" path="res://Audio/beat/coin_3.wav" id="8_fxvdb"]
-[ext_resource type="AudioStream" uid="uid://cyc1r1ncrj18w" path="res://Audio/beat/coin_4.wav" id="9_ewdrc"]
-[ext_resource type="AudioStream" uid="uid://d01d24x2edune" path="res://Audio/beat/coin.wav" id="10_h52wn"]
-[ext_resource type="AudioStream" uid="uid://buswhp1freiol" path="res://Audio/beat/coin_2.wav" id="11_h681o"]
+[ext_resource type="AudioStream" uid="uid://byd5wnn2uxsrp" path="res://Audio/ost/untitled.mp3" id="11_s3gi3"]
 [ext_resource type="Texture2D" uid="uid://cpus0vlxswf7q" path="res://Assets/Environment/2/environment2_pahr.png" id="12_l6vw1"]
 [ext_resource type="PackedScene" uid="uid://s1jmysodr4kn" path="res://Assets/Arena/arena1.glb" id="13_qd5km"]
-[ext_resource type="Texture2D" uid="uid://yxiajbkb1mbn" path="res://Assets/Environment/graph.jpg" id="15_7bhxr"]
+[ext_resource type="Texture2D" uid="uid://e6y2uioetjto" path="res://Cutscenes/final_mog.png" id="16_gheb2"]
 [ext_resource type="PackedScene" uid="uid://c5q2x3avfe3ap" path="res://Postprocessing/PostProcess.tscn" id="16_s3gi3"]
 
 [sub_resource type="Environment" id="Environment_s3gi3"]
@@ -97,14 +93,6 @@ albedo_texture = ExtResource("12_l6vw1")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_6bp64"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_gheb2"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6o7rb"]
-albedo_texture = ExtResource("15_7bhxr")
-metallic = 1.0
-normal_scale = -2.4
-uv1_scale = Vector3(3.72, 3.72, 3.72)
-
 [node name="main" type="Node3D"]
 script = ExtResource("1_qd5km")
 beat_frames = Array[Texture2D]([ExtResource("5_gheb2"), ExtResource("3_qx1ny"), ExtResource("4_w2e3v"), ExtResource("5_k8lbx"), ExtResource("3_qx1ny"), ExtResource("5_gheb2")])
@@ -119,6 +107,7 @@ fov = 37.9
 near = 0.029
 
 [node name="MouseMarker" parent="." instance=ExtResource("2_6o7rb")]
+visible = false
 
 [node name="Player" parent="." instance=ExtResource("3_qd5km")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.954, 0, -5.146)
@@ -257,9 +246,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -437.0
-offset_top = -70.0
+offset_top = -55.0
 offset_right = 4417.9995
-offset_bottom = 240.0
+offset_bottom = 255.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.2, 0.2)
@@ -434,8 +423,7 @@ text = "NEXT"
 flat = true
 
 [node name="Conductor" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_k8lbx")
-volume_db = -10.957
+stream = ExtResource("11_s3gi3")
 autoplay = true
 script = ExtResource("7_hugjn")
 bpm = 90
@@ -443,16 +431,12 @@ bpm = 90
 [node name="note_audio" type="Node" parent="."]
 
 [node name="miss" type="AudioStreamPlayer" parent="note_audio"]
-stream = ExtResource("8_fxvdb")
 
 [node name="good" type="AudioStreamPlayer" parent="note_audio"]
-stream = ExtResource("9_ewdrc")
 
 [node name="great" type="AudioStreamPlayer" parent="note_audio"]
-stream = ExtResource("10_h52wn")
 
 [node name="perfect" type="AudioStreamPlayer" parent="note_audio"]
-stream = ExtResource("11_h681o")
 
 [node name="Env" type="Node3D" parent="."]
 
@@ -580,11 +564,6 @@ material_override = SubResource("StandardMaterial3D_b7urp")
 mesh = SubResource("CylinderMesh_6bp64")
 skeleton = NodePath("")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(400, 0, 0, 0, 1, 0, 0, 0, 400, 0, -2.06, 0)
-mesh = SubResource("BoxMesh_gheb2")
-surface_material_override/0 = SubResource("StandardMaterial3D_6o7rb")
-
 [node name="SpotLight3D2" type="SpotLight3D" parent="."]
 transform = Transform3D(0.9768929, -0.0027342152, 0.21371199, -0.21372949, -0.012497271, 0.97681296, 0, -0.99991816, -0.012792878, 0, 57.856453, 0)
 light_energy = 4.223
@@ -597,5 +576,9 @@ spot_attenuation = 0.71
 spot_angle = 32.05
 
 [node name="PostProcess" parent="." instance=ExtResource("16_s3gi3")]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(-2.2111406e-06, -20.41334, 46.283234, 0, 46.283234, 20.41334, -50.585, 8.9229536e-07, -2.0231046e-06, -47.007347, 2.6585674, 0)
+texture = ExtResource("16_gheb2")
 
 [connection signal="pressed" from="CanvasLayer/Tutorial/NextButton" to="." method="_on_next_button_pressed"]

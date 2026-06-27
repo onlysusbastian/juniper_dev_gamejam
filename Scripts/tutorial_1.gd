@@ -146,9 +146,22 @@ func _process(delta):
 
 		marker.global_position = hit
 
-		player.target_position = hit
+		var deadzone := 1.0
 
-		var offset = hit - player.global_position
+		var dir = hit - player.global_position
+		dir.y = 0.0
+
+		if dir.length() > deadzone:
+
+			player.target_position = (
+				player.global_position
+				+ dir.normalized() * (dir.length() - deadzone)
+			)
+
+		var offset = player.target_position - player.global_position
+
+		if offset.length() < 0.3:
+			offset = Vector3.ZERO
 
 		camera_offset = camera_offset.lerp(
 			Vector3(

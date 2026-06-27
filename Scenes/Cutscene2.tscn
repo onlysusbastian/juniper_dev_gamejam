@@ -1,7 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://crafgii4pwrs5"]
+[gd_scene load_steps=18 format=3 uid="uid://crafgii4pwrs5"]
 
 [ext_resource type="Script" uid="uid://ct17c1aoum8e8" path="res://Scripts/cutscene_2.gd" id="1_2mqi4"]
-[ext_resource type="AudioStream" uid="uid://jcwqjbtkplnt" path="res://Audio/cutscene_audio/pop_3.wav" id="2_vvdcv"]
 [ext_resource type="Texture2D" uid="uid://nvyiihd02gry" path="res://Cutscenes/talk.png" id="3_vvdcv"]
 [ext_resource type="Texture2D" uid="uid://b4nq41rx2wcm6" path="res://Cutscenes/cutscene 2/1.png" id="3_xlha4"]
 [ext_resource type="FontFile" uid="uid://clo6er66bms8a" path="res://Assets/fonts/Square Thief.ttf" id="4_xlha4"]
@@ -28,7 +27,6 @@ script = ExtResource("1_2mqi4")
 next_scene = "res://Scenes/main_2.tscn"
 
 [node name="TypingSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_vvdcv")
 volume_db = 0.024
 
 [node name="Dialogue1" type="TextureRect" parent="."]
@@ -346,7 +344,7 @@ theme_override_fonts/normal_font = ExtResource("4_xlha4")
 theme_override_font_sizes/normal_font_size = 120
 text = "i said
 gimme my egg
-you retard"
+you ******"
 fit_content = true
 
 [node name="Dialogue20" type="TextureRect" parent="."]
@@ -403,7 +401,7 @@ scale = Vector2(0.2, 0.2)
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("4_xlha4")
 theme_override_font_sizes/normal_font_size = 120
-text = "my love told me about the powers he is passing down to his son"
+text = "my love told me about the powers he passed down to his son"
 fit_content = true
 
 [node name="Dialogue21" type="TextureRect" parent="."]
@@ -459,7 +457,7 @@ scale = Vector2(0.2, 0.2)
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("4_xlha4")
 theme_override_font_sizes/normal_font_size = 120
-text = "fight me you moron. what are you doing??"
+text = "fight me you *****. what are you doing??"
 fit_content = true
 
 [node name="Dialogue22" type="TextureRect" parent="."]
@@ -555,14 +553,6 @@ love
 -mr p"
 fit_content = true
 
-[node name="Fade" type="ColorRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
-
 [node name="PostProcess" parent="." instance=ExtResource("15_7rgrc")]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
@@ -570,3 +560,11 @@ stream = ExtResource("16_vvdcv")
 volume_db = -10.0
 autoplay = true
 parameters/looping = true
+
+[node name="Fade" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

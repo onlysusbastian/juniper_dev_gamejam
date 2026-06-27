@@ -68,7 +68,7 @@ func _process(delta):
 
 		current_label.visible_characters += 1
 
-		$TypingSound.pitch_scale = randf_range(0.3, 0.8)
+		$TypingSound.pitch_scale = randf_range(1, 1.1)
 		$TypingSound.play()
 		typing_sound_timer = 0.03
 

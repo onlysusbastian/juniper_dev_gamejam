@@ -1,5 +1,5 @@
 extends AudioStreamPlayer
-
+@export var music_fade_time := 1.5
 @export var bpm := 100
 @export var measures := 4
 @export var indicator_frame_time := 0.03
@@ -16,8 +16,8 @@ var last_judged_beat := -999
 var closest = 0
 var time_off_beat = 0.0
 
-var perfect_window := 0.02
-var great_window := 0.05
+var perfect_window := 0.04
+var great_window := 0.08
 var good_window := 0.2
 
 signal beat(position)
@@ -29,6 +29,8 @@ signal good_window_ended
 
 func _ready():
 	sec_per_beat = 60.0 / bpm
+	finished.connect(_on_finished)
+	play()
 
 
 func _physics_process(_delta):
@@ -64,8 +66,10 @@ func play_with_beat_offset(num):
 
 
 func closest_beat(nth):
-	closest = int(round((song_position / sec_per_beat) / nth) * nth) 
-	time_off_beat = abs(closest * sec_per_beat - song_position)
+	var web_offset := 0.03 # 50 ms
+
+	closest = int(round(((song_position + web_offset) / sec_per_beat) / nth) * nth)
+	time_off_beat = abs(closest * sec_per_beat - (song_position + web_offset))
 	return Vector2(closest, time_off_beat)
 
 
@@ -139,3 +143,29 @@ func show_good_window():
 	await get_tree().create_timer(good_window * 2.0).timeout
 
 	good_window_ended.emit()
+
+func _on_finished():
+
+	last_reported_beat = -1
+	last_judged_beat = -999
+	current_measure = 1
+	song_position_in_beats = 0
+	song_position = 0.0
+	beats_before_start = 0
+
+	play()
+	
+func fade_out(time := 1.0):
+
+	var tween = create_tween()
+
+	tween.tween_property(
+		self,
+		"volume_db",
+		-80.0,
+		time
+	)
+
+	await tween.finished
+
+	stop()

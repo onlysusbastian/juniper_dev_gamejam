@@ -1,14 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://ck5xjtdasprpk"]
+[gd_scene load_steps=4 format=3 uid="uid://ck5xjtdasprpk"]
 
 [ext_resource type="Texture2D" uid="uid://btsvf3tirde1p" path="res://Assets/tiles/circle.png" id="1_o3psc"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kftq2"]
-albedo_color = Color(1, 0, 0, 1)
+[sub_resource type="CylinderMesh" id="CylinderMesh_kftq2"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_o3psc"]
-material = SubResource("StandardMaterial3D_kftq2")
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_kftq2"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o3psc"]
+albedo_texture = ExtResource("1_o3psc")
+uv1_scale = Vector3(1.845, 0.715, 1.275)
+uv1_offset = Vector3(0.045, 0, 0)
 
 [node name="MouseMarker" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.20221034, 0)
@@ -16,16 +15,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.20221034, 0)
 [node name="Node3D" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.5, 0)
-mesh = SubResource("SphereMesh_o3psc")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-transform = Transform3D(2.105, 0, 0, 0, 2.105, 0, 0, 0, 2.105, 0, 0, 0)
-shape = SubResource("SphereShape3D_kftq2")
-
-[node name="Sprite3D" type="Sprite3D" parent="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, -0.005358118, 0.99998564, 0, -0.99998564, -0.005358118, 0, -0.5905776, 0)
-pixel_size = 0.095
-texture = ExtResource("1_o3psc")
+transform = Transform3D(4.595, 0, 0, 0, 0.02, 0, 0, 0, 4.595, 0, 0.5648743, 0)
+mesh = SubResource("CylinderMesh_kftq2")
+surface_material_override/0 = SubResource("StandardMaterial3D_o3psc")

@@ -1,7 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://dt4gfm40glvb3"]
+[gd_scene load_steps=18 format=3 uid="uid://dt4gfm40glvb3"]
 
 [ext_resource type="Script" uid="uid://culoo88ugbufr" path="res://Scripts/cutscene_1.gd" id="1_dif7x"]
-[ext_resource type="AudioStream" uid="uid://jcwqjbtkplnt" path="res://Audio/cutscene_audio/pop_3.wav" id="2_5arrb"]
 [ext_resource type="Texture2D" uid="uid://b10qbm3byli0f" path="res://Cutscenes/cutscene1/1.png" id="2_hdjsx"]
 [ext_resource type="Texture2D" uid="uid://bs1ksaqeu85cg" path="res://Cutscenes/cutscene1/2.png" id="3_8xxqb"]
 [ext_resource type="Texture2D" uid="uid://nvyiihd02gry" path="res://Cutscenes/talk.png" id="3_ajl8d"]
@@ -30,7 +29,6 @@ autoplay = true
 parameters/looping = true
 
 [node name="TypingSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_5arrb")
 volume_db = 0.024
 
 [node name="Dialogue1" type="TextureRect" parent="."]
@@ -378,7 +376,7 @@ scale = Vector2(0.2, 0.2)
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("4_6xn6i")
 theme_override_font_sizes/normal_font_size = 120
-text = "how did this retard find me???"
+text = "how did this guy find me???"
 fit_content = true
 
 [node name="Dialogue12" type="TextureRect" parent="."]

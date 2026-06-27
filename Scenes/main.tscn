@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://6ph4j2ye3m0"]
+[gd_scene load_steps=32 format=3 uid="uid://6ph4j2ye3m0"]
 
 [ext_resource type="Script" uid="uid://rf2tu3s8hg4d" path="res://Scripts/main.gd" id="1_8gbba"]
 [ext_resource type="Texture2D" uid="uid://b7pyuqnj5sybf" path="res://Assets/tiles/space3.png" id="3_b3802"]
@@ -7,17 +7,16 @@
 [ext_resource type="PackedScene" uid="uid://ck6jrbqtyqrhf" path="res://Scenes/Player.tscn" id="4_jjvhh"]
 [ext_resource type="Texture2D" uid="uid://wamxokeftx5x" path="res://Assets/tiles/space2.png" id="5_hibaj"]
 [ext_resource type="PackedScene" uid="uid://dfysmu00krk0s" path="res://Scenes/Enemy.tscn" id="5_kry3j"]
-[ext_resource type="AudioStream" uid="uid://r8dfna5f2rxf" path="res://Audio/test/eda_180.mp3" id="6_6bp64"]
 [ext_resource type="Texture2D" uid="uid://lhqrhdbaw6sj" path="res://Assets/tiles/space1.png" id="6_wsu2k"]
 [ext_resource type="Script" uid="uid://dw0b0do7m7sbt" path="res://Scripts/Conductor.gd" id="7_344ge"]
 [ext_resource type="PackedScene" uid="uid://bf2chskegbcp8" path="res://Assets/Environment/main/environment1.glb" id="8_344ge"]
 [ext_resource type="FontFile" uid="uid://yrnkkpx8c1id" path="res://Assets/fonts/23 seconds to midnight.ttf" id="8_hibaj"]
 [ext_resource type="Texture2D" uid="uid://cxof16hhre8y1" path="res://Assets/Environment/main/environment1_wall3.png" id="8_ynf5e"]
 [ext_resource type="Texture2D" uid="uid://ds2wt4t626rsr" path="res://Assets/birds/pigeon1.png" id="9_6iyac"]
+[ext_resource type="AudioStream" uid="uid://mb262mlhp8kj" path="res://Audio/ost/main3.mp3" id="10_b3802"]
 [ext_resource type="Texture2D" uid="uid://bdhwc1oxvvvc0" path="res://Assets/birds/pigeon2.png" id="10_fdnlq"]
 [ext_resource type="Texture2D" uid="uid://cgcjm5x7xfoxb" path="res://Assets/birds/crow1.png" id="11_jkdf5"]
 [ext_resource type="Texture2D" uid="uid://bc7qv64pip1vq" path="res://Assets/birds/crow2.png" id="12_wsu2k"]
-[ext_resource type="PackedScene" uid="uid://c5q2x3avfe3ap" path="res://Postprocessing/PostProcess.tscn" id="14_jkdf5"]
 
 [sub_resource type="Gradient" id="Gradient_ki2rj"]
 colors = PackedColorArray(0.8145063, 0, 0.19991395, 1, 1, 0.31260142, 0.34393445, 1)
@@ -249,11 +248,12 @@ RHYTHM : SPACE
 
 [node name="Beat Indicator" type="Sprite2D" parent="CanvasLayer/Control"]
 self_modulate = Color(1, 1, 1, 0.64705884)
-position = Vector2(595, 568)
+position = Vector2(640, 568)
 scale = Vector2(0.725586, 0.74609333)
 texture = ExtResource("6_wsu2k")
 
 [node name="FadeScreen" type="ColorRect" parent="CanvasLayer/Control"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -286,11 +286,12 @@ theme_override_font_sizes/normal_font_size = 80
 bbcode_enabled = true
 
 [node name="Conductor" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_6bp64")
-volume_db = -10.957
+stream = ExtResource("10_b3802")
+volume_db = -4.758
 autoplay = true
 script = ExtResource("7_344ge")
-bpm = 90
+music_fade_time = 0.5
+bpm = 120
 
 [node name="note_audio" type="Node" parent="."]
 
@@ -461,5 +462,3 @@ transform = Transform3D(0.079326436, 0, 2.0934978, 0, 2.095, 0, -2.0934978, 0, 0
 sprite_frames = SubResource("SpriteFrames_h1bgf")
 autoplay = "default"
 frame_progress = 0.49170947
-
-[node name="PostProcess" parent="." instance=ExtResource("14_jkdf5")]

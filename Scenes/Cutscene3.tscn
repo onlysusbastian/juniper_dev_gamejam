@@ -1,7 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://yooolskx7ego"]
+[gd_scene load_steps=13 format=3 uid="uid://yooolskx7ego"]
 
 [ext_resource type="Script" uid="uid://co8ybki6wln3y" path="res://Scripts/cutscene_3.gd" id="1_5cdrm"]
-[ext_resource type="AudioStream" uid="uid://jcwqjbtkplnt" path="res://Audio/cutscene_audio/pop_3.wav" id="2_st801"]
 [ext_resource type="Texture2D" uid="uid://j8ym3clk37j2" path="res://Cutscenes/cutscene 3/1.png" id="3_st801"]
 [ext_resource type="Texture2D" uid="uid://nvyiihd02gry" path="res://Cutscenes/talk.png" id="4_p80p3"]
 [ext_resource type="FontFile" uid="uid://clo6er66bms8a" path="res://Assets/fonts/Square Thief.ttf" id="5_4ki4j"]
@@ -19,7 +18,6 @@ script = ExtResource("1_5cdrm")
 next_scene = "res://Scenes/main.tscn"
 
 [node name="TypingSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_st801")
 volume_db = -9.618
 
 [node name="Dialogue1" type="TextureRect" parent="."]
